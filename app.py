@@ -64,6 +64,7 @@ with open("KUHP_Baru.txt", "r", encoding="utf-8") as f:
 # ================================
 class AgentState(TypedDict):
     question: str
+    conversation_history: Optional[List[dict]]
     docs: Optional[List[str]]
     external_docs: Optional[List[str]]
     answer: Optional[str]
@@ -73,16 +74,54 @@ class AgentState(TypedDict):
     reasoning: Optional[str]
 
 # ================================
+# 🧠 Conversation Memory Helper
+# ================================
+def format_conversation_history(
+    history: Optional[List[dict]],
+    max_messages: int = 10
+) -> str:
+    """
+    Mengubah riwayat percakapan menjadi teks yang dapat
+    digunakan oleh LLM sebagai konteks percakapan.
+    """
+
+    if not history:
+        return "Belum ada riwayat percakapan."
+
+    recent_history = history[-max_messages:]
+
+    formatted = []
+
+    for message in recent_history:
+        role = message.get("role", "")
+        text = message.get("text", "")
+
+        if role == "user":
+            label = "Pengguna"
+        elif role in ("assistant", "Asisten"):
+            label = "Asisten"
+        else:
+            label = role
+
+        formatted.append(f"{label}: {text}")
+
+    return "\n".join(formatted)
+
+# ================================
 # 🧠 Node: Tool Selection
 # ================================
 @traceable
 def tool_selection_node(state: AgentState) -> AgentState:
     q = state["question"]
+    conversation_history = state.get("conversation_history", [])
+    conversation_context = format_conversation_history(conversation_history)
     prompt = f"""
     Kamu adalah asisten ahli UU KUHP Baru yang sangat cerdas setara 100 profesor. Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak? Jika tidak, maka jangan mencoba menjawab. Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru". Utamakan mencari dulu sumber yang terdapat dalam dokumen sumber, yakni KUHP_Baru.txt. Baru setelah itu, tentukan tools terbaik untuk menjawab pertanyaan berikut:
-
-    Pertanyaan: {q}
-
+    Riwayat percakapan sebelumnya:
+    {conversation_context}
+    Pertanyaan terbaru:
+    {q}
+    
     Tools tersedia:
     1. Wikipedia - konsep hukum umum (Bahasa Indonesia)
     2. arXiv - penelitian hukum akademik
@@ -165,10 +204,24 @@ def enhanced_grade_node(state: AgentState) -> AgentState:
 # ================================
 @traceable
 def enhanced_generation_node(state: AgentState) -> AgentState:
-    q = state["question"]
+    conversation_history = state.get("conversation_history", [])
+    conversation_context = format_conversation_history(conversation_history)
     context = "\n".join(state.get("docs", []) + state.get("external_docs", []))
     prompt = f"""
     Kamu adalah asisten ahli Kitab Undang-Undang Hukum Pidana (KUHP) baru di Indonesia.
+    RIWAYAT PERCAKAPAN SEBELUMNYA:
+    {conversation_context}
+    Gunakan riwayat percakapan di atas untuk memahami konteks pertanyaan terbaru. 
+    Jika pertanyaan terbaru menggunakan kata atau frasa yang mengacu ke pertanyaan dan jawaban sebelumnya seperti:
+    - "itu"
+    - "tersebut"
+    - "pasal tersebut"
+    - "bagaimana sanksinya?"
+    - "berapa dendanya?"
+    - "siapa yang dimaksud?"
+    - "jelaskan lebih lanjut"
+    - "bagaimana penerapannya?"
+    maka hubungkan pertanyaan terrsebut dengan percakapan sebelumnya. Jangan menganggap pertanyaan terbaru selalu berdiri sendiri.
     Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak? Jika tidak, maka jangan mencoba menjawab. 
     Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru".
     Utamakan mengambil dari documents lalu gabungkan informasi dari berbagai sumber berikut untuk menjawab pertanyaan secara komprehensif.
