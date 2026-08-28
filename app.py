@@ -210,19 +210,6 @@ def enhanced_generation_node(state: AgentState) -> AgentState:
     context = "\n".join(state.get("docs", []) + state.get("external_docs", []))
     prompt = f"""
     Kamu adalah asisten ahli Kitab Undang-Undang Hukum Pidana (KUHP) baru di Indonesia.
-    RIWAYAT PERCAKAPAN SEBELUMNYA:
-    {conversation_context}
-    Gunakan riwayat percakapan di atas untuk memahami konteks pertanyaan terbaru. 
-    Jika pertanyaan terbaru menggunakan kata atau frasa yang mengacu ke pertanyaan dan jawaban sebelumnya seperti:
-    - "itu"
-    - "tersebut"
-    - "pasal tersebut"
-    - "bagaimana sanksinya?"
-    - "berapa dendanya?"
-    - "siapa yang dimaksud?"
-    - "jelaskan lebih lanjut"
-    - "bagaimana penerapannya?"
-    maka hubungkan pertanyaan terrsebut dengan percakapan sebelumnya. Jangan menganggap pertanyaan terbaru selalu berdiri sendiri.
     Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak? Jika tidak, maka jangan mencoba menjawab. 
     Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru".
     Utamakan mengambil dari documents lalu gabungkan informasi dari berbagai sumber berikut untuk menjawab pertanyaan secara komprehensif.
