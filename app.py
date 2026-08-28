@@ -120,6 +120,18 @@ def tool_selection_node(state: AgentState) -> AgentState:
     Riwayat percakapan sebelumnya? Jika berkaitan gunakan bagian ini:
     {conversation_context} 
     sebagai sebuah konteks untuk menjawab. Dokumen KUHP_Baru.txt bukan percakapan sebelumnya itu adalah base dokumen RAG untuk dijadikan sebagai sumber bukan konteks percakapan.
+    Jika pertanyaan terbaru menggunakan kata atau frasa seperti:
+    - "itu"
+    - "tersebut"
+    - "pasal tersebut"
+    - "bagaimana sanksinya?"
+    - "berapa dendanya?"
+    - "siapa yang dimaksud?"
+    - "jelaskan lebih lanjut"
+    - "bagaimana penerapannya?"
+    maka hubungkan pertanyaan tersebut dengan percakapan sebelumnya.
+    Jangan menganggap pertanyaan terbaru selalu berdiri sendiri.
+    
     Pertanyaan terbaru:
     {q}
     
