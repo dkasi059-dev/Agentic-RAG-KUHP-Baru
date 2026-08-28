@@ -39,24 +39,24 @@ tools = {
     "Wikipedia": Tool(
         name="Wikipedia",
         func=wikipedia_tool.run,
-        description="Gunakan untuk menemukan konsep utama, sejarah, dan hal-hal lain yang berkaitan dengan UU Perlindungan Data Pribadi (PDP) dalam Bahasa Indonesia!"
+        description="Gunakan untuk menemukan konsep utama, sejarah, dan hal-hal lain yang berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru dalam Bahasa Indonesia!"
     ),
     "arXiv": Tool(
         name="arXiv",
         func=arxiv_tool.run,
-        description="Gunakan untuk referensi akademik tentang teori atau penelitian berkaitan UU Perlindungan Data Pribadi!"
+        description="Gunakan untuk referensi akademik tentang teori atau penelitian berkaitan Kitab Undang-Undang Hukum Pidana (KUHP) baru!"
     ),
     "TavilySearch": Tool(
         name="TavilySearch",
         func=tavily_tool_instance.run,
-        description="Gunakan untuk berita UU Perlindungan Data Pribadi terbaru, peraturan Indonesia, atau putusan pengadilan!"
+        description="Gunakan untuk menemukan berita, peraturan Indonesia, atau putusan pengadilan, maupun direktori/repositori pengadilan mengenai penggunaan Kitab Undang-Undang Hukum Pidana (KUHP) baru."
     )
 }
 
 # ================================
-# 📚 Load Dokumen UU PDP
+# 📚 Load Dokumen KUHP Baru
 # ================================
-with open("uu_pdp.txt", "r", encoding="utf-8") as f:
+with open("KUHP_Baru.txt", "r", encoding="utf-8") as f:
     documents = [f.read()]
 
 # ================================
@@ -79,7 +79,7 @@ class AgentState(TypedDict):
 def tool_selection_node(state: AgentState) -> AgentState:
     q = state["question"]
     prompt = f"""
-    Kamu adalah asisten ahli UU Pelindungan Data Pribadi yang sangat cerdas setara 100 profesor. Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan UU Perlindungan Data Pribadi (PDP) atau tidak? Jika tidak, maka jangan mencoba menjawab. Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan UU Perlindungan Data Pribadi (PDP)". Utamakan mencari dulu sumber yang terdapat dalam documents. Baru setelah itu, tentukan tools terbaik untuk menjawab pertanyaan berikut:
+    Kamu adalah asisten ahli UU KUHP Baru yang sangat cerdas setara 100 profesor. Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak? Jika tidak, maka jangan mencoba menjawab. Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru". Utamakan mencari dulu sumber yang terdapat dalam dokumen sumber, yakni KUHP_Baru.txt. Baru setelah itu, tentukan tools terbaik untuk menjawab pertanyaan berikut:
 
     Pertanyaan: {q}
 
@@ -87,13 +87,13 @@ def tool_selection_node(state: AgentState) -> AgentState:
     1. Wikipedia - konsep hukum umum (Bahasa Indonesia)
     2. arXiv - penelitian hukum akademik
     3. TavilySearch - berita dan hukum terbaru di Indonesia
-    4. Documents UU PDP - dokumen UU Perlindungan Data Pribadi
+    4. Dokumen Kitab Undang-Undang Hukum Pidana (KUHP) baru - dokumen Kitab Undang-Undang Hukum Pidana (KUHP) baru
 
     Analisis:
-    - Apakah ada referensi tentang UU Perlindungan Data Pribadi (PDP) terkini Indonesia? → TavilySearch
-    - Apakah teori akademik yang berkenaan UU Perlindungan Data Pribadi (PDP) di Indonesia? → arXiv
-    - Apakah konsep dasar UU Perlindungan Data Pribadi (PDP)? → Wikipedia
-    - Apakah isi UU Perlindungan Data Pribadi (PDP) setiap pasalnya? → Documents UU PDP
+    - Apakah ada referensi tentang Kitab Undang-Undang Hukum Pidana (KUHP) baru terkini Indonesia? → TavilySearch
+    - Apakah teori akademik yang berkenaan Kitab Undang-Undang Hukum Pidana (KUHP) baru di Indonesia? → arXiv
+    - Apakah konsep dasar Kitab Undang-Undang Hukum Pidana (KUHP) baru? → Wikipedia
+    - Apakah isi Kitab Undang-Undang Hukum Pidana (KUHP) baru setiap pasalnya? → Dokumen Kitab Undang-Undang Hukum Pidana (KUHP) baru
 
     Format:
     TOOLS: tool1,tool2
@@ -168,15 +168,15 @@ def enhanced_generation_node(state: AgentState) -> AgentState:
     q = state["question"]
     context = "\n".join(state.get("docs", []) + state.get("external_docs", []))
     prompt = f"""
-    Kamu adalah asisten ahli UU Perlindungan Data Pribadi (PDP) di Indonesia.
-    Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan UU Perlindungan Data Pribadi (PDP) atau tidak? Jika tidak, maka jangan mencoba menjawab. 
-    Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan UU Perlindungan Data Pribadi (PDP)".
+    Kamu adalah asisten ahli Kitab Undang-Undang Hukum Pidana (KUHP) baru di Indonesia.
+    Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak? Jika tidak, maka jangan mencoba menjawab. 
+    Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru".
     Utamakan mengambil dari documents lalu gabungkan informasi dari berbagai sumber berikut untuk menjawab pertanyaan secara komprehensif.
 
     Pertanyaan: {q}
     Konteks: {context}
 
-    Jawablah dengan mengutamakan yang ada di dokumen tersebut dengan bahasa Indonesia formal, dan sebutkan sumber (UU, Wikipedia, Tavily, dll).
+    Jawablah dengan mengutamakan yang ada di dokumen tersebut dengan bahasa Indonesia formal, dan sebutkan sumber (KUHP, Wikipedia, Tavily, dll).
     """
     res = llm.invoke(prompt)
     return {**state, "answer": res.content.strip()}
