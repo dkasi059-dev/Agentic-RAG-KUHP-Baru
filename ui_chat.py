@@ -192,7 +192,11 @@ if st.session_state.viewing_history_index is None:
     if st.session_state.pending_prompt:
         with st.spinner("🔍 Sedang menganalisis dengan Agentic RAG..."):
             try:
-                state = {"question": st.session_state.pending_prompt}
+                conversation_history = st.session_state.messages.copy()
+                state = {
+                    "question": st.session_state.pending_prompt,
+                    "conversation_history": conversation_history
+                }
                 result = app.runnable_graph.invoke(state)
                 answer = result.get("answer", "Tidak ada jawaban ditemukan.")
                 reasoning = result.get("reasoning", "")
