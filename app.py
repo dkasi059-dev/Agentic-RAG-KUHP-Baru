@@ -204,6 +204,7 @@ def enhanced_grade_node(state: AgentState) -> AgentState:
 # ================================
 @traceable
 def enhanced_generation_node(state: AgentState) -> AgentState:
+    q = state["question"]
     conversation_history = state.get("conversation_history", [])
     conversation_context = format_conversation_history(conversation_history)
     context = "\n".join(state.get("docs", []) + state.get("external_docs", []))
