@@ -5,6 +5,7 @@ langchain>=0.2.14
 langchain-core>=0.2.36
 langchain-community>=0.2.14
 langchain-openai>=0.1.22
+langchain-groq>=0.1.0   
 langchain-huggingface>=0.0.3
 langgraph>=0.1.19
 langchain-text-splitters>=0.2.4
