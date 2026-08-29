@@ -13,7 +13,7 @@ from langchain_openai import ChatOpenAI
 # ================================
 # 🔧 Konfigurasi Awal
 # ================================
-os.environ["TAVILY_API_KEY"] = "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"
+os.environ["TAVILY_API_KEY"] = "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"
 os.environ["LANGCHAIN_TRACING_V2"] = "true"
 os.environ["LANGCHAIN_API_KEY"] = "ls__YourLangSmithKeyHere"
 os.environ["LANGCHAIN_PROJECT"] = "UU-CiptaKerja-AgenticRAG"
