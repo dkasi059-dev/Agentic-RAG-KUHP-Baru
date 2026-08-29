@@ -79,7 +79,8 @@ class AgentState(TypedDict):
 def tool_selection_node(state: AgentState) -> AgentState:
     q = state["question"]
     prompt = f"""
-    Kamu adalah asisten ahli UU KUHP Baru yang sangat cerdas setara 100 profesor. Sebelum menjawab wajib mengecek apakah pertanyaan tersebut berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak? Jika tidak, maka jangan mencoba menjawab. Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru". Utamakan mencari dulu sumber yang terdapat dalam dokumen sumber, yakni KUHP_Baru.txt. Baru setelah itu, tentukan tools terbaik untuk menjawab pertanyaan berikut:
+    Kamu adalah asisten ahli UU KUHP Baru yang sangat cerdas setara 100 profesor. Sebelum menjawab jangan baca dokumen atau panggil tools apapun, tetapi wajib mengecek apakah pertanyaan tersebut berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak? 
+    Jika tidak, maka jangan mencoba menjawab, jangan membaca dokumen apapun, jangan panggil tools apapun. Namun jawablah dengan kata-kata yang sama persis dengan "saya tidak bisa menjawab pertanyaan Anda karena tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru". Utamakan mencari dulu sumber yang terdapat dalam dokumen sumber, yakni KUHP_Baru.txt. Baru setelah itu, tentukan tools terbaik untuk menjawab pertanyaan berikut:
 
     Pertanyaan: {q}
 
