@@ -14,9 +14,9 @@ from langchain_openai import ChatOpenAI
 # 🔧 Konfigurasi Awal
 # ================================
 os.environ["TAVILY_API_KEY"] = "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"
-os.environ["LANGCHAIN_TRACING_V2"] = "true"
-os.environ["LANGCHAIN_API_KEY"] = "ls__YourLangSmithKeyHere"
-os.environ["LANGCHAIN_PROJECT"] = "UU-CiptaKerja-AgenticRAG"
+os.environ["LANGCHAIN_TRACING_V2"] = st.secrets["LANGCHAIN_TRACING_V2"]
+os.environ["LANGCHAIN_API_KEY"] = st.secrets["LANGCHAIN_API_KEY"]
+os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
 
 # ================================
 # 🔮 Setup Google Gemini
