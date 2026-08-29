@@ -9,6 +9,7 @@ from langchain_tavily import TavilySearch
 from langgraph.graph import StateGraph, END
 from langsmith import traceable
 from langchain_openai import ChatOpenAI
+from langchain_groq import ChatGroq
 
 # ================================
 # 🔧 Konfigurasi Awal
@@ -21,11 +22,10 @@ os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
 # ================================
 # 🔮 Setup LLM
 # ================================
-llm = ChatOpenAI(
-    model="openrouter/auto",
+llm = ChatGroq(
+    model="qwen-3-32b",        
     temperature=0,
-    openai_api_key=st.secrets["API_OR"],
-    openai_api_base="https://openrouter.ai/api/v1"
+    groq_api_key=st.secrets["API_GROQ"]
 )
 
 # ================================
