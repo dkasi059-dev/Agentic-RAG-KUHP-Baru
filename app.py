@@ -81,7 +81,7 @@ def tool_selection_node(state: AgentState) -> AgentState:
     q = state["question"]
     history = state.get("history", [])
     history_text = ""
-    for msg in history[-6:]:
+    for msg in history[-10:]:
         history_text += f"{msg['role']}: {msg['content']}\n"
 
     prompt = f"""
