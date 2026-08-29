@@ -22,8 +22,8 @@ os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
 # 🔮 Setup Google Gemini
 # ================================
 llm = ChatOpenAI(
-    model="openrouter/auto",
-    temperature=0.3,
+    model="liquid/lfm-2.5-2.6b:free",
+    temperature=0,
     openai_api_key=st.secrets["API_OR"],
     openai_api_base="https://openrouter.ai/api/v1"
 )
