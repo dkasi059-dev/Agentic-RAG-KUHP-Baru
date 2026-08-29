@@ -20,14 +20,13 @@ os.environ["LANGCHAIN_API_KEY"] = st.secrets["LANGCHAIN_API_KEY"]
 os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
 
 # ================================
-# 🔮 Setup OpenRouter
+# 🔮 Setup LLM
 # ================================
 llm = ChatOpenAI(
     model="openrouter/free",
     temperature=0,
     openai_api_key=st.secrets["API_OR"],
-    openai_api_base="https://openrouter.ai/api/v1",
-    max_tokens=1200
+    openai_api_base="https://openrouter.ai/api/v1"
 )
 
 # ================================
@@ -41,23 +40,25 @@ arxiv_tool = ArxivQueryRun(
     api_wrapper=ArxivAPIWrapper()
 )
 
-tavily_tool_instance = TavilySearch(max_results=3)
+tavily_tool_instance = TavilySearch(
+    max_results=3
+)
 
 tools = {
     "Wikipedia": Tool(
         name="Wikipedia",
         func=wikipedia_tool.run,
-        description="Gunakan untuk menemukan konsep umum yang berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) Baru."
+        description="Gunakan untuk menemukan konsep utama, sejarah, dan hal-hal lain yang berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru dalam Bahasa Indonesia."
     ),
     "arXiv": Tool(
         name="arXiv",
         func=arxiv_tool.run,
-        description="Gunakan untuk penelitian akademik yang berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) Baru."
+        description="Gunakan untuk referensi akademik tentang teori atau penelitian berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru."
     ),
     "TavilySearch": Tool(
         name="TavilySearch",
         func=tavily_tool_instance.run,
-        description="Gunakan untuk informasi terbaru, peraturan Indonesia, berita hukum, dan putusan pengadilan yang berkaitan dengan KUHP Baru."
+        description="Gunakan untuk menemukan berita, artikel, peraturan Indonesia, putusan pengadilan, situs hukum, Hukumonline, maupun sumber internet lain yang berkaitan dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru."
     )
 }
 
@@ -65,9 +66,9 @@ tools = {
 # 📚 Load Dokumen KUHP Baru
 # ================================
 with open("KUHP_Baru.txt", "r", encoding="utf-8") as f:
-    kuhp_text = f.read()
+    documents = [f.read()]
 
-documents = [kuhp_text]
+KUHP_TEXT = documents[0]
 
 # ================================
 # 🧩 Define Agent State
@@ -81,453 +82,254 @@ class AgentState(TypedDict):
     relevant: Optional[bool]
     answered: Optional[bool]
     selected_tools: Optional[List[str]]
-    reasoning: Optional[str]
-    article_number: Optional[int]
-    article_text: Optional[str]
-    direct_article: Optional[bool]
+    reasoning: Optional[str]]
+    retry_count: Optional[int]
 
 # ================================
-# 🧠 MEMORY
+# 🧠 Helper: Format Conversation
 # ================================
 def format_conversation_history(history):
     if not history:
-        return "Tidak ada percakapan sebelumnya."
+        return "Belum ada percakapan sebelumnya."
 
     formatted = []
 
-    for msg in history[-8:]:
-        role = msg.get("role", "")
-        text = msg.get("text", "").strip()
-
-        if not text:
-            continue
+    for item in history[-8:]:
+        role = item.get("role", "")
+        text = item.get("text", "")
 
         if role == "user":
             formatted.append(f"Pengguna: {text}")
         elif role in ["assistant", "Asisten"]:
             formatted.append(f"Asisten: {text}")
 
-    if not formatted:
-        return "Tidak ada percakapan sebelumnya."
-
     return "\n".join(formatted)
 
 # ================================
-# 🔎 DETEKSI NOMOR PASAL
+# 🔎 Helper: Ambil Nomor Pasal
 # ================================
-def detect_article_number(question):
+def extract_article_number(question):
     patterns = [
-        r"\bpasal\s+ke[-\s]?(\d+)\b",
-        r"\bpasal\s+(\d+)\b"
+        r"pasal\s+(\d+)",
+        r"pasal\s*no\.?\s*(\d+)",
+        r"artikel\s+(\d+)"
     ]
 
     for pattern in patterns:
         match = re.search(pattern, question.lower())
-
         if match:
             return int(match.group(1))
 
     return None
 
 # ================================
-# 🔎 DETEKSI UU PDP
+# 📚 Helper: Cari Pasal Dalam KUHP
 # ================================
-def mentions_pdp(question):
-    q = question.lower()
-
-    pdp_patterns = [
-        "uu pdp",
-        "uu perlindungan data pribadi",
-        "perlindungan data pribadi",
-        "undang-undang perlindungan data pribadi",
-        "undang undang perlindungan data pribadi",
-        "uu no. 27 tahun 2022",
-        "uu nomor 27 tahun 2022"
-    ]
-
-    return any(pattern in q for pattern in pdp_patterns)
-
-# ================================
-# 📚 AMBIL PASAL DARI KUHP_Baru.txt
-# ================================
-def extract_article(article_number):
-    text = kuhp_text
-
-    # Cari awal pasal.
-    start_pattern = rf"(?im)^\s*Pasal\s+{article_number}\s*\.?\s*$"
-    start_match = re.search(start_pattern, text)
-
-    if not start_match:
-        # Fallback jika format dokumen sedikit berbeda.
-        start_pattern = rf"(?im)^\s*Pasal\s+{article_number}\s*\.?"
-        start_match = re.search(start_pattern, text)
-
-    if not start_match:
+def find_article_in_kuhp(article_number):
+    if article_number is None:
         return None
 
-    start = start_match.start()
+    pattern = rf"(?im)^\s*Pasal\s+{article_number}\b"
 
-    # Cari batas akhir pasal.
-    # Jangan hanya mencari "Pasal" berikutnya karena
-    # struktur UU juga memiliki Bagian, Bab, Paragraf, dll.
-    boundary_pattern = (
-        r"(?im)^\s*(?:"
-        r"Pasal\s+\d+\.?"
-        r"|BAB\s+[IVXLCDM0-9]+"
-        r"|Bagian\s+(?:Kesatu|Kedua|Ketiga|Keempat|Kelima|Keenam|Ketujuh|Kedelapan|Kesembilan|Kesepuluh|[A-Za-z]+)"
-        r"|Paragraf\s+\d+"
-        r"|BAB\s+[A-Za-z]+"
-        r")\s*$"
-    )
+    matches = list(re.finditer(pattern, KUHP_TEXT))
 
-    search_start = start_match.end()
-    next_boundary = re.search(
-        boundary_pattern,
-        text[search_start:]
-    )
+    if not matches:
+        return None
 
-    if next_boundary:
-        end = search_start + next_boundary.start()
-        article = text[start:end].strip()
+    start = matches[0].start()
+
+    next_pattern = r"(?im)^\s*Pasal\s+\d+\b"
+    next_match = re.search(next_pattern, KUHP_TEXT[start + 1:])
+
+    if next_match:
+        end = start + 1 + next_match.start()
     else:
-        article = text[start:].strip()
+        end = min(len(KUHP_TEXT), start + 12000)
 
-    # Bersihkan baris kosong berlebihan.
-    article = re.sub(r"\n{3,}", "\n\n", article)
+    article_text = KUHP_TEXT[start:end].strip()
 
-    return article.strip()
-
-# ================================
-# ✨ FORMAT TAMPILAN PASAL
-# ================================
-def format_article_answer(article_number, article_text):
-    """
-    Merapikan tampilan pasal tanpa mengubah isi.
-    Tidak menggunakan LLM.
-    """
-
-    lines = article_text.splitlines()
-
-    cleaned = []
-
-    for line in lines:
-        line = line.strip()
-
-        if not line:
-            continue
-
-        # Hilangkan titik setelah nomor pasal jika ada.
-        if re.fullmatch(
-            rf"Pasal\s+{article_number}\.?",
-            line,
-            re.IGNORECASE
-        ):
-            continue
-
-        cleaned.append(line)
-
-    if not cleaned:
-        return f"### Pasal {article_number}\n\nTeks pasal tidak tersedia."
-
-    result = f"### Pasal {article_number}\n\n"
-
-    for line in cleaned:
-        # Ayat
-        if re.match(r"^\(\d+\)", line):
-            result += f"{line}\n\n"
-        else:
-            result += f"{line}\n\n"
-
-    return result.strip()
+    return article_text
 
 # ================================
-# 🔎 RESOLUSI PERTANYAAN KONTEKSTUAL
-# ================================
-def resolve_contextual_question(question, history):
-    q = question.strip().lower()
-
-    contextual_patterns = [
-        "pasal di atas",
-        "pasal tersebut",
-        "pasal tadi",
-        "pasal itu",
-        "ketentuan di atas",
-        "ketentuan tersebut",
-        "ketentuan tadi",
-        "aturan di atas",
-        "aturan tersebut",
-        "aturan tadi",
-        "hal di atas",
-        "hal tersebut",
-        "hal tadi",
-        "jelaskan di atas",
-        "jelaskan hal di atas",
-        "jelaskan ketentuan di atas",
-        "jelaskan pasal di atas"
-    ]
-
-    if not any(pattern in q for pattern in contextual_patterns):
-        return question
-
-    if not history:
-        return question
-
-    # Cari percakapan sebelumnya dari belakang.
-    for msg in reversed(history):
-        role = msg.get("role", "")
-
-        if role != "user":
-            continue
-
-        previous_question = msg.get("text", "").strip()
-
-        if not previous_question:
-            continue
-
-        article_number = detect_article_number(previous_question)
-
-        if article_number is not None:
-            return (
-                f"{question}\n\n"
-                f"[KONTEKS INTERNAL: Pengguna sedang merujuk "
-                f"pada Pasal {article_number} KUHP Baru.]"
-            )
-
-    return question
-
-# ================================
-# 🧠 NODE: VALIDASI
-# ================================
-@traceable
-def validation_node(state: AgentState) -> AgentState:
-    original_question = state["question"]
-    history = state.get("conversation_history", [])
-
-    q = resolve_contextual_question(
-        original_question,
-        history
-    )
-
-    article_number = detect_article_number(q)
-
-    # --------------------------------
-    # UU PDP -> TOLAK
-    # --------------------------------
-    if mentions_pdp(q):
-        return {
-            **state,
-            "question": q,
-            "article_number": article_number,
-            "direct_article": False,
-            "relevant": False,
-            "answer": (
-                "saya tidak bisa menjawab pertanyaan Anda karena "
-                "tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana "
-                "(KUHP) baru"
-            ),
-            "reasoning": (
-                "Pertanyaan merujuk pada UU Perlindungan Data Pribadi, "
-                "bukan KUHP Baru."
-            )
-        }
-
-    # --------------------------------
-    # PERTANYAAN PASAL
-    # --------------------------------
-    if article_number is not None:
-
-        article_text = extract_article(article_number)
-
-        # PASAL TIDAK ADA
-        if article_text is None:
-            return {
-                **state,
-                "question": q,
-                "article_number": article_number,
-                "article_text": None,
-                "direct_article": True,
-                "relevant": False,
-                "answer": (
-                    f"### Pasal {article_number}\n\n"
-                    f"Pasal {article_number} tidak ditemukan dalam "
-                    f"dokumen **KUHP_Baru.txt** yang digunakan oleh sistem."
-                ),
-                "reasoning": (
-                    f"Pasal {article_number} tidak ditemukan secara "
-                    f"langsung dalam KUHP_Baru.txt. Sistem tidak "
-                    f"menggunakan LLM untuk mengarang isi pasal."
-                )
-            }
-
-        # PASAL ADA
-        return {
-            **state,
-            "question": q,
-            "article_number": article_number,
-            "article_text": article_text,
-            "direct_article": True,
-            "relevant": True,
-            "reasoning": (
-                f"Pasal {article_number} ditemukan langsung "
-                f"dalam KUHP_Baru.txt."
-            )
-        }
-
-    # --------------------------------
-    # PERTANYAAN UMUM
-    # --------------------------------
-    return {
-        **state,
-        "question": q,
-        "article_number": None,
-        "direct_article": False
-    }
-
-# ================================
-# 🧠 NODE: TOOL SELECTION
+# 🧠 Node: Tool Selection
 # ================================
 @traceable
 def tool_selection_node(state: AgentState) -> AgentState:
+    q = state["question"]
+    history = state.get("conversation_history", [])
 
-    # Pasal tidak boleh masuk tool selection.
-    if state.get("direct_article"):
+    article_number = extract_article_number(q)
+
+    # --------------------------------
+    # Jika pertanyaan meminta pasal
+    # --------------------------------
+    if article_number is not None:
+        article = find_article_in_kuhp(article_number)
+
+        if article:
+            return {
+                **state,
+                "selected_tools": ["Documents"],
+                "reasoning": f"Pasal {article_number} ditemukan langsung dalam KUHP_Baru.txt.",
+                "relevant": True
+            }
+
+        # Pasal tidak ditemukan → JANGAN cari-cari atau mengarang
         return {
             **state,
             "selected_tools": [],
-            "reasoning": state.get(
-                "reasoning",
-                "Pertanyaan pasal diproses langsung dari KUHP_Baru.txt."
-            )
+            "reasoning": f"Pasal {article_number} tidak ditemukan dalam KUHP_Baru.txt. Sistem tidak akan membuat atau menebak isi pasal.",
+            "relevant": True
         }
 
-    # Jika sudah ditolak.
-    if state.get("answer"):
+    # --------------------------------
+    # Deteksi permintaan sumber internet
+    # --------------------------------
+    q_lower = q.lower()
+
+    external_source_keywords = [
+        "hukumonline",
+        "hukum online",
+        "artikel",
+        "berita",
+        "website",
+        "situs",
+        "link",
+        "tautan",
+        "putusan",
+        "pengadilan",
+        "terbaru",
+        "terkini",
+        "hari ini",
+        "sumber internet",
+        "jurnal",
+        "berita terbaru"
+    ]
+
+    if any(keyword in q_lower for keyword in external_source_keywords):
         return {
             **state,
-            "selected_tools": []
+            "selected_tools": ["TavilySearch"],
+            "reasoning": "Pertanyaan meminta informasi atau sumber eksternal sehingga TavilySearch digunakan.",
+            "relevant": True
         }
 
-    q = state["question"]
+    # --------------------------------
+    # Deteksi pertanyaan lanjutan
+    # --------------------------------
+    conversation_context = format_conversation_history(history)
 
     prompt = f"""
-Kamu adalah router untuk chatbot Kitab Undang-Undang Hukum Pidana
-(KUHP) Baru Indonesia.
+Kamu adalah router untuk chatbot KUHP Baru Indonesia.
 
-Tentukan apakah pertanyaan berikut berkaitan dengan KUHP Baru.
+Tentukan terlebih dahulu apakah pertanyaan pengguna masih berhubungan dengan Kitab Undang-Undang Hukum Pidana (KUHP) Baru.
+
+Jika pertanyaan masih berhubungan dengan KUHP Baru, jangan menolaknya hanya karena membutuhkan sumber eksternal.
+
+Aturan routing:
+
+1. Pertanyaan tentang bunyi/isi pasal:
+   gunakan Documents.
+
+2. Pertanyaan yang meminta artikel, berita, website, Hukumonline,
+   putusan, sumber internet, informasi terbaru atau sumber eksternal:
+   gunakan TavilySearch.
+
+3. Pertanyaan konsep umum KUHP:
+   boleh menggunakan Documents dan/atau Wikipedia.
+
+4. Pertanyaan akademik:
+   boleh menggunakan Documents dan/atau arXiv.
+
+5. Jika pertanyaan merupakan lanjutan dari percakapan sebelumnya,
+   gunakan konteks percakapan untuk memahami maksud pengguna.
+
+6. Hanya anggap pertanyaan di luar domain jika benar-benar tidak
+   memiliki hubungan dengan KUHP Baru.
+
+Riwayat percakapan:
+{conversation_context}
 
 Pertanyaan:
 {q}
 
-Jika tidak berkaitan dengan KUHP Baru, jawab:
-TOOLS: NONE
-REASONING: OUT_OF_SCOPE
+Balas tepat dengan format:
 
-Jika berkaitan dengan KUHP Baru, pilih maksimal SATU tools eksternal
-jika benar-benar diperlukan.
+TOOLS: Documents
+atau
+TOOLS: TavilySearch
+atau
+TOOLS: Wikipedia
+atau
+TOOLS: arXiv
+atau kombinasi yang diperlukan.
 
-Tools:
-Wikipedia
-arXiv
-TavilySearch
-
-Aturan:
-- Wikipedia untuk konsep umum.
-- arXiv untuk penelitian akademik.
-- TavilySearch untuk informasi terbaru.
-- Jika pertanyaan dapat dijawab dari KUHP_Baru.txt,
-  jangan pilih tools eksternal.
-- Jangan memilih lebih dari satu tool.
-
-Format:
-TOOLS: nama_tool
-REASONING: alasan
+REASONING: alasan singkat.
 """
 
     result = llm.invoke(prompt)
     content = result.content.strip()
 
+    lines = content.split("\n")
+
     tools_selected = []
     reasoning = ""
 
-    for line in content.split("\n"):
+    for line in lines:
         line = line.strip()
 
         if line.startswith("TOOLS:"):
-            selected = line.replace("TOOLS:", "").strip()
+            raw_tools = line.replace("TOOLS:", "").strip()
 
-            if selected and selected.upper() != "NONE":
-                if selected in tools:
-                    tools_selected = [selected]
+            for tool_name in [
+                "Documents",
+                "TavilySearch",
+                "Wikipedia",
+                "arXiv"
+            ]:
+                if tool_name in raw_tools:
+                    tools_selected.append(tool_name)
 
         elif line.startswith("REASONING:"):
-            reasoning = line.replace(
-                "REASONING:",
-                ""
-            ).strip()
-
-    if "OUT_OF_SCOPE" in content:
-        return {
-            **state,
-            "selected_tools": [],
-            "relevant": False,
-            "answer": (
-                "saya tidak bisa menjawab pertanyaan Anda karena "
-                "tidak berkaitan dengan Kitab Undang-Undang Hukum Pidana "
-                "(KUHP) baru"
-            ),
-            "reasoning": (
-                "Pertanyaan berada di luar cakupan KUHP Baru."
-            )
-        }
+            reasoning = line.replace("REASONING:", "").strip()
 
     return {
         **state,
         "selected_tools": tools_selected,
-        "reasoning": reasoning
+        "reasoning": reasoning,
+        "relevant": True
     }
 
 # ================================
-# 🔍 NODE: RETRIEVAL
+# 🔍 Node: Multi Source Retrieval
 # ================================
 @traceable
 def multi_source_retrieve_node(state: AgentState) -> AgentState:
-
-    # --------------------------------
-    # PASAL -> LANGSUNG DOKUMEN
-    # --------------------------------
-    if state.get("direct_article"):
-
-        article_text = state.get("article_text")
-
-        if article_text:
-            return {
-                **state,
-                "docs": [article_text],
-                "external_docs": []
-            }
-
-        return {
-            **state,
-            "docs": [],
-            "external_docs": []
-        }
-
-    # --------------------------------
-    # OUT OF SCOPE
-    # --------------------------------
-    if state.get("answer"):
-        return {
-            **state,
-            "docs": [],
-            "external_docs": []
-        }
-
     q = state["question"]
     selected = state.get("selected_tools", [])
 
-    internal_docs = documents
+    internal_docs = []
     external_docs = []
 
+    article_number = extract_article_number(q)
+
+    # --------------------------------
+    # Retrieval dokumen KUHP
+    # --------------------------------
+    if "Documents" in selected:
+        if article_number is not None:
+            article = find_article_in_kuhp(article_number)
+
+            if article:
+                internal_docs.append(article)
+        else:
+            # Untuk pertanyaan umum jangan kirim seluruh KUHP
+            # karena boros token.
+            internal_docs.append(KUHP_TEXT[:30000])
+
+    # --------------------------------
+    # Retrieval tools eksternal
+    # --------------------------------
     for tool_name in selected:
         if tool_name in tools:
             try:
@@ -538,10 +340,12 @@ def multi_source_retrieve_node(state: AgentState) -> AgentState:
 
                     for i, item in enumerate(result):
                         if isinstance(item, dict):
+                            title = item.get("title", "No title")
+                            content = item.get("content", "No content")
+
                             result_str += (
                                 f"Result {i+1}: "
-                                f"{item.get('title', 'No title')} - "
-                                f"{item.get('content', 'No content')}\n"
+                                f"{title} - {content}\n"
                             )
                         else:
                             result_str += (
@@ -565,181 +369,232 @@ def multi_source_retrieve_node(state: AgentState) -> AgentState:
     }
 
 # ================================
-# 🧩 NODE: GENERATE FINAL ANSWER
+# 🧮 Node: Grade Relevance
 # ================================
 @traceable
-def enhanced_generation_node(state: AgentState) -> AgentState:
+def enhanced_grade_node(state: AgentState) -> AgentState:
+    q = state["question"]
+
+    all_docs = (
+        state.get("docs", [])
+        + state.get("external_docs", [])
+    )
 
     # --------------------------------
-    # PASAL TIDAK DITEMUKAN
+    # Pasal yang ditemukan = relevan
     # --------------------------------
-    if state.get("direct_article") and not state.get("article_text"):
-        return state
+    article_number = extract_article_number(q)
 
-    # --------------------------------
-    # PASAL DITEMUKAN
-    # --------------------------------
-    if state.get("direct_article"):
+    if article_number is not None:
+        article = find_article_in_kuhp(article_number)
 
-        article_number = state.get("article_number")
-        article_text = state.get("article_text")
-        q = state["question"].lower()
-
-        # Jika meminta bunyi / isi pasal,
-        # TIDAK PERLU LLM.
-        direct_patterns = [
-            "apa bunyi",
-            "apa isi",
-            "bunyi pasal",
-            "isi pasal",
-            "tuliskan pasal",
-            "tuliskan isi",
-            "sebutkan pasal",
-            "kutip pasal",
-            "tampilkan pasal"
-        ]
-
-        if any(pattern in q for pattern in direct_patterns):
+        if article:
             return {
                 **state,
-                "answer": format_article_answer(
-                    article_number,
-                    article_text
-                )
+                "relevant": True
             }
-
-        # --------------------------------
-        # PENJELASAN PASAL
-        # --------------------------------
-        history = format_conversation_history(
-            state.get("conversation_history", [])
-        )
-
-        prompt = f"""
-Kamu adalah asisten yang menjelaskan Kitab Undang-Undang
-Hukum Pidana (KUHP) Baru Indonesia.
-
-Pengguna meminta penjelasan mengenai Pasal {article_number}.
-
-ATURAN SANGAT KETAT:
-
-1. Satu-satunya dasar untuk menjelaskan Pasal {article_number}
-   adalah teks pasal yang diberikan di bawah.
-2. Jangan mengarang.
-3. Jangan membuat ayat, angka, sanksi, unsur pidana,
-   pengecualian, atau ketentuan yang tidak ada dalam teks.
-4. Jangan menggunakan pengetahuan internal model untuk
-   menggantikan informasi yang tidak terdapat dalam teks.
-5. Jika suatu informasi tidak terdapat dalam teks pasal,
-   katakan bahwa informasi tersebut tidak terdapat dalam
-   teks pasal.
-6. Jangan mencampurkan Pasal {article_number} dengan pasal lain.
-7. Jika konteks percakapan menyebut "pasal di atas",
-   konteks tersebut merujuk pada Pasal {article_number}.
-8. Gunakan bahasa Indonesia yang rapi dan mudah dipahami.
-
-RIWAYAT PERCAKAPAN:
-{history}
-
-TEKS PASAL {article_number}:
-{article_text}
-
-PERTANYAAN:
-{state["question"]}
-
-Format jawaban:
-
-### Penjelasan Pasal {article_number}
-
-**Inti ketentuan:**
-Jelaskan secara singkat berdasarkan teks.
-
-**Penjelasan:**
-Jelaskan setiap ketentuan/ayat secara berurutan jika ada.
-
-**Catatan:**
-Sampaikan batasan informasi jika memang diperlukan.
-
-Jangan menambahkan informasi hukum yang tidak terdapat
-dalam teks pasal.
-"""
-
-        res = llm.invoke(prompt)
 
         return {
             **state,
-            "answer": res.content.strip()
+            "relevant": False
         }
 
     # --------------------------------
-    # OUT OF SCOPE
+    # Jika tidak ada dokumen
     # --------------------------------
-    if state.get("answer"):
-        return state
-
-    # --------------------------------
-    # PERTANYAAN UMUM
-    # --------------------------------
-    q = state["question"]
-
-    history = format_conversation_history(
-        state.get("conversation_history", [])
-    )
-
-    context = "\n".join(
-        state.get("docs", []) +
-        state.get("external_docs", [])
-    )
+    if not all_docs:
+        return {
+            **state,
+            "relevant": False
+        }
 
     prompt = f"""
-Kamu adalah asisten ahli Kitab Undang-Undang Hukum Pidana
-(KUHP) Baru Indonesia.
+Evaluasi apakah sumber berikut relevan dengan pertanyaan pengguna.
 
-ATURAN WAJIB:
-
-1. Jawab hanya jika pertanyaan berkaitan dengan KUHP Baru.
-2. Utamakan KUHP_Baru.txt.
-3. Jangan mengarang isi hukum.
-4. Jangan membuat nomor pasal yang tidak ada.
-5. Jangan mengarang bunyi pasal.
-6. Jika informasi tidak ditemukan dalam sumber,
-   katakan bahwa informasi tersebut tidak ditemukan.
-7. Jangan menggunakan pengetahuan internal model untuk
-   menggantikan informasi yang tidak tersedia.
-8. Gunakan conversation history untuk memahami pertanyaan
-   lanjutan.
-9. Jangan menganggap pertanyaan lanjutan sebagai pertanyaan
-   yang berdiri sendiri jika konteks sebelumnya jelas.
-
-RIWAYAT PERCAKAPAN:
-{history}
-
-PERTANYAAN:
+Pertanyaan:
 {q}
 
-SUMBER:
-{context}
+Sumber:
+{all_docs}
 
-Jawab dengan bahasa Indonesia formal, rapi, jelas,
-dan tidak bertele-tele.
+Balas hanya:
+ya
+atau
+tidak
 """
 
     res = llm.invoke(prompt)
 
     return {
         **state,
-        "answer": res.content.strip()
+        "relevant": "ya" in res.content.lower()
     }
 
 # ================================
-# 🔧 WORKFLOW GRAPH
+# 🧩 Node: Generate Final Answer
+# ================================
+@traceable
+def enhanced_generation_node(state: AgentState) -> AgentState:
+    q = state["question"]
+
+    history = state.get(
+        "conversation_history",
+        []
+    )
+
+    conversation_context = format_conversation_history(
+        history
+    )
+
+    docs = state.get("docs", [])
+    external_docs = state.get(
+        "external_docs",
+        []
+    )
+
+    context = "\n\n".join(
+        docs + external_docs
+    )
+
+    article_number = extract_article_number(q)
+
+    # --------------------------------
+    # PASAL TIDAK DITEMUKAN
+    # --------------------------------
+    if article_number is not None:
+        article = find_article_in_kuhp(article_number)
+
+        if not article:
+            return {
+                **state,
+                "answer": (
+                    f"Pasal {article_number} tidak ditemukan "
+                    "dalam dokumen KUHP Baru (UU No. 1 Tahun 2023) "
+                    "yang digunakan oleh sistem."
+                )
+            }
+
+    # --------------------------------
+    # Tidak ada sumber
+    # --------------------------------
+    if not context:
+        return {
+            **state,
+            "answer": (
+                "Saya tidak menemukan sumber yang cukup "
+                "untuk menjawab pertanyaan tersebut."
+            )
+        }
+
+    prompt = f"""
+Kamu adalah asisten hukum khusus Kitab Undang-Undang Hukum Pidana
+(KUHP) Baru Indonesia.
+
+ATURAN PALING PENTING:
+
+1. Jangan pernah mengarang fakta hukum.
+
+2. Jangan pernah membuat nomor pasal, bunyi pasal,
+   judul artikel, nama putusan, atau sumber yang tidak
+   terdapat dalam konteks.
+
+3. Jika pengguna meminta bunyi/isi suatu pasal,
+   gunakan HANYA teks pasal yang tersedia dalam konteks.
+
+4. Jika pasal tidak tersedia dalam konteks,
+   jangan menebak.
+
+5. Jika pengguna meminta informasi dari situs tertentu
+   seperti Hukumonline, gunakan hasil Tavily jika tersedia.
+   Jangan mengatakan informasi tidak ditemukan hanya karena
+   tidak ada di KUHP_Baru.txt.
+
+6. Gunakan riwayat percakapan untuk memahami kata-kata seperti:
+   "di atas", "pasal tersebut", "jelaskan", "yang tadi",
+   "itu", dan pertanyaan lanjutan lainnya.
+
+7. Jangan mengulang pertanyaan pengguna.
+
+8. Jangan menambahkan informasi yang tidak didukung sumber.
+
+9. Jawaban harus rapi, formal, dan mudah dibaca.
+
+10. Untuk bunyi pasal, gunakan format:
+
+### Pasal X
+
+(teks pasal)
+
+11. Untuk pertanyaan penjelasan, gunakan paragraf atau
+    poin-poin hanya jika memang diperlukan.
+
+12. Jangan menampilkan proses berpikir internal.
+    Cukup berikan jawaban dan sumber yang digunakan.
+
+RIWAYAT PERCAKAPAN:
+{conversation_context}
+
+PERTANYAAN TERKINI:
+{q}
+
+SUMBER INTERNAL KUHP:
+{docs}
+
+SUMBER EKSTERNAL:
+{external_docs}
+
+Jawablah berdasarkan sumber di atas.
+"""
+
+    res = llm.invoke(prompt)
+
+    answer = res.content.strip()
+
+    return {
+        **state,
+        "answer": answer
+    }
+
+# ================================
+# 🔁 Node: Answer Check
+# ================================
+@traceable
+def answer_check_node(state: AgentState) -> AgentState:
+    q = state["question"]
+    ans = state.get("answer", "")
+
+    # Jika jawaban sudah berupa penolakan aman,
+    # jangan lakukan retry.
+    if (
+        "tidak ditemukan" in ans.lower()
+        or "tidak menemukan sumber" in ans.lower()
+    ):
+        return {
+            **state,
+            "answered": True
+        }
+
+    # Jawaban pasal yang ditemukan langsung dianggap selesai.
+    article_number = extract_article_number(q)
+
+    if article_number is not None:
+        article = find_article_in_kuhp(article_number)
+
+        if article:
+            return {
+                **state,
+                "answered": True
+            }
+
+    return {
+        **state,
+        "answered": bool(ans.strip())
+    }
+
+# ================================
+# 🔧 Workflow Graph (LangGraph)
 # ================================
 workflow = StateGraph(AgentState)
-
-workflow.add_node(
-    "Validation",
-    validation_node
-)
 
 workflow.add_node(
     "ToolSelection",
@@ -752,28 +607,22 @@ workflow.add_node(
 )
 
 workflow.add_node(
+    "Grade",
+    enhanced_grade_node
+)
+
+workflow.add_node(
     "Generate",
     enhanced_generation_node
 )
 
-workflow.set_entry_point("Validation")
+workflow.add_node(
+    "Evaluate",
+    answer_check_node
+)
 
-workflow.add_conditional_edges(
-    "Validation",
-    lambda s: (
-        "DirectAnswer"
-        if s.get("direct_article")
-        else (
-            "OutOfScope"
-            if s.get("answer")
-            else "ToolSelection"
-        )
-    ),
-    {
-        "DirectAnswer": "Retrieve",
-        "OutOfScope": END,
-        "ToolSelection": "ToolSelection"
-    }
+workflow.set_entry_point(
+    "ToolSelection"
 )
 
 workflow.add_edge(
@@ -783,12 +632,26 @@ workflow.add_edge(
 
 workflow.add_edge(
     "Retrieve",
+    "Grade"
+)
+
+workflow.add_edge(
+    "Grade",
     "Generate"
 )
 
 workflow.add_edge(
     "Generate",
-    END
+    "Evaluate"
+)
+
+workflow.add_conditional_edges(
+    "Evaluate",
+    lambda s: "Yes" if s.get("answered") else "No",
+    {
+        "Yes": END,
+        "No": END
+    }
 )
 
 runnable_graph = workflow.compile()
