@@ -83,7 +83,7 @@ class AgentState(TypedDict):
     relevant: Optional[bool]
     answered: Optional[bool]
     selected_tools: Optional[List[str]]
-    reasoning: Optional[str]]
+    reasoning: Optional[str]
     article_number: Optional[int]
     article_text: Optional[str]
     direct_article: Optional[bool]
