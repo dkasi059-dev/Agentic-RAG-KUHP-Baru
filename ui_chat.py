@@ -266,52 +266,32 @@ if st.session_state.viewing_history_index is None:
     # ================================
     # 🧠 PROSES PERTANYAAN
     # ================================
+# Di bagian proses pertanyaan
     if st.session_state.pending_prompt:
-
-        with st.spinner(
-            "🔍 Sedang menganalisis dengan Agentic RAG..."
-        ):
-
+        with st.spinner("🔍 Sedang menganalisis dengan Agentic RAG..."):
             try:
-
-                # PENTING:
-                # Kirim seluruh percakapan sebelumnya
-                # ke app.py.
-                conversation_history = (
-                    st.session_state.messages[:-1].copy()
-                )
-
+                # Ambil seluruh riwayat kecuali pertanyaan terakhir
+                conversation_history = st.session_state.messages[:-1].copy()
+                # Ubah format: ubah 'text' menjadi 'content' agar sesuai dengan agent
+                history_for_agent = [
+                    {"role": msg["role"], "content": msg["text"]}
+                    for msg in conversation_history
+                ]
+    
                 state = {
                     "question": st.session_state.pending_prompt,
-                    "conversation_history": conversation_history
+                    "history": history_for_agent   # <- gunakan field 'history'
                 }
-
+    
                 result = app.runnable_graph.invoke(state)
-
-                answer = result.get(
-                    "answer",
-                    "Tidak ada jawaban ditemukan."
-                )
-
-                reasoning = result.get(
-                    "reasoning",
-                    ""
-                )
-
+                answer = result.get("answer", "Tidak ada jawaban ditemukan.")
+                reasoning = result.get("reasoning", "")
                 if reasoning:
-                    response_text = (
-                        f"{answer}"
-                        f"<br><br>"
-                        f"🧠 <b>Analisis:</b> {reasoning}"
-                    )
+                    response_text = f"{answer}<br><br>🧠 <b>Analisis:</b> {reasoning}"
                 else:
                     response_text = answer
-
             except Exception as e:
-
-                response_text = (
-                    f"⚠️ Terjadi kesalahan: {str(e)}"
-                )
+                response_text = f"⚠️ Terjadi kesalahan: {str(e)}"
 
         tz = pytz.timezone("Asia/Jakarta")
 
