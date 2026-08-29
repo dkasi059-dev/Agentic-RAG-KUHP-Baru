@@ -101,7 +101,7 @@ def tool_selection_node(state: AgentState) -> AgentState:
        - TavilySearch: berita, informasi terkini, artikel internet, putusan pengadilan
        - Dokumen KUHP Baru: isi pasal-pasal (sudah tersedia secara internal)
     3. Sangat wajib sekali untuk memperhatikan riwayat percakapan sebelumnya baru menentukan apakah berkaitan dengan pertanyaan sebelumnya atau tidak?
-
+    4. Jika diminta ayat maka jangan tafsirkan pasal. Misalnya ayat 1 maka lihat percakapan sebelumnya membicarakan pasal berapa? berarti ayat dalam pasal itulah yang dimaksud.
     Pertimbangkan konteks riwayat: jika sebelumnya Anda telah memberikan daftar hasil dari dokumen KUHP_Baru.txt maupun pencarian dari TavilySearch dan pertanyaan sekarang merujuk pada ayat, pasal, atau nomor urut tertentu (misal: pertama, kedua, kelima, atau angka 1,2,3), maka tidak perlu memilih TavilySearch lagi, cukup gunakan hasil retrieval yang sudah ada. Namun jika pertanyaannya tidak ada hubungannya dengan pertanyaan sebelumnya, gunakan TavilySearch.
 
     Format jawaban (jika berkaitan):
@@ -240,6 +240,7 @@ def enhanced_generation_node(state: AgentState) -> AgentState:
     - Sertakan sumber informasi (misal: KUHP, Wikipedia, Tavily, arXiv) secara jelas.
     - Jika informasi tidak tersedia, sampaikan dengan jujur.
     - Jawab dengan bahasa Indonesia formal dan ringkas.
+    - Jika diminta ayat maka jangan tafsirkan pasal. Misalnya ayat 1 maka lihat percakapan sebelumnya membicarakan pasal berapa? berarti ayat dalam pasal itulah yang dimaksud.
     """
 
     res = llm.invoke(prompt)
