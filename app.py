@@ -23,7 +23,7 @@ os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
 # ================================
 llm = ChatOpenAI(
     model="cohere/north-mini-code:free",
-    temperature=0,
+    temperature=0.3,
     openai_api_key=st.secrets["API_OR"],
     openai_api_base="https://openrouter.ai/api/v1"
 )
