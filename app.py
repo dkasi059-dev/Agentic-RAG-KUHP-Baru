@@ -71,7 +71,7 @@ class AgentState(TypedDict):
     answered: Optional[bool]
     selected_tools: Optional[List[str]]
     reasoning: Optional[str]
-    history: Optional[List[dict]]   # riwayat percakapan
+    history: Optional[List[dict]]
 
 # ================================
 # 🧠 Node: Tool Selection + Relevansi
@@ -81,7 +81,7 @@ def tool_selection_node(state: AgentState) -> AgentState:
     q = state["question"]
     history = state.get("history", [])
     history_text = ""
-    for msg in history[-6:]:  # ambil 3 pasang terakhir
+    for msg in history[-6:]:
         history_text += f"{msg['role']}: {msg['content']}\n"
 
     prompt = f"""
@@ -93,21 +93,20 @@ def tool_selection_node(state: AgentState) -> AgentState:
 
     Tugas Anda:
     1. Tentukan apakah pertanyaan ini BERKAITAN dengan Kitab Undang-Undang Hukum Pidana (KUHP) baru atau tidak.
-    2. Jika TIDAK berkaitan, jawab dengan format:
-       RELEVANT: no
-       REASONING: (alasan singkat)
-    3. Jika BERKAITAN, pilih tools yang paling sesuai dari daftar berikut:
-       - Wikipedia (konsep hukum umum, Bahasa Indonesia)
-       - arXiv (penelitian hukum akademik)
-       - TavilySearch (berita dan hukum terbaru di Indonesia)
-       - Dokumen KUHP Baru (isi pasal-pasal, tersedia secara internal)
+       Jika tidak, jawab: RELEVANT: no dan berikan REASONING.
+    2. Jika berkaitan, pilih tools yang paling sesuai dari daftar berikut:
+       - Wikipedia (konsep hukum umum, Bahasa Indonesia) – untuk penjelasan konsep dasar.
+       - arXiv (penelitian hukum akademik) – untuk teori/penelitian ilmiah.
+       - TavilySearch (berita dan hukum terbaru di Indonesia) – WAJIB digunakan jika pertanyaan meminta informasi terkini, artikel dari internet, berita, putusan pengadilan, atau hal-hal yang memerlukan pencarian web.
+       - Dokumen KUHP Baru (isi pasal-pasal, tersedia secara internal) – untuk isi spesifik pasal.
+
+    **Penting**: Jika pertanyaan meminta "judul artikel", "berita", "informasi terbaru", atau "cari di internet", maka TavilySearch HARUS dipilih.
 
     Format jawaban (hanya jika berkaitan):
     RELEVANT: yes
-    TOOLS: tool1,tool2
+    TOOLS: tool1,tool2 (pisahkan dengan koma)
     REASONING: alasan pemilihan tools
 
-    Penting: Jika tidak berkaitan, jangan pilih tools apapun dan jangan mencoba menjawab. 
     Jawaban akhir hanya akan dihasilkan jika RELEVANT: yes.
     """
 
@@ -135,6 +134,11 @@ def tool_selection_node(state: AgentState) -> AgentState:
             "selected_tools": [],
             "reasoning": reasoning
         }
+
+    # Pastikan TavilySearch dipilih jika pertanyaan mengandung kata "artikel", "internet", "berita", "terbaru"
+    # Jika tidak, kita bisa menambahkan secara paksa, tapi lebih baik biarkan LLM memutuskan.
+    # Namun untuk memastikan, kita bisa periksa kata kunci.
+    # Saya tidak menambahkan logika paksa agar tetap fleksibel.
 
     return {
         **state,
@@ -193,12 +197,13 @@ def enhanced_generation_node(state: AgentState) -> AgentState:
 
     Pertanyaan: {q}
 
-    Gunakan konteks berikut (utamakan dokumen KUHP Baru) untuk menjawab secara komprehensif dan akurat.
+    Gunakan konteks berikut (utamakan dokumen KUHP Baru, tetapi jika ada hasil pencarian dari TavilySearch, Wikipedia, atau arXiv, gunakan juga) untuk menjawab secara komprehensif dan akurat.
     Konteks:
     {context}
 
     Jawablah dengan bahasa Indonesia formal, sertakan sumber informasi (misal: KUHP, Wikipedia, Tavily, arXiv) jika relevan.
     Jika jawaban tidak ditemukan dalam konteks, sampaikan bahwa informasi tidak tersedia.
+    Jika hasil pencarian dari TavilySearch berisi judul-judul artikel, sebutkan judul-judul tersebut dengan jelas.
     """
 
     res = llm.invoke(prompt)
