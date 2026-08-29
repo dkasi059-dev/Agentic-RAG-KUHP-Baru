@@ -22,10 +22,11 @@ os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
 # ================================
 # 🔮 Setup LLM
 # ================================
-llm = ChatGroq(
-    model="qwen/qwen3.6-27b",        
+llm = ChatOpenAI(
+    model="inclusionai/ling-3.0-flash-fin:free",
     temperature=0,
-    groq_api_key=st.secrets["API_GROQ"]
+    openai_api_key=st.secrets["API_OR"],
+    openai_api_base="https://openrouter.ai/api/v1"
 )
 
 # ================================
