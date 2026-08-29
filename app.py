@@ -82,7 +82,7 @@ class AgentState(TypedDict):
     relevant: Optional[bool]
     answered: Optional[bool]
     selected_tools: Optional[List[str]]
-    reasoning: Optional[str]]
+    reasoning: Optional[str]
     retry_count: Optional[int]
 
 # ================================
