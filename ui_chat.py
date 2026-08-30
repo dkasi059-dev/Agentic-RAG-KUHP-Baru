@@ -17,7 +17,7 @@ st.set_page_config(
 
 
 # ============================================================
-# CSS (raw string agar aman)
+# CSS (raw string)
 # ============================================================
 
 st.markdown(
@@ -230,44 +230,42 @@ st.markdown(
 
 
     /* ========================================================
-       CAPTION (Anda • waktu & Chatbot Suhardi • waktu)
-       HITAM TERANG, BOLD, UKURAN LEBIH BESAR
+       EXPANDER (Analisis) - KOTAK HIJAU TERANG MENYALA
+       dan teks hitam menyala
     ======================================================== */
 
-    [data-testid="stChatMessage"] .stCaption,
-    [data-testid="stChatMessage"] caption,
-    [data-testid="stChatMessage"] .caption {
-        color: #000000 !important;
-        font-weight: 800 !important;
-        font-size: 1.2em !important;
-        text-shadow: 0 0 5px rgba(255,255,255,0.8) !important;
+    /* Kotak expander (saat terbuka) */
+    [data-testid="stExpander"] details {
+        background: linear-gradient(145deg, #00ff44, #00cc33) !important;
+        border: 2px solid rgba(0, 255, 68, 0.9) !important;
+        box-shadow:
+            0 0 30px rgba(0, 255, 68, 0.7),
+            inset 0 0 20px rgba(255, 255, 255, 0.3) !important;
+        border-radius: 15px !important;
+        padding: 10px !important;
     }
 
-
-    /* ========================================================
-       EXPANDER ANALISIS - KOTAK HIJAU TERANG, TEKS HITAM
-    ======================================================== */
-
-    [data-testid="stExpander"] {
-        background: #00ff00 !important;
-        border: 2px solid #00cc00 !important;
-        border-radius: 12px !important;
-        box-shadow: 0 0 25px #00ff00, 0 0 50px #00ff00 !important;
-        padding: 5px !important;
-        margin-top: 10px !important;
-    }
-
-    [data-testid="stExpander"] .streamlit-expanderHeader {
+    /* Judul expander (summary) - biarkan hitam menyala */
+    [data-testid="stExpander"] summary {
         color: #000000 !important;
-        font-weight: 900 !important;
+        text-shadow:
+            0 0 5px rgba(0, 0, 0, 0.8),
+            0 0 10px rgba(0, 255, 68, 0.5) !important;
+        font-weight: bold !important;
         font-size: 1.1em !important;
-        text-shadow: 0 0 8px rgba(0,0,0,0.5) !important;
     }
 
+    /* Semua teks di dalam expander (termasuk analisis) menjadi hitam */
+    [data-testid="stExpander"] details * {
+        color: #000000 !important;
+        text-shadow:
+            0 0 5px rgba(255, 255, 255, 0.3),
+            0 0 10px rgba(0, 255, 68, 0.4) !important;
+    }
+
+    /* Khusus untuk markdown di dalam expander agar hitam */
     [data-testid="stExpander"] .stMarkdown {
         color: #000000 !important;
-        font-weight: 600 !important;
-        text-shadow: 0 0 10px rgba(0,0,0,0.3) !important;
     }
 
 
