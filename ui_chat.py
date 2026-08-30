@@ -236,8 +236,8 @@ st.markdown(
 
     .custom-caption {
         color: #000000 !important;
-        font-weight: 333 !important;
-        font-size: 1.05em !important;
+        font-weight: 900 !important;
+        font-size: 1.5em !important;
         text-shadow: 0 0 12px rgba(255, 255, 255, 0.95) !important;
         margin-bottom: 4px !important;
     }
@@ -386,16 +386,16 @@ with st.sidebar:
         use_container_width=True
     ):
 
-        if (
-            st.session_state.messages
-            and
-            st.session_state.viewing_history_index is None
-        ):
+        # Simpan riwayat saat ini jika ada pesan
+        if st.session_state.messages:
+            if st.session_state.viewing_history_index is not None:
+                # Perbarui riwayat yang sedang dilihat
+                st.session_state.chat_history[st.session_state.viewing_history_index] = st.session_state.messages.copy()
+            else:
+                # Tambahkan sebagai riwayat baru
+                st.session_state.chat_history.append(st.session_state.messages.copy())
 
-            st.session_state.chat_history.append(
-                st.session_state.messages.copy()
-            )
-
+        # Reset ke chat baru
         st.session_state.messages = []
         st.session_state.pending_prompt = None
         st.session_state.viewing_history_index = None
@@ -445,12 +445,11 @@ with st.sidebar:
                 key=f"hist_{i}"
             ):
 
+                # Muat riwayat ke sesi saat ini
                 st.session_state.messages = chat.copy()
-
                 st.session_state.viewing_history_index = (
                     len(st.session_state.chat_history) - i
                 )
-
                 st.session_state.pending_prompt = None
 
                 st.rerun()
@@ -552,7 +551,6 @@ with chat_panel:
                     avatar="👤"
                 ):
 
-                    # ---- MODIFIKASI: gunakan custom class ----
                     st.markdown(
                         f'<div class="custom-caption">Anda • {time}</div>',
                         unsafe_allow_html=True
@@ -573,7 +571,6 @@ with chat_panel:
                     avatar="⚖️"
                 ):
 
-                    # ---- MODIFIKASI: gunakan custom class ----
                     st.markdown(
                         f'<div class="custom-caption">Chatbot Suhardi • {time}</div>',
                         unsafe_allow_html=True
@@ -633,176 +630,182 @@ with chat_panel:
 
 
 # ============================================================
-# INPUT CHAT
+# NOTIFIKASI RIWAYAT (jika sedang melihat)
 # ============================================================
 
-if st.session_state.viewing_history_index is None:
-
-    prompt = st.chat_input(
-        "💬 Tuliskan pertanyaan Anda seputar KUHP Baru..."
-    )
-
-    # ========================================================
-    # PERTANYAAN BARU
-    # ========================================================
-
-    if prompt:
-
-        tz = pytz.timezone(
-            "Asia/Jakarta"
-        )
-
-        current_time = datetime.datetime.now(
-            tz
-        ).strftime("%H:%M:%S")
-
-        # ----------------------------------------------------
-        # Simpan pertanyaan user
-        # ----------------------------------------------------
-
-        st.session_state.messages.append(
-            {
-                "role": "user",
-                "text": prompt,
-                "time": current_time
-            }
-        )
-
-        st.session_state.pending_prompt = prompt
-
-        st.rerun()
-
-    # ========================================================
-    # PROSES AGENTIC RAG
-    # ========================================================
-
-    if st.session_state.pending_prompt:
-
-        with st.spinner(
-            "🔍 Sedang menganalisis dengan Agentic RAG..."
-        ):
-
-            try:
-
-                # ------------------------------------------------
-                # Ambil seluruh percakapan sebelum pertanyaan
-                # terakhir.
-                # ------------------------------------------------
-
-                conversation_history = (
-                    st.session_state.messages[:-1].copy()
-                )
-
-                # ------------------------------------------------
-                # Format history untuk agent
-                # ------------------------------------------------
-
-                history_for_agent = [
-
-                    {
-                        "role": msg["role"],
-                        "content": msg["text"]
-                    }
-
-                    for msg in conversation_history
-                ]
-
-                # ------------------------------------------------
-                # State
-                # ------------------------------------------------
-
-                state = {
-
-                    "question":
-                        st.session_state.pending_prompt,
-
-                    "history":
-                        history_for_agent
-                }
-
-                # ------------------------------------------------
-                # Jalankan graph
-                # ------------------------------------------------
-
-                result = app.runnable_graph.invoke(
-                    state
-                )
-
-                # ------------------------------------------------
-                # Ambil jawaban
-                # ------------------------------------------------
-
-                answer = result.get(
-                    "answer",
-                    "Tidak ada jawaban ditemukan."
-                )
-
-                reasoning = result.get(
-                    "reasoning",
-                    ""
-                )
-
-                # ------------------------------------------------
-                # Simpan jawaban
-                # ------------------------------------------------
-
-                if reasoning:
-
-                    response_text = (
-                        f"{answer}\n\n"
-                        f"🧠 **Analisis:**\n"
-                        f"{reasoning}"
-                    )
-
-                else:
-
-                    response_text = str(
-                        answer
-                    )
-
-            except Exception as e:
-
-                response_text = (
-                    "⚠️ Terjadi kesalahan:\n\n"
-                    f"{str(e)}"
-                )
-
-        # ========================================================
-        # WAKTU RESPONSE
-        # ========================================================
-
-        tz = pytz.timezone(
-            "Asia/Jakarta"
-        )
-
-        current_time = datetime.datetime.now(
-            tz
-        ).strftime("%H:%M:%S")
-
-        # ========================================================
-        # SIMPAN RESPONSE
-        # ========================================================
-
-        st.session_state.messages.append(
-            {
-                "role": "assistant",
-                "text": response_text,
-                "time": current_time
-            }
-        )
-
-        st.session_state.pending_prompt = None
-
-        st.rerun()
-
-
-# ============================================================
-# SAAT MELIHAT HISTORY
-# ============================================================
-
-else:
-
+if st.session_state.viewing_history_index is not None:
     st.info(
         "🔒 Anda sedang melihat riwayat chat lama. "
+        "Anda dapat melanjutkan percakapan di bawah ini. "
         "Klik 'MULAI CHAT BARU' untuk memulai percakapan baru."
     )
+
+
+# ============================================================
+# INPUT CHAT & PROSES RAG
+# ============================================================
+
+prompt = st.chat_input(
+    "💬 Tuliskan pertanyaan Anda seputar KUHP Baru..."
+)
+
+# ============================================================
+# PERTANYAAN BARU
+# ============================================================
+
+if prompt:
+
+    tz = pytz.timezone(
+        "Asia/Jakarta"
+    )
+
+    current_time = datetime.datetime.now(
+        tz
+    ).strftime("%H:%M:%S")
+
+    # ----------------------------------------------------
+    # Simpan pertanyaan user
+    # ----------------------------------------------------
+
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "text": prompt,
+            "time": current_time
+        }
+    )
+
+    st.session_state.pending_prompt = prompt
+
+    st.rerun()
+
+
+# ============================================================
+# PROSES AGENTIC RAG
+# ============================================================
+
+if st.session_state.pending_prompt:
+
+    with st.spinner(
+        "🔍 Sedang menganalisis dengan Agentic RAG..."
+    ):
+
+        try:
+
+            # ------------------------------------------------
+            # Ambil seluruh percakapan sebelum pertanyaan
+            # terakhir.
+            # ------------------------------------------------
+
+            conversation_history = (
+                st.session_state.messages[:-1].copy()
+            )
+
+            # ------------------------------------------------
+            # Format history untuk agent
+            # ------------------------------------------------
+
+            history_for_agent = [
+
+                {
+                    "role": msg["role"],
+                    "content": msg["text"]
+                }
+
+                for msg in conversation_history
+            ]
+
+            # ------------------------------------------------
+            # State
+            # ------------------------------------------------
+
+            state = {
+
+                "question":
+                    st.session_state.pending_prompt,
+
+                "history":
+                    history_for_agent
+            }
+
+            # ------------------------------------------------
+            # Jalankan graph
+            # ------------------------------------------------
+
+            result = app.runnable_graph.invoke(
+                state
+            )
+
+            # ------------------------------------------------
+            # Ambil jawaban
+            # ------------------------------------------------
+
+            answer = result.get(
+                "answer",
+                "Tidak ada jawaban ditemukan."
+            )
+
+            reasoning = result.get(
+                "reasoning",
+                ""
+            )
+
+            # ------------------------------------------------
+            # Simpan jawaban
+            # ------------------------------------------------
+
+            if reasoning:
+
+                response_text = (
+                    f"{answer}\n\n"
+                    f"🧠 **Analisis:**\n"
+                    f"{reasoning}"
+                )
+
+            else:
+
+                response_text = str(
+                    answer
+                )
+
+        except Exception as e:
+
+            response_text = (
+                "⚠️ Terjadi kesalahan:\n\n"
+                f"{str(e)}"
+            )
+
+    # ========================================================
+    # WAKTU RESPONSE
+    # ========================================================
+
+    tz = pytz.timezone(
+        "Asia/Jakarta"
+    )
+
+    current_time = datetime.datetime.now(
+        tz
+    ).strftime("%H:%M:%S")
+
+    # ========================================================
+    # SIMPAN RESPONSE
+    # ========================================================
+
+    st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "text": response_text,
+            "time": current_time
+        }
+    )
+
+    # ========================================================
+    # PERBARUI RIWAYAT jika sedang melihat
+    # ========================================================
+
+    if st.session_state.viewing_history_index is not None:
+        st.session_state.chat_history[st.session_state.viewing_history_index] = st.session_state.messages.copy()
+
+    st.session_state.pending_prompt = None
+
+    st.rerun()
