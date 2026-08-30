@@ -809,7 +809,6 @@ except Exception:
 
 st.markdown(
     textwrap.dedent(
-        """
         <div class="header-box">
 
             <div class="main-title">
@@ -828,7 +827,6 @@ st.markdown(
             </p>
 
         </div>
-        """
     ),
     unsafe_allow_html=True
 )
