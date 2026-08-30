@@ -383,14 +383,11 @@ with st.sidebar:
 # ============================================================
 # HEADER UTAMA
 # ============================================================
-#
-# PENTING:
-# Tidak menggunakan HTML untuk judul/subjudul.
-# Logo dan teks dibuat menggunakan Streamlit native.
+# Logo diperbesar dan rasio kolom disesuaikan
 # ============================================================
 
 logo_col, text_col = st.columns(
-    [1.05, 3.95],
+    [1.5, 3.5],  # ubah rasio agar logo lebih lebar
     vertical_alignment="center"
 )
 
@@ -405,7 +402,7 @@ with logo_col:
 
         st.image(
             "logo.png",
-            width=270
+            width=400  # diperbesar dari 270 menjadi 400
         )
 
     except Exception:
