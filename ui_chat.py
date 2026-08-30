@@ -197,6 +197,23 @@ st.markdown(
 
 
     /* ========================================================
+       CHAT MESSAGE TEXT COLOR - AGAR PUTIH TERLIHAT
+    ======================================================== */
+
+    [data-testid="stChatMessage"] {
+        color: #ffffff !important;
+    }
+
+    [data-testid="stChatMessage"] p,
+    [data-testid="stChatMessage"] div,
+    [data-testid="stChatMessage"] span,
+    [data-testid="stChatMessage"] strong,
+    [data-testid="stChatMessage"] em {
+        color: #ffffff !important;
+    }
+
+
+    /* ========================================================
        NATIVE STREAMLIT CHAT MESSAGE
     ======================================================== */
 
