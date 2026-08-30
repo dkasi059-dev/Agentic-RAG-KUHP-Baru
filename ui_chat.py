@@ -383,7 +383,7 @@ with st.sidebar:
 # ============================================================
 # HEADER UTAMA
 # ============================================================
-# Logo diperbesar, teks di kolom kanan dibuat rata tengah
+# Logo diperbesar, teks di kolom kanan dibuat rata tengah dan berwarna putih
 # ============================================================
 
 logo_col, text_col = st.columns(
@@ -414,14 +414,14 @@ with logo_col:
 
 
 # ============================================================
-# TEKS DI SAMPING LOGO (rata tengah)
+# TEKS DI SAMPING LOGO (rata tengah & warna putih)
 # ============================================================
 
 with text_col:
 
     st.markdown(
         """
-        <div style="text-align: center;">
+        <div style="text-align: center; color: #ffffff;">
             <h1>Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru</h1>
             <h3>Agentic RAG with LangChain</h3>
             <p>Tanyakan apa pun seputar <strong>UU No. 1 Tahun 2023 tentang KUHP</strong>.</p>
