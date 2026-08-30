@@ -221,24 +221,27 @@ st.markdown(
 
 
     /* ========================================================
-       CHAT MESSAGE TEXT COLOR - PUTIH
+       CHAT MESSAGE TEXT COLOR - PUTIH (kecuali caption)
     ======================================================== */
 
+    /* Semua teks di dalam chat message menjadi putih (default) */
     [data-testid="stChatMessage"] * {
         color: #ffffff !important;
     }
 
-
     /* ========================================================
        CAPTION (Anda • waktu & Chatbot Suhardi • waktu)
        HITAM TERANG, BOLD, UKURAN LEBIH BESAR
+       Selector lebih spesifik untuk override
     ======================================================== */
 
-    [data-testid="stChatMessage"] .stCaption {
+    [data-testid="stChatMessage"] .stCaption,
+    [data-testid="stChatMessage"] small,
+    [data-testid="stChatMessage"] .caption {
         color: #000000 !important;
         font-weight: 800 !important;
         font-size: 1.2em !important;
-        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8) !important;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.9) !important;
     }
 
 
