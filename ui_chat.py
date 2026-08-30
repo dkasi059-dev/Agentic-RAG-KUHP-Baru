@@ -329,7 +329,7 @@ with st.sidebar:
     # --------------------------------------------------------
 
     if st.button(
-        "MULAI CHAT BARU",
+        "MULAI OBROLAN BARU",
         use_container_width=True
     ):
 
@@ -396,7 +396,7 @@ with st.sidebar:
         st.info(
             'Belum ada riwayat pertanyaan tersimpan. '
             'Riwayat akan tersimpan setelah Anda menekan '
-            '"MULAI CHAT BARU".'
+            '"MULAI OBROLAN BARU".'
         )
 
 # ============================================================
@@ -433,9 +433,8 @@ with text_col:
         """
         <div style="text-align: center; color: #ffffff;">
             <h1>Asisten Cerdas Kitab Undang-Undang Hukum Pidana (KUHP) Baru</h1>
-            <h3>Agentic RAG with LangChain</h3>
-            <p>Tanyakan apa pun seputar <strong>UU No. 1 Tahun 2023 tentang KUHP</strong>.</p>
-            <p>Chatbot ini dibuat oleh <strong>SUHARDI</strong>.</p>
+            <p>Tanyakan apa pun seputar <strong>Kitab Undang-Undang Hukum Pidana (KUHP)</strong>.</p>
+            <p>Chatbot ini dibuat oleh <strong>EquiLawForJustice</strong>.</p>
         </div>
         """,
         unsafe_allow_html=True
@@ -473,7 +472,7 @@ with chat_panel:
                     avatar="👤"
                 ):
                     st.markdown(
-                        f'<div class="custom-caption">Anda • {time}</div>',
+                        f'<div class="custom-caption">Pertanyaan Anda • {time}</div>',
                         unsafe_allow_html=True
                     )
                     st.markdown(text)
@@ -488,7 +487,7 @@ with chat_panel:
                     avatar="⚖️"
                 ):
                     st.markdown(
-                        f'<div class="custom-caption">Chatbot Suhardi • {time}</div>',
+                        f'<div class="custom-caption">Jawaban EquiLawForJustice • {time}</div>',
                         unsafe_allow_html=True
                     )
 
@@ -513,7 +512,7 @@ with chat_panel:
                     # -----------------------------------------
                     
                     analysis_marker = (
-                        "🧠 **Analisis:**"
+                        "🧠 **Penjelasan Proses Analisis:**"
                     )
 
                     if analysis_marker in clean_text:
@@ -543,7 +542,7 @@ with chat_panel:
 # ============================================================
 
 prompt = st.chat_input(
-    "💬 Tuliskan pertanyaan Anda seputar KUHP Baru..."
+    "💬 Tuliskan pertanyaan Anda seputar KUHP Baru pada kolom ini..."
 )
 
 # ============================================================
@@ -575,7 +574,7 @@ if prompt:
 # ============================================================
 
 if st.session_state.pending_prompt:
-    with st.spinner("🔍 Sedang menganalisis dengan Agentic RAG..."):
+    with st.spinner("🔍 Sedang menganalisis pertanyaan Anda dengan Agentic-RAG..."):
         try:
             # ------------------------------------------------
             # Ambil seluruh percakapan sebelum pertanyaan
@@ -630,7 +629,7 @@ if st.session_state.pending_prompt:
             if reasoning:
                 response_text = (
                     f"{answer}\n\n"
-                    f"🧠 **Analisis:**\n"
+                    f"🧠 **Penjelasan Proses Analisis:**\n"
                     f"{reasoning}"
                 )
             else:
@@ -683,7 +682,7 @@ if st.session_state.viewing_history_index is not None:
     st.info(
         "🔒 Anda sedang melihat riwayat chat lama. "
         "Anda dapat melanjutkan percakapan di bawah ini. "
-        "Klik 'MULAI CHAT BARU' untuk memulai percakapan baru."
+        "Klik 'MULAI OBROLAN BARU' untuk memulai percakapan baru."
     )
 
 # ============================================================
