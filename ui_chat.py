@@ -402,7 +402,7 @@ with logo_col:
 
         st.image(
             "logo.png",
-            width=400  # diperbesar dari 270
+            width=600  # diperbesar dari 270
         )
 
     except Exception:
