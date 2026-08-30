@@ -17,7 +17,7 @@ st.set_page_config(
 
 
 # ============================================================
-# CSS (menggunakan raw string agar aman)
+# CSS (raw string agar aman)
 # ============================================================
 
 st.markdown(
@@ -201,7 +201,7 @@ st.markdown(
     ======================================================== */
 
     [data-testid="stChatMessage"] {
-        background: linear-gradient(145deg, #f00226, #cc0033) !important;
+        background: linear-gradient(145deg, #ff0040, #cc0033) !important;
         border: 1px solid rgba(255, 0, 64, 0.7) !important;
         box-shadow:
             0 0 25px rgba(255, 0, 64, 0.6),
@@ -226,6 +226,21 @@ st.markdown(
 
     [data-testid="stChatMessage"] * {
         color: #ffffff !important;
+    }
+
+
+    /* ========================================================
+       ANALISIS - HIJAU TERANG MENYALA (di dalam expander)
+    ======================================================== */
+
+    [data-testid="stExpander"] .stMarkdown {
+        color: #00ff00 !important;
+        text-shadow:
+            0 0 5px #00ff00,
+            0 0 10px #00ff00,
+            0 0 20px #00ff00,
+            0 0 40px #00ff00 !important;
+        font-weight: 500;
     }
 
 
@@ -567,6 +582,7 @@ with chat_panel:
                             expanded=False
                         ):
 
+                            # teks analisis akan otomatis berwarna hijau terang menyala
                             st.markdown(
                                 reasoning_part.strip()
                             )
