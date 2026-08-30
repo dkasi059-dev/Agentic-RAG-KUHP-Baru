@@ -2,678 +2,535 @@ import streamlit as st
 import datetime
 import pytz
 import app
-import textwrap
 import html
 
-
-# ============================================================
+# ================================
 # KONFIGURASI HALAMAN
-# ============================================================
-
+# ================================
 st.set_page_config(
     page_title="Chatbot Pintar KUHP Baru",
     page_icon="⚖️",
     layout="wide",
 )
 
-
-# ============================================================
+# ================================
 # CSS
-# ============================================================
-
+# ================================
 st.markdown(
-    textwrap.dedent(
-        """
-        <style>
+"""
+<style>
 
-        /* ====================================================
-           PALET WARNA
-           Navy      : #172033
-           Navy Deep : #0D1424
-           Ivory     : #F7F4EC
-           Champagne : #C8A96B
-           Slate     : #596579
-           White     : #FFFFFF
-        ==================================================== */
+/* =========================================================
+   GLOBAL
+========================================================= */
 
+.stApp {
+    background:
+        radial-gradient(
+            circle at 50% -15%,
+            rgba(148, 163, 184, 0.16) 0%,
+            rgba(148, 163, 184, 0) 38%
+        ),
+        linear-gradient(
+            145deg,
+            #0b1220 0%,
+            #111827 48%,
+            #1e293b 100%
+        );
 
-        /* ====================================================
-           GLOBAL
-        ==================================================== */
+    color: #f8fafc !important;
+    font-family: "Segoe UI", "Inter", Arial, sans-serif;
+}
 
-        .stApp {
 
-            background:
-                radial-gradient(
-                    circle at 50% -15%,
-                    rgba(200, 169, 107, 0.13) 0%,
-                    rgba(200, 169, 107, 0.00) 34%
-                ),
-                linear-gradient(
-                    145deg,
-                    #0d1424 0%,
-                    #172033 48%,
-                    #202c42 100%
-                );
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
 
-            color: #f7f4ec !important;
+.block-container {
+    max-width: 1280px;
+    padding-top: 1.6rem;
+    padding-bottom: 5rem;
+}
 
-            font-family:
-                "Segoe UI",
-                "Inter",
-                Arial,
-                sans-serif;
-        }
 
+/* =========================================================
+   LOGO
+========================================================= */
 
-        /* ====================================================
-           HILANGKAN BEBERAPA ELEMEN DEFAULT STREAMLIT
-        ==================================================== */
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4px;
+    margin-bottom: 20px;
+}
 
-        #MainMenu {
-            visibility: hidden;
-        }
+.logo-wrapper img {
+    width: 270px;
+    max-width: 65vw;
 
-        footer {
-            visibility: hidden;
-        }
+    border-radius: 24px;
 
-        header {
-            background: transparent !important;
-        }
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.42),
+        0 0 0 1px rgba(255, 255, 255, 0.08);
 
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
 
-        /* ====================================================
-           MAIN CONTAINER
-        ==================================================== */
+.logo-wrapper img:hover {
+    transform: scale(1.02);
 
-        .block-container {
+    box-shadow:
+        0 24px 55px rgba(0, 0, 0, 0.50),
+        0 0 0 1px rgba(255, 255, 255, 0.14);
+}
 
-            max-width: 1220px;
 
-            padding-top: 1.5rem;
-            padding-bottom: 5rem;
-            padding-left: 2rem;
-            padding-right: 2rem;
-        }
+/* =========================================================
+   HEADER
+========================================================= */
 
+.header-box {
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
 
-        /* ====================================================
-           LOGO
-        ==================================================== */
+    padding: 8px 30px 24px 30px;
 
-        .logo-wrapper {
+    text-align: center;
 
-            display: flex;
+    border-bottom:
+        1px solid rgba(148, 163, 184, 0.25);
+}
 
-            justify-content: center;
-            align-items: center;
+.main-title {
+    text-align: center;
 
-            margin-top: 0;
-            margin-bottom: 24px;
-        }
+    font-size: clamp(25px, 3vw, 38px);
+    line-height: 1.25;
 
+    font-weight: 750;
 
-        .logo-wrapper img {
+    color: #f8fafc !important;
 
-            width: 250px !important;
+    margin: 0 auto 12px auto;
 
-            max-width: 65vw;
+    letter-spacing: -0.5px;
 
-            height: auto;
+    text-shadow:
+        0 3px 14px rgba(0, 0, 0, 0.38);
+}
 
-            border-radius: 26px;
+p.subtitle {
+    text-align: center;
 
-            filter:
-                drop-shadow(
-                    0 18px 35px
-                    rgba(0, 0, 0, 0.42)
-                )
-                drop-shadow(
-                    0 0 20px
-                    rgba(200, 169, 107, 0.15)
-                );
+    font-size: 15.5px;
+    line-height: 1.8;
 
-            transition:
-                transform 0.3s ease,
-                filter 0.3s ease;
-        }
+    color: #cbd5e1 !important;
 
+    margin: 0 auto;
 
-        .logo-wrapper img:hover {
+    max-width: 820px;
+}
 
-            transform: scale(1.025);
+p.subtitle b {
+    color: #d6a58d !important;
+}
 
-            filter:
-                drop-shadow(
-                    0 22px 42px
-                    rgba(0, 0, 0, 0.48)
-                )
-                drop-shadow(
-                    0 0 26px
-                    rgba(200, 169, 107, 0.24)
-                );
-        }
 
+/* =========================================================
+   CHAT AREA
+========================================================= */
 
-        /* ====================================================
-           HEADER
-        ==================================================== */
+.chat-container {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.025)
+        );
 
-        .header-box {
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
 
-            max-width: 980px;
+    border-radius: 24px;
 
-            margin:
-                0 auto 30px auto;
+    padding: 26px;
 
-            padding:
-                0 25px 25px 25px;
+    min-height: 100px;
 
-            text-align: center;
+    max-height: 70vh;
 
-            border-bottom:
-                1px solid
-                rgba(200, 169, 107, 0.28);
-        }
+    overflow-y: auto;
 
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
 
-        .main-title {
+    backdrop-filter: blur(12px);
+}
 
-            text-align: center;
 
-            font-size:
-                clamp(
-                    25px,
-                    3vw,
-                    38px
-                );
+/* =========================================================
+   USER CHAT BUBBLE
+========================================================= */
 
-            line-height: 1.25;
+.chat-bubble-user {
+    background:
+        linear-gradient(
+            135deg,
+            #e2e8f0 0%,
+            #cbd5e1 100%
+        );
 
-            font-weight: 750;
+    color: #172033;
 
-            color:
-                #f7f4ec !important;
+    padding: 15px 19px;
 
-            margin:
-                0 auto 12px auto;
+    border-radius:
+        19px
+        19px
+        6px
+        19px;
 
-            letter-spacing:
-                -0.45px;
+    margin:
+        4px
+        0
+        18px
+        auto;
 
-            text-shadow:
-                0 3px 15px
-                rgba(0, 0, 0, 0.30);
-        }
+    max-width: 78%;
 
+    line-height: 1.7;
 
-        .title-icon {
+    border:
+        1px solid rgba(255, 255, 255, 0.55);
 
-            color:
-                #c8a96b;
+    box-shadow:
+        0 7px 20px rgba(0, 0, 0, 0.20);
+}
 
-            margin-right:
-                8px;
-        }
+.chat-bubble-user .chat-label {
+    color: #334155;
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: 0.2px;
+}
 
+.chat-bubble-user .chat-text {
+    margin-top: 5px;
+}
 
-        p.subtitle {
 
-            text-align: center;
+/* =========================================================
+   ASSISTANT CHAT BUBBLE
+========================================================= */
 
-            font-size: 15.5px;
+.chat-bubble-assistant {
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f8fafc 100%
+        );
 
-            line-height: 1.75;
+    color: #1e293b;
 
-            color:
-                #dce2ea !important;
+    padding: 16px 20px;
 
-            margin:
-                0 auto;
+    border-radius:
+        19px
+        19px
+        19px
+        6px;
 
-            max-width: 800px;
-        }
+    margin:
+        4px
+        auto
+        18px
+        0;
 
+    max-width: 84%;
 
-        p.subtitle b {
+    line-height: 1.75;
 
-            color:
-                #d8bd82 !important;
+    border-left:
+        4px solid #7f1d1d;
 
-            font-weight:
-                700;
-        }
+    box-shadow:
+        0 8px 22px rgba(0, 0, 0, 0.20);
+}
 
+.chat-bubble-assistant .chat-label {
+    color: #7f1d1d;
+    font-size: 13px;
+    font-weight: 750;
+    letter-spacing: 0.2px;
+}
 
-        /* ====================================================
-           CHAT CONTAINER
-        ==================================================== */
+.chat-bubble-assistant .chat-text {
+    margin-top: 5px;
+}
 
-        .chat-container {
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255, 255, 255, 0.075),
-                    rgba(255, 255, 255, 0.035)
-                );
+/* =========================================================
+   ANALYSIS BOX
+========================================================= */
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.10);
+.reasoning-box {
+    margin-top: 14px;
 
-            border-radius:
-                24px;
+    padding: 12px 15px;
 
-            padding:
-                26px;
+    background: #f1f5f9;
 
-            max-height:
-                70vh;
+    border-left:
+        3px solid #64748b;
 
-            overflow-y:
-                auto;
+    border-radius: 10px;
 
-            box-shadow:
-                0 20px 50px
-                rgba(0, 0, 0, 0.24),
+    color: #475569;
 
-                inset 0 1px 0
-                rgba(255, 255, 255, 0.06);
+    font-size: 13.5px;
 
-            backdrop-filter:
-                blur(10px);
-        }
+    line-height: 1.65;
+}
 
+.reasoning-title {
+    font-weight: 750;
+    color: #334155;
+}
 
-        /* ====================================================
-           USER CHAT BUBBLE
-        ==================================================== */
 
-        .chat-bubble-user {
+/* =========================================================
+   SIDEBAR
+========================================================= */
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #e9edf3 0%,
-                    #d9e0e9 100%
-                );
+[data-testid="stSidebar"] {
+    background:
+        linear-gradient(
+            165deg,
+            #f8fafc 0%,
+            #e2e8f0 100%
+        );
 
-            color:
-                #182234;
+    color: #1e293b;
 
-            padding:
-                15px 19px;
+    border-right:
+        1px solid rgba(15, 23, 42, 0.10);
 
-            border-radius:
-                19px
-                19px
-                6px
-                19px;
+    box-shadow:
+        8px 0 28px rgba(0, 0, 0, 0.14);
+}
 
-            margin:
-                4px
-                0
-                18px
-                auto;
+[data-testid="stSidebar"] * {
+    color: #1e293b;
+}
 
-            max-width:
-                78%;
 
-            line-height:
-                1.68;
+/* =========================================================
+   SIDEBAR HEADER
+========================================================= */
 
-            border:
-                1px solid
-                rgba(255, 255, 255, 0.75);
+.sidebar-header {
+    text-align: center;
 
-            box-shadow:
-                0 7px 20px
-                rgba(0, 0, 0, 0.18);
-        }
+    font-weight: 800;
 
+    font-size: 15px;
 
-        .chat-bubble-user b {
+    letter-spacing: 0.8px;
 
-            color:
-                #24334c;
-        }
+    margin:
+        26px
+        0
+        16px
+        0;
 
+    color: #172033;
 
-        /* ====================================================
-           ASSISTANT CHAT BUBBLE
-        ==================================================== */
+    padding-bottom: 12px;
 
-        .chat-bubble-assistant {
+    border-bottom:
+        1px solid rgba(71, 85, 105, 0.22);
+}
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffffff 0%,
-                    #f5f3ee 100%
-                );
 
-            color:
-                #202b3d;
+/* =========================================================
+   SIDEBAR BUTTON
+========================================================= */
 
-            padding:
-                17px 21px;
+[data-testid="stSidebar"] button {
 
-            border-radius:
-                19px
-                19px
-                19px
-                6px;
+    background:
+        #ffffff !important;
 
-            margin:
-                4px
-                auto
-                18px
-                0;
+    color:
+        #7f1d1d !important;
 
-            max-width:
-                84%;
+    font-weight:
+        700 !important;
 
-            line-height:
-                1.72;
+    border-radius:
+        12px !important;
 
-            border-left:
-                4px solid
-                #c8a96b;
+    border:
+        1px solid rgba(127, 29, 29, 0.28) !important;
 
-            box-shadow:
-                0 7px 20px
-                rgba(0, 0, 0, 0.18);
-        }
+    box-shadow:
+        0 4px 12px rgba(15, 23, 42, 0.08);
 
+    transition:
+        all 0.22s ease !important;
+}
 
-        .chat-bubble-assistant b {
+[data-testid="stSidebar"] button:hover {
 
-            color:
-                #826b3e;
-        }
+    background:
+        #7f1d1d !important;
 
+    color:
+        #ffffff !important;
 
-        .analysis-label {
+    border:
+        1px solid #7f1d1d !important;
 
-            color:
-                #826b3e;
+    transform:
+        translateY(-1px);
 
-            font-weight:
-                700;
-        }
+    box-shadow:
+        0 7px 18px rgba(127, 29, 29, 0.22);
+}
 
 
-        /* ====================================================
-           SIDEBAR
-        ==================================================== */
+/* =========================================================
+   SIDEBAR INFO
+========================================================= */
 
-        [data-testid="stSidebar"] {
+[data-testid="stSidebar"] [data-testid="stAlert"] {
 
-            background:
-                linear-gradient(
-                    170deg,
-                    #f7f4ec 0%,
-                    #ebe7dc 55%,
-                    #ded9cb 100%
-                );
+    background:
+        rgba(255, 255, 255, 0.72);
 
-            color:
-                #172033;
+    border:
+        1px solid rgba(71, 85, 105, 0.16);
 
-            border-right:
-                1px solid
-                rgba(23, 32, 51, 0.12);
+    border-radius:
+        13px;
 
-            box-shadow:
-                8px 0 30px
-                rgba(0, 0, 0, 0.16);
-        }
+    color:
+        #475569;
+}
 
 
-        [data-testid="stSidebar"] * {
+/* =========================================================
+   CHAT INPUT
+========================================================= */
 
-            color:
-                #172033;
-        }
+[data-testid="stChatInput"] {
+    border-radius: 17px !important;
+}
 
+[data-testid="stChatInput"] > div {
+    background: #f8fafc !important;
 
-        /* ====================================================
-           SIDEBAR HEADER
-        ==================================================== */
+    border:
+        1px solid rgba(148, 163, 184, 0.35) !important;
 
-        .sidebar-header {
+    border-radius: 17px !important;
 
-            text-align:
-                center;
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.16) !important;
+}
 
-            font-weight:
-                800;
+[data-testid="stChatInput"] textarea {
+    font-size: 15px !important;
+    color: #1e293b !important;
+}
 
-            font-size:
-                15.5px;
 
-            letter-spacing:
-                0.75px;
+/* =========================================================
+   ALERT / SPINNER
+========================================================= */
 
-            margin:
-                24px 0 14px 0;
+[data-testid="stAlert"] {
+    border-radius: 12px;
+}
 
-            color:
-                #172033 !important;
 
-            padding-bottom:
-                12px;
+/* =========================================================
+   SCROLLBAR
+========================================================= */
 
-            border-bottom:
-                1px solid
-                rgba(23, 32, 51, 0.18);
-        }
+::-webkit-scrollbar {
+    width: 7px;
+}
 
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+}
 
-        /* ====================================================
-           SIDEBAR EMPTY INFO
-        ==================================================== */
+::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.40);
+    border-radius: 10px;
+}
 
-        [data-testid="stSidebar"] [data-testid="stAlert"] {
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.60);
+}
 
-            background:
-                rgba(255, 255, 255, 0.52) !important;
 
-            border:
-                1px solid
-                rgba(23, 32, 51, 0.10) !important;
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-            border-radius:
-                15px !important;
+@media (max-width: 768px) {
 
-            color:
-                #344054 !important;
-        }
+    .block-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 
+    .logo-wrapper img {
+        width: 210px;
+    }
 
-        /* ====================================================
-           SIDEBAR BUTTON
-        ==================================================== */
+    .header-box {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
 
-        [data-testid="stSidebar"] button {
+    .main-title {
+        font-size: 25px;
+    }
 
-            background:
-                #172033 !important;
+    p.subtitle {
+        font-size: 14px;
+    }
 
-            color:
-                #f7f4ec !important;
+    .chat-container {
+        padding: 14px;
+    }
 
-            font-weight:
-                700 !important;
+    .chat-bubble-user,
+    .chat-bubble-assistant {
+        max-width: 94%;
+    }
+}
 
-            border-radius:
-                12px !important;
-
-            border:
-                1px solid
-                #172033 !important;
-
-            box-shadow:
-                0 5px 14px
-                rgba(23, 32, 51, 0.18);
-
-            transition:
-                all 0.22s ease !important;
-        }
-
-
-        [data-testid="stSidebar"] button:hover {
-
-            background:
-                #c8a96b !important;
-
-            color:
-                #172033 !important;
-
-            border:
-                1px solid
-                #c8a96b !important;
-
-            transform:
-                translateY(-1px);
-
-            box-shadow:
-                0 8px 20px
-                rgba(23, 32, 51, 0.20);
-        }
-
-
-        /* ====================================================
-           CHAT INPUT
-        ==================================================== */
-
-        [data-testid="stChatInput"] {
-
-            border-radius:
-                17px !important;
-
-            background:
-                rgba(255, 255, 255, 0.97) !important;
-
-            border:
-                1px solid
-                rgba(23, 32, 51, 0.13) !important;
-
-            box-shadow:
-                0 8px 24px
-                rgba(0, 0, 0, 0.14);
-        }
-
-
-        [data-testid="stChatInput"] textarea {
-
-            font-size:
-                15px !important;
-
-            color:
-                #172033 !important;
-        }
-
-
-        [data-testid="stChatInput"] textarea::placeholder {
-
-            color:
-                #7a8494 !important;
-
-            opacity:
-                1 !important;
-        }
-
-
-        /* ====================================================
-           STREAMLIT INFO / SPINNER
-        ==================================================== */
-
-        [data-testid="stAlert"] {
-
-            border-radius:
-                13px;
-        }
-
-
-        /* ====================================================
-           RESPONSIVE
-        ==================================================== */
-
-        @media (max-width: 768px) {
-
-            .block-container {
-
-                padding-left:
-                    1rem;
-
-                padding-right:
-                    1rem;
-
-                padding-top:
-                    1rem;
-            }
-
-
-            .logo-wrapper img {
-
-                width:
-                    190px !important;
-            }
-
-
-            .header-box {
-
-                padding-left:
-                    5px;
-
-                padding-right:
-                    5px;
-            }
-
-
-            .main-title {
-
-                font-size:
-                    25px;
-            }
-
-
-            p.subtitle {
-
-                font-size:
-                    14px;
-            }
-
-
-            .chat-container {
-
-                padding:
-                    14px;
-            }
-
-
-            .chat-bubble-user,
-            .chat-bubble-assistant {
-
-                max-width:
-                    94%;
-            }
-        }
-
-        </style>
-        """
-    ),
-    unsafe_allow_html=True,
+</style>
+""",
+unsafe_allow_html=True
 )
 
 
-# ============================================================
+# ================================
 # SESSION STATE
-# ============================================================
-
+# ================================
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -687,10 +544,9 @@ if "viewing_history_index" not in st.session_state:
     st.session_state.viewing_history_index = None
 
 
-# ============================================================
+# ================================
 # SIDEBAR
-# ============================================================
-
+# ================================
 with st.sidebar:
 
     if st.button(
@@ -708,22 +564,18 @@ with st.sidebar:
             )
 
         st.session_state.messages = []
-
         st.session_state.pending_prompt = None
-
         st.session_state.viewing_history_index = None
 
         st.rerun()
 
 
     st.markdown(
-        textwrap.dedent(
-            """
-            <div class="sidebar-header">
-                RIWAYAT PERTANYAAN ANDA
-            </div>
-            """
-        ),
+        """
+<div class="sidebar-header">
+RIWAYAT PERTANYAAN ANDA
+</div>
+""",
         unsafe_allow_html=True
     )
 
@@ -744,13 +596,11 @@ with st.sidebar:
                 "(tanpa isi)"
             )
 
-
             short_preview = (
                 first_msg[:60] + "..."
                 if len(first_msg) > 60
                 else first_msg
             )
-
 
             if st.button(
                 short_preview,
@@ -768,7 +618,6 @@ with st.sidebar:
 
                 st.rerun()
 
-
     else:
 
         st.info(
@@ -778,10 +627,9 @@ with st.sidebar:
         )
 
 
-# ============================================================
+# ================================
 # LOGO
-# ============================================================
-
+# ================================
 try:
 
     st.markdown(
@@ -791,7 +639,7 @@ try:
 
     st.image(
         "logo.png",
-        width=250
+        width=270
     )
 
     st.markdown(
@@ -803,40 +651,35 @@ except Exception:
     pass
 
 
-# ============================================================
+# ================================
 # HEADER
-# ============================================================
-
+# ================================
 st.markdown(
-    textwrap.dedent(
-        <div class="header-box">
+"""
+<div class="header-box">
+    <div class="main-title">
+        ⚖️ Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru
+    </div>
 
-            <div class="main-title">
-                Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru
-            </div>
-
-            <p class="subtitle">
-                Agentic RAG with LangChain
-                <br>
-                Tanyakan apa pun seputar
-                <b>UU No. 1 Tahun 2023 tentang KUHP</b>.
-                <br>
-                Chatbot ini dibuat oleh
-                <b>SUHARDI</b>.
-            </p>
-
-        </div>
-    ),
-    unsafe_allow_html=True
+    <p class="subtitle">
+        Agentic RAG with LangChain
+        <br>
+        Tanyakan apa pun seputar
+        <b>UU No. 1 Tahun 2023 tentang KUHP</b>.
+        <br>
+        Chatbot ini dibuat oleh
+        <b>SUHARDI</b>.
+    </p>
+</div>
+""",
+unsafe_allow_html=True
 )
 
 
-# ============================================================
+# ================================
 # AREA CHAT
-# ============================================================
-
+# ================================
 chat_box = st.container()
-
 
 with chat_box:
 
@@ -849,15 +692,13 @@ with chat_box:
     for msg in st.session_state.messages:
 
         role = msg["role"]
-
         text = msg["text"]
-
         time = msg["time"]
 
 
-        # ====================================================
-        # USER
-        # ====================================================
+        # =====================================================
+        # USER MESSAGE
+        # =====================================================
 
         if role == "user":
 
@@ -868,47 +709,104 @@ with chat_box:
                 "<br>"
             )
 
-
             st.markdown(
-                textwrap.dedent(
-                    f"""
-                    <div class="chat-bubble-user">
-                        <b>Anda ({html.escape(str(time))})</b>
-                        <br>
-                        {safe_text}
-                    </div>
-                    """
-                ),
+f"""
+<div class="chat-bubble-user">
+    <div class="chat-label">
+        Anda &nbsp;•&nbsp; {html.escape(str(time))}
+    </div>
+
+    <div class="chat-text">
+        {safe_text}
+    </div>
+</div>
+""",
                 unsafe_allow_html=True
             )
 
 
-        # ====================================================
-        # ASSISTANT
-        # ====================================================
+        # =====================================================
+        # ASSISTANT MESSAGE
+        # =====================================================
 
         else:
 
-            # Jawaban assistant sengaja tidak di-escape
-            # karena dapat mengandung <br>, <b>, dsb.
-            safe_answer = str(text)
+            # Pisahkan reasoning dari jawaban jika ada.
+            marker = "<br><br>🧠 <b>Analisis:</b>"
+
+            if marker in str(text):
+
+                answer_part, reasoning_part = str(text).split(
+                    marker,
+                    1
+                )
+
+                safe_answer = html.escape(
+                    answer_part
+                ).replace(
+                    "\n",
+                    "<br>"
+                )
+
+                safe_reasoning = html.escape(
+                    reasoning_part
+                ).replace(
+                    "\n",
+                    "<br>"
+                )
+
+                assistant_html = f"""
+<div class="chat-bubble-assistant">
+
+    <div class="chat-label">
+        ⚖️ Jawaban Chatbot Suhardi
+        &nbsp;•&nbsp;
+        {html.escape(str(time))}
+    </div>
+
+    <div class="chat-text">
+        {safe_answer}
+    </div>
+
+    <div class="reasoning-box">
+        <span class="reasoning-title">
+            🧠 Analisis
+        </span>
+        <br>
+        {safe_reasoning}
+    </div>
+
+</div>
+"""
+
+            else:
+
+                safe_answer = html.escape(
+                    str(text)
+                ).replace(
+                    "\n",
+                    "<br>"
+                )
+
+                assistant_html = f"""
+<div class="chat-bubble-assistant">
+
+    <div class="chat-label">
+        ⚖️ Jawaban Chatbot Suhardi
+        &nbsp;•&nbsp;
+        {html.escape(str(time))}
+    </div>
+
+    <div class="chat-text">
+        {safe_answer}
+    </div>
+
+</div>
+"""
 
 
             st.markdown(
-                textwrap.dedent(
-                    f"""
-                    <div class="chat-bubble-assistant">
-                        <b>
-                            Jawaban Chatbot Suhardi
-                            ({html.escape(str(time))})
-                        </b>
-
-                        <br>
-
-                        {safe_answer}
-                    </div>
-                    """
-                ),
+                assistant_html,
                 unsafe_allow_html=True
             )
 
@@ -919,10 +817,9 @@ with chat_box:
     )
 
 
-# ============================================================
+# ================================
 # INPUT CHAT
-# ============================================================
-
+# ================================
 if st.session_state.viewing_history_index is None:
 
     prompt = st.chat_input(
@@ -936,102 +833,86 @@ if st.session_state.viewing_history_index is None:
             "Asia/Jakarta"
         )
 
-
         current_time = datetime.datetime.now(
             tz
         ).strftime("%H:%M:%S")
 
 
-        # ----------------------------------------------------
-        # SIMPAN PERTANYAAN USER
-        # ----------------------------------------------------
+        # --------------------------------
+        # Simpan pertanyaan user
+        # --------------------------------
 
         st.session_state.messages.append({
-
-            "role":
-                "user",
-
-            "text":
-                prompt,
-
-            "time":
-                current_time
-
+            "role": "user",
+            "text": prompt,
+            "time": current_time
         })
 
 
         st.session_state.pending_prompt = prompt
 
-
         st.rerun()
 
 
-    # ========================================================
+    # ================================
     # PROSES PERTANYAAN
-    # ========================================================
-
+    # ================================
     if st.session_state.pending_prompt:
 
         with st.spinner(
-            "🔎 Sedang menganalisis dengan Agentic RAG..."
+            "🔍 Sedang menganalisis dengan Agentic RAG..."
         ):
 
             try:
 
-                # ------------------------------------------------
-                # Ambil seluruh riwayat kecuali pertanyaan terakhir
-                # ------------------------------------------------
+                # --------------------------------
+                # Ambil seluruh riwayat
+                # kecuali pertanyaan terakhir
+                # --------------------------------
 
                 conversation_history = (
                     st.session_state.messages[:-1].copy()
                 )
 
 
-                # ------------------------------------------------
-                # Konversi text -> content
-                # ------------------------------------------------
+                # --------------------------------
+                # Ubah text -> content
+                # --------------------------------
 
                 history_for_agent = [
-
                     {
-                        "role":
-                            msg["role"],
-
-                        "content":
-                            msg["text"]
+                        "role": msg["role"],
+                        "content": msg["text"]
                     }
-
                     for msg in conversation_history
                 ]
 
 
-                # ------------------------------------------------
-                # STATE UNTUK AGENT
-                # ------------------------------------------------
+                # --------------------------------
+                # State untuk Agent
+                # --------------------------------
 
                 state = {
-
                     "question":
                         st.session_state.pending_prompt,
 
                     "history":
                         history_for_agent
-
                 }
 
 
-                # ------------------------------------------------
-                # INVOKE AGENTIC RAG
-                # ------------------------------------------------
+                # --------------------------------
+                # Jalankan Agentic RAG
+                # --------------------------------
 
                 result = app.runnable_graph.invoke(
                     state
                 )
 
 
-                # ------------------------------------------------
-                # AMBIL HASIL
-                # ------------------------------------------------
+                # --------------------------------
+                # Ambil jawaban
+                # --------------------------------
 
                 answer = result.get(
                     "answer",
@@ -1045,18 +926,16 @@ if st.session_state.viewing_history_index is None:
                 )
 
 
-                # ------------------------------------------------
-                # FORMAT JAWABAN
-                # ------------------------------------------------
+                # --------------------------------
+                # Bentuk response
+                # --------------------------------
 
                 if reasoning:
 
                     response_text = (
                         f"{answer}"
                         f"<br><br>"
-                        f'<span class="analysis-label">'
-                        f"🧠 Analisis:"
-                        f"</span> "
+                        f"🧠 <b>Analisis:</b>"
                         f"{reasoning}"
                     )
 
@@ -1069,51 +948,34 @@ if st.session_state.viewing_history_index is None:
 
                 response_text = (
                     f"⚠️ Terjadi kesalahan: "
-                    f"{html.escape(str(e))}"
+                    f"{str(e)}"
                 )
 
 
-        # ========================================================
-        # WAKTU JAWABAN
-        # ========================================================
+        # ================================
+        # SIMPAN JAWABAN
+        # ================================
 
         tz = pytz.timezone(
             "Asia/Jakarta"
         )
-
 
         current_time = datetime.datetime.now(
             tz
         ).strftime("%H:%M:%S")
 
 
-        # ========================================================
-        # SIMPAN JAWABAN
-        # ========================================================
-
         st.session_state.messages.append({
-
-            "role":
-                "assistant",
-
-            "text":
-                response_text,
-
-            "time":
-                current_time
-
+            "role": "assistant",
+            "text": response_text,
+            "time": current_time
         })
 
 
         st.session_state.pending_prompt = None
 
-
         st.rerun()
 
-
-# ============================================================
-# MODE MELIHAT HISTORY
-# ============================================================
 
 else:
 
