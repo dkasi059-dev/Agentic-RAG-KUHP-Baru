@@ -4,533 +4,276 @@ import pytz
 import app
 import html
 
-# ================================
+
+# ============================================================
 # KONFIGURASI HALAMAN
-# ================================
+# ============================================================
+
 st.set_page_config(
     page_title="Chatbot Pintar KUHP Baru",
     page_icon="⚖️",
     layout="wide",
 )
 
-# ================================
+
+# ============================================================
 # CSS
-# ================================
+# ============================================================
+
 st.markdown(
-"""
-<style>
+    """
+    <style>
+
+    /* ========================================================
+       GLOBAL
+    ======================================================== */
+
+    .stApp {
+        background:
+            radial-gradient(
+                circle at 50% -15%,
+                rgba(148, 163, 184, 0.14),
+                transparent 38%
+            ),
+            linear-gradient(
+                145deg,
+                #0b1220 0%,
+                #111827 50%,
+                #1e293b 100%
+            );
+
+        color: #f8fafc;
+        font-family:
+            "Segoe UI",
+            "Inter",
+            Arial,
+            sans-serif;
+    }
 
-/* =========================================================
-   GLOBAL
-========================================================= */
-
-.stApp {
-    background:
-        radial-gradient(
-            circle at 50% -15%,
-            rgba(148, 163, 184, 0.16) 0%,
-            rgba(148, 163, 184, 0) 38%
-        ),
-        linear-gradient(
-            145deg,
-            #0b1220 0%,
-            #111827 48%,
-            #1e293b 100%
-        );
-
-    color: #f8fafc !important;
-    font-family: "Segoe UI", "Inter", Arial, sans-serif;
-}
-
-
-/* =========================================================
-   MAIN CONTAINER
-========================================================= */
-
-.block-container {
-    max-width: 1280px;
-    padding-top: 1.6rem;
-    padding-bottom: 5rem;
-}
-
-
-/* =========================================================
-   LOGO
-========================================================= */
-
-.logo-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 4px;
-    margin-bottom: 20px;
-}
-
-.logo-wrapper img {
-    width: 270px;
-    max-width: 65vw;
-
-    border-radius: 24px;
-
-    box-shadow:
-        0 20px 45px rgba(0, 0, 0, 0.42),
-        0 0 0 1px rgba(255, 255, 255, 0.08);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-.logo-wrapper img:hover {
-    transform: scale(1.02);
-
-    box-shadow:
-        0 24px 55px rgba(0, 0, 0, 0.50),
-        0 0 0 1px rgba(255, 255, 255, 0.14);
-}
-
-
-/* =========================================================
-   HEADER
-========================================================= */
-
-.header-box {
-    max-width: 1000px;
-    margin: 0 auto 30px auto;
-
-    padding: 8px 30px 24px 30px;
-
-    text-align: center;
-
-    border-bottom:
-        1px solid rgba(148, 163, 184, 0.25);
-}
-
-.main-title {
-    text-align: center;
-
-    font-size: clamp(25px, 3vw, 38px);
-    line-height: 1.25;
-
-    font-weight: 750;
-
-    color: #f8fafc !important;
-
-    margin: 0 auto 12px auto;
-
-    letter-spacing: -0.5px;
-
-    text-shadow:
-        0 3px 14px rgba(0, 0, 0, 0.38);
-}
-
-p.subtitle {
-    text-align: center;
-
-    font-size: 15.5px;
-    line-height: 1.8;
-
-    color: #cbd5e1 !important;
-
-    margin: 0 auto;
-
-    max-width: 820px;
-}
-
-p.subtitle b {
-    color: #d6a58d !important;
-}
-
-
-/* =========================================================
-   CHAT AREA
-========================================================= */
-
-.chat-container {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.075),
-            rgba(255, 255, 255, 0.025)
-        );
-
-    border:
-        1px solid rgba(255, 255, 255, 0.09);
-
-    border-radius: 24px;
-
-    padding: 26px;
-
-    min-height: 100px;
-
-    max-height: 70vh;
-
-    overflow-y: auto;
-
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.28),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
-
-    backdrop-filter: blur(12px);
-}
-
-
-/* =========================================================
-   USER CHAT BUBBLE
-========================================================= */
-
-.chat-bubble-user {
-    background:
-        linear-gradient(
-            135deg,
-            #e2e8f0 0%,
-            #cbd5e1 100%
-        );
-
-    color: #172033;
-
-    padding: 15px 19px;
-
-    border-radius:
-        19px
-        19px
-        6px
-        19px;
-
-    margin:
-        4px
-        0
-        18px
-        auto;
-
-    max-width: 78%;
-
-    line-height: 1.7;
-
-    border:
-        1px solid rgba(255, 255, 255, 0.55);
-
-    box-shadow:
-        0 7px 20px rgba(0, 0, 0, 0.20);
-}
-
-.chat-bubble-user .chat-label {
-    color: #334155;
-    font-size: 13px;
-    font-weight: 750;
-    letter-spacing: 0.2px;
-}
-
-.chat-bubble-user .chat-text {
-    margin-top: 5px;
-}
-
-
-/* =========================================================
-   ASSISTANT CHAT BUBBLE
-========================================================= */
-
-.chat-bubble-assistant {
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff 0%,
-            #f8fafc 100%
-        );
-
-    color: #1e293b;
-
-    padding: 16px 20px;
-
-    border-radius:
-        19px
-        19px
-        19px
-        6px;
-
-    margin:
-        4px
-        auto
-        18px
-        0;
-
-    max-width: 84%;
-
-    line-height: 1.75;
-
-    border-left:
-        4px solid #7f1d1d;
-
-    box-shadow:
-        0 8px 22px rgba(0, 0, 0, 0.20);
-}
-
-.chat-bubble-assistant .chat-label {
-    color: #7f1d1d;
-    font-size: 13px;
-    font-weight: 750;
-    letter-spacing: 0.2px;
-}
-
-.chat-bubble-assistant .chat-text {
-    margin-top: 5px;
-}
-
-
-/* =========================================================
-   ANALYSIS BOX
-========================================================= */
-
-.reasoning-box {
-    margin-top: 14px;
-
-    padding: 12px 15px;
-
-    background: #f1f5f9;
-
-    border-left:
-        3px solid #64748b;
-
-    border-radius: 10px;
-
-    color: #475569;
-
-    font-size: 13.5px;
-
-    line-height: 1.65;
-}
-
-.reasoning-title {
-    font-weight: 750;
-    color: #334155;
-}
-
-
-/* =========================================================
-   SIDEBAR
-========================================================= */
-
-[data-testid="stSidebar"] {
-    background:
-        linear-gradient(
-            165deg,
-            #f8fafc 0%,
-            #e2e8f0 100%
-        );
-
-    color: #1e293b;
-
-    border-right:
-        1px solid rgba(15, 23, 42, 0.10);
-
-    box-shadow:
-        8px 0 28px rgba(0, 0, 0, 0.14);
-}
-
-[data-testid="stSidebar"] * {
-    color: #1e293b;
-}
-
-
-/* =========================================================
-   SIDEBAR HEADER
-========================================================= */
-
-.sidebar-header {
-    text-align: center;
-
-    font-weight: 800;
-
-    font-size: 15px;
-
-    letter-spacing: 0.8px;
-
-    margin:
-        26px
-        0
-        16px
-        0;
-
-    color: #172033;
-
-    padding-bottom: 12px;
-
-    border-bottom:
-        1px solid rgba(71, 85, 105, 0.22);
-}
-
-
-/* =========================================================
-   SIDEBAR BUTTON
-========================================================= */
-
-[data-testid="stSidebar"] button {
-
-    background:
-        #ffffff !important;
-
-    color:
-        #7f1d1d !important;
-
-    font-weight:
-        700 !important;
-
-    border-radius:
-        12px !important;
-
-    border:
-        1px solid rgba(127, 29, 29, 0.28) !important;
-
-    box-shadow:
-        0 4px 12px rgba(15, 23, 42, 0.08);
-
-    transition:
-        all 0.22s ease !important;
-}
-
-[data-testid="stSidebar"] button:hover {
-
-    background:
-        #7f1d1d !important;
-
-    color:
-        #ffffff !important;
-
-    border:
-        1px solid #7f1d1d !important;
-
-    transform:
-        translateY(-1px);
-
-    box-shadow:
-        0 7px 18px rgba(127, 29, 29, 0.22);
-}
-
-
-/* =========================================================
-   SIDEBAR INFO
-========================================================= */
-
-[data-testid="stSidebar"] [data-testid="stAlert"] {
-
-    background:
-        rgba(255, 255, 255, 0.72);
-
-    border:
-        1px solid rgba(71, 85, 105, 0.16);
-
-    border-radius:
-        13px;
-
-    color:
-        #475569;
-}
-
-
-/* =========================================================
-   CHAT INPUT
-========================================================= */
-
-[data-testid="stChatInput"] {
-    border-radius: 17px !important;
-}
-
-[data-testid="stChatInput"] > div {
-    background: #f8fafc !important;
-
-    border:
-        1px solid rgba(148, 163, 184, 0.35) !important;
-
-    border-radius: 17px !important;
-
-    box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.16) !important;
-}
-
-[data-testid="stChatInput"] textarea {
-    font-size: 15px !important;
-    color: #1e293b !important;
-}
-
-
-/* =========================================================
-   ALERT / SPINNER
-========================================================= */
-
-[data-testid="stAlert"] {
-    border-radius: 12px;
-}
-
-
-/* =========================================================
-   SCROLLBAR
-========================================================= */
-
-::-webkit-scrollbar {
-    width: 7px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.04);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(148, 163, 184, 0.40);
-    border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(148, 163, 184, 0.60);
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 768px) {
 
     .block-container {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        max-width: 1250px;
+        padding-top: 1.5rem;
+        padding-bottom: 5rem;
     }
 
-    .logo-wrapper img {
-        width: 210px;
+
+    /* ========================================================
+       HEADER AREA
+    ======================================================== */
+
+    .header-divider {
+        height: 1px;
+        width: 100%;
+        margin-top: 24px;
+        margin-bottom: 28px;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(148, 163, 184, 0.30),
+                transparent
+            );
     }
 
-    .header-box {
-        padding-left: 8px;
-        padding-right: 8px;
+
+    /* ========================================================
+       SIDEBAR
+    ======================================================== */
+
+    [data-testid="stSidebar"] {
+
+        background:
+            linear-gradient(
+                165deg,
+                #f8fafc 0%,
+                #e2e8f0 100%
+            );
+
+        border-right:
+            1px solid rgba(15, 23, 42, 0.10);
+
+        box-shadow:
+            8px 0 30px rgba(0, 0, 0, 0.14);
     }
 
-    .main-title {
-        font-size: 25px;
+
+    [data-testid="stSidebar"] * {
+        color: #1e293b;
     }
 
-    p.subtitle {
-        font-size: 14px;
+
+    .sidebar-title {
+        text-align: center;
+
+        font-size: 15px;
+        font-weight: 800;
+
+        letter-spacing: 0.8px;
+
+        color: #172033;
+
+        margin-top: 24px;
+        margin-bottom: 15px;
+
+        padding-bottom: 12px;
+
+        border-bottom:
+            1px solid rgba(71, 85, 105, 0.22);
     }
 
-    .chat-container {
-        padding: 14px;
+
+    [data-testid="stSidebar"] button {
+
+        background: #ffffff !important;
+
+        color: #7f1d1d !important;
+
+        font-weight: 700 !important;
+
+        border-radius: 12px !important;
+
+        border:
+            1px solid rgba(127, 29, 29, 0.28) !important;
+
+        box-shadow:
+            0 4px 12px rgba(15, 23, 42, 0.08);
+
+        transition:
+            all 0.2s ease !important;
     }
 
-    .chat-bubble-user,
-    .chat-bubble-assistant {
-        max-width: 94%;
-    }
-}
 
-</style>
-""",
-unsafe_allow_html=True
+    [data-testid="stSidebar"] button:hover {
+
+        background: #7f1d1d !important;
+
+        color: #ffffff !important;
+
+        border-color: #7f1d1d !important;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 7px 18px rgba(127, 29, 29, 0.22);
+    }
+
+
+    [data-testid="stSidebar"] [data-testid="stAlert"] {
+
+        background:
+            rgba(255, 255, 255, 0.75);
+
+        border:
+            1px solid rgba(71, 85, 105, 0.15);
+
+        border-radius: 13px;
+
+        color: #475569;
+    }
+
+
+    /* ========================================================
+       CHAT CONTAINER
+    ======================================================== */
+
+    .chat-panel {
+
+        background:
+            rgba(255, 255, 255, 0.045);
+
+        border:
+            1px solid rgba(255, 255, 255, 0.08);
+
+        border-radius: 22px;
+
+        padding: 18px 20px;
+
+        box-shadow:
+            0 20px 50px rgba(0, 0, 0, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+
+    /* ========================================================
+       NATIVE STREAMLIT CHAT MESSAGE
+    ======================================================== */
+
+    [data-testid="stChatMessage"] {
+
+        border-radius: 18px;
+
+        padding: 8px 14px;
+
+        margin-bottom: 12px;
+    }
+
+
+    /* ========================================================
+       CHAT INPUT
+    ======================================================== */
+
+    [data-testid="stChatInput"] {
+
+        margin-top: 15px;
+    }
+
+
+    [data-testid="stChatInput"] > div {
+
+        background: #f8fafc !important;
+
+        border:
+            1px solid rgba(148, 163, 184, 0.35) !important;
+
+        border-radius: 17px !important;
+
+        box-shadow:
+            0 10px 28px rgba(0, 0, 0, 0.18) !important;
+    }
+
+
+    [data-testid="stChatInput"] textarea {
+
+        color: #1e293b !important;
+
+        font-size: 15px !important;
+    }
+
+
+    /* ========================================================
+       INFO
+    ======================================================== */
+
+    [data-testid="stAlert"] {
+        border-radius: 12px;
+    }
+
+
+    /* ========================================================
+       MOBILE
+    ======================================================== */
+
+    @media (max-width: 768px) {
+
+        .block-container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
 )
 
 
-# ================================
+# ============================================================
 # SESSION STATE
-# ================================
+# ============================================================
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -544,10 +287,15 @@ if "viewing_history_index" not in st.session_state:
     st.session_state.viewing_history_index = None
 
 
-# ================================
+# ============================================================
 # SIDEBAR
-# ================================
+# ============================================================
+
 with st.sidebar:
+
+    # --------------------------------------------------------
+    # CHAT BARU
+    # --------------------------------------------------------
 
     if st.button(
         "MULAI CHAT BARU",
@@ -556,7 +304,8 @@ with st.sidebar:
 
         if (
             st.session_state.messages
-            and st.session_state.viewing_history_index is None
+            and
+            st.session_state.viewing_history_index is None
         ):
 
             st.session_state.chat_history.append(
@@ -570,15 +319,19 @@ with st.sidebar:
         st.rerun()
 
 
+    # --------------------------------------------------------
+    # HEADER RIWAYAT
+    # --------------------------------------------------------
+
     st.markdown(
-        """
-<div class="sidebar-header">
-RIWAYAT PERTANYAAN ANDA
-</div>
-""",
+        '<div class="sidebar-title">RIWAYAT PERTANYAAN ANDA</div>',
         unsafe_allow_html=True
     )
 
+
+    # --------------------------------------------------------
+    # RIWAYAT
+    # --------------------------------------------------------
 
     if st.session_state.chat_history:
 
@@ -627,205 +380,199 @@ RIWAYAT PERTANYAAN ANDA
         )
 
 
-# ================================
-# LOGO
-# ================================
-try:
+# ============================================================
+# HEADER UTAMA
+# ============================================================
+#
+# PENTING:
+# Tidak menggunakan HTML untuk judul/subjudul.
+# Logo dan teks dibuat menggunakan Streamlit native.
+# ============================================================
 
-    st.markdown(
-        '<div class="logo-wrapper">',
-        unsafe_allow_html=True
-    )
-
-    st.image(
-        "logo.png",
-        width=270
-    )
-
-    st.markdown(
-        "</div>",
-        unsafe_allow_html=True
-    )
-
-except Exception:
-    pass
-
-
-# ================================
-# HEADER
-# ================================
-st.markdown(
-"""
-<div class="header-box">
-    <div class="main-title">
-        ⚖️ Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru
-    </div>
-
-    <p class="subtitle">
-        Agentic RAG with LangChain
-        <br>
-        Tanyakan apa pun seputar
-        <b>UU No. 1 Tahun 2023 tentang KUHP</b>.
-        <br>
-        Chatbot ini dibuat oleh
-        <b>SUHARDI</b>.
-    </p>
-</div>
-""",
-unsafe_allow_html=True
+logo_col, text_col = st.columns(
+    [1.05, 3.95],
+    vertical_alignment="center"
 )
 
 
-# ================================
-# AREA CHAT
-# ================================
-chat_box = st.container()
+# ============================================================
+# LOGO
+# ============================================================
 
-with chat_box:
+with logo_col:
+
+    try:
+
+        st.image(
+            "logo.png",
+            width=270
+        )
+
+    except Exception:
+
+        st.markdown(
+            "⚖️",
+            unsafe_allow_html=False
+        )
+
+
+# ============================================================
+# TEKS DI SAMPING LOGO
+# ============================================================
+
+with text_col:
 
     st.markdown(
-        '<div class="chat-container">',
-        unsafe_allow_html=True
+        "# ⚖️ Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru"
+    )
+
+    st.markdown(
+        "### Agentic RAG with LangChain"
+    )
+
+    st.markdown(
+        "Tanyakan apa pun seputar "
+        "**UU No. 1 Tahun 2023 tentang KUHP**."
+    )
+
+    st.markdown(
+        "Chatbot ini dibuat oleh **SUHARDI**."
     )
 
 
-    for msg in st.session_state.messages:
+# ============================================================
+# GARIS PEMISAH HEADER
+# ============================================================
 
-        role = msg["role"]
-        text = msg["text"]
-        time = msg["time"]
-
-
-        # =====================================================
-        # USER MESSAGE
-        # =====================================================
-
-        if role == "user":
-
-            safe_text = html.escape(
-                str(text)
-            ).replace(
-                "\n",
-                "<br>"
-            )
-
-            st.markdown(
-f"""
-<div class="chat-bubble-user">
-    <div class="chat-label">
-        Anda &nbsp;•&nbsp; {html.escape(str(time))}
-    </div>
-
-    <div class="chat-text">
-        {safe_text}
-    </div>
-</div>
-""",
-                unsafe_allow_html=True
-            )
+st.markdown(
+    '<div class="header-divider"></div>',
+    unsafe_allow_html=True
+)
 
 
-        # =====================================================
-        # ASSISTANT MESSAGE
-        # =====================================================
+# ============================================================
+# AREA CHAT
+# ============================================================
 
-        else:
+chat_panel = st.container()
 
-            # Pisahkan reasoning dari jawaban jika ada.
-            marker = "<br><br>🧠 <b>Analisis:</b>"
 
-            if marker in str(text):
+with chat_panel:
 
-                answer_part, reasoning_part = str(text).split(
-                    marker,
-                    1
-                )
+    if st.session_state.messages:
 
-                safe_answer = html.escape(
-                    answer_part
-                ).replace(
-                    "\n",
-                    "<br>"
-                )
+        for msg in st.session_state.messages:
 
-                safe_reasoning = html.escape(
-                    reasoning_part
-                ).replace(
-                    "\n",
-                    "<br>"
-                )
+            role = msg["role"]
+            text = str(msg["text"])
+            time = msg["time"]
 
-                assistant_html = f"""
-<div class="chat-bubble-assistant">
 
-    <div class="chat-label">
-        ⚖️ Jawaban Chatbot Suhardi
-        &nbsp;•&nbsp;
-        {html.escape(str(time))}
-    </div>
+            # =================================================
+            # USER
+            # =================================================
 
-    <div class="chat-text">
-        {safe_answer}
-    </div>
+            if role == "user":
 
-    <div class="reasoning-box">
-        <span class="reasoning-title">
-            🧠 Analisis
-        </span>
-        <br>
-        {safe_reasoning}
-    </div>
+                with st.chat_message(
+                    "user",
+                    avatar="👤"
+                ):
 
-</div>
-"""
+                    st.caption(
+                        f"Anda • {time}"
+                    )
+
+                    st.markdown(
+                        text
+                    )
+
+
+            # =================================================
+            # ASSISTANT
+            # =================================================
 
             else:
 
-                safe_answer = html.escape(
-                    str(text)
-                ).replace(
-                    "\n",
-                    "<br>"
-                )
+                with st.chat_message(
+                    "assistant",
+                    avatar="⚖️"
+                ):
 
-                assistant_html = f"""
-<div class="chat-bubble-assistant">
+                    st.caption(
+                        f"Chatbot Suhardi • {time}"
+                    )
 
-    <div class="chat-label">
-        ⚖️ Jawaban Chatbot Suhardi
-        &nbsp;•&nbsp;
-        {html.escape(str(time))}
-    </div>
+                    # -----------------------------------------
+                    # Bersihkan HTML yang mungkin berasal dari
+                    # format response lama.
+                    # -----------------------------------------
 
-    <div class="chat-text">
-        {safe_answer}
-    </div>
-
-</div>
-"""
-
-
-            st.markdown(
-                assistant_html,
-                unsafe_allow_html=True
-            )
+                    clean_text = (
+                        text
+                        .replace("<br><br>", "\n\n")
+                        .replace("<br>", "\n")
+                        .replace("<br/>", "\n")
+                        .replace("<br />", "\n")
+                        .replace("<b>", "**")
+                        .replace("</b>", "**")
+                        .replace("<strong>", "**")
+                        .replace("</strong>", "**")
+                    )
 
 
-    st.markdown(
-        "</div>",
-        unsafe_allow_html=True
-    )
+                    # -----------------------------------------
+                    # Jika terdapat analisis
+                    # -----------------------------------------
+
+                    analysis_marker = (
+                        "🧠 **Analisis:**"
+                    )
 
 
-# ================================
+                    if analysis_marker in clean_text:
+
+                        answer_part, reasoning_part = (
+                            clean_text.split(
+                                analysis_marker,
+                                1
+                            )
+                        )
+
+                        st.markdown(
+                            answer_part.strip()
+                        )
+
+                        with st.expander(
+                            "🧠 Analisis",
+                            expanded=False
+                        ):
+
+                            st.markdown(
+                                reasoning_part.strip()
+                            )
+
+                    else:
+
+                        st.markdown(
+                            clean_text
+                        )
+
+
+# ============================================================
 # INPUT CHAT
-# ================================
+# ============================================================
+
 if st.session_state.viewing_history_index is None:
 
     prompt = st.chat_input(
         "💬 Tuliskan pertanyaan Anda seputar KUHP Baru..."
     )
 
+
+    # ========================================================
+    # PERTANYAAN BARU
+    # ========================================================
 
     if prompt:
 
@@ -838,15 +585,17 @@ if st.session_state.viewing_history_index is None:
         ).strftime("%H:%M:%S")
 
 
-        # --------------------------------
+        # ----------------------------------------------------
         # Simpan pertanyaan user
-        # --------------------------------
+        # ----------------------------------------------------
 
-        st.session_state.messages.append({
-            "role": "user",
-            "text": prompt,
-            "time": current_time
-        })
+        st.session_state.messages.append(
+            {
+                "role": "user",
+                "text": prompt,
+                "time": current_time
+            }
+        )
 
 
         st.session_state.pending_prompt = prompt
@@ -854,9 +603,10 @@ if st.session_state.viewing_history_index is None:
         st.rerun()
 
 
-    # ================================
-    # PROSES PERTANYAAN
-    # ================================
+    # ========================================================
+    # PROSES AGENTIC RAG
+    # ========================================================
+
     if st.session_state.pending_prompt:
 
         with st.spinner(
@@ -865,34 +615,37 @@ if st.session_state.viewing_history_index is None:
 
             try:
 
-                # --------------------------------
-                # Ambil seluruh riwayat
-                # kecuali pertanyaan terakhir
-                # --------------------------------
+                # ------------------------------------------------
+                # Ambil seluruh percakapan sebelum pertanyaan
+                # terakhir.
+                # ------------------------------------------------
 
                 conversation_history = (
                     st.session_state.messages[:-1].copy()
                 )
 
 
-                # --------------------------------
-                # Ubah text -> content
-                # --------------------------------
+                # ------------------------------------------------
+                # Format history untuk agent
+                # ------------------------------------------------
 
                 history_for_agent = [
+
                     {
                         "role": msg["role"],
                         "content": msg["text"]
                     }
+
                     for msg in conversation_history
                 ]
 
 
-                # --------------------------------
-                # State untuk Agent
-                # --------------------------------
+                # ------------------------------------------------
+                # State
+                # ------------------------------------------------
 
                 state = {
+
                     "question":
                         st.session_state.pending_prompt,
 
@@ -901,18 +654,18 @@ if st.session_state.viewing_history_index is None:
                 }
 
 
-                # --------------------------------
-                # Jalankan Agentic RAG
-                # --------------------------------
+                # ------------------------------------------------
+                # Jalankan graph
+                # ------------------------------------------------
 
                 result = app.runnable_graph.invoke(
                     state
                 )
 
 
-                # --------------------------------
+                # ------------------------------------------------
                 # Ambil jawaban
-                # --------------------------------
+                # ------------------------------------------------
 
                 answer = result.get(
                     "answer",
@@ -926,35 +679,36 @@ if st.session_state.viewing_history_index is None:
                 )
 
 
-                # --------------------------------
-                # Bentuk response
-                # --------------------------------
+                # ------------------------------------------------
+                # Simpan jawaban
+                # ------------------------------------------------
 
                 if reasoning:
 
                     response_text = (
-                        f"{answer}"
-                        f"<br><br>"
-                        f"🧠 <b>Analisis:</b>"
+                        f"{answer}\n\n"
+                        f"🧠 **Analisis:**\n"
                         f"{reasoning}"
                     )
 
                 else:
 
-                    response_text = answer
+                    response_text = str(
+                        answer
+                    )
 
 
             except Exception as e:
 
                 response_text = (
-                    f"⚠️ Terjadi kesalahan: "
+                    "⚠️ Terjadi kesalahan:\n\n"
                     f"{str(e)}"
                 )
 
 
-        # ================================
-        # SIMPAN JAWABAN
-        # ================================
+        # ========================================================
+        # WAKTU RESPONSE
+        # ========================================================
 
         tz = pytz.timezone(
             "Asia/Jakarta"
@@ -965,17 +719,27 @@ if st.session_state.viewing_history_index is None:
         ).strftime("%H:%M:%S")
 
 
-        st.session_state.messages.append({
-            "role": "assistant",
-            "text": response_text,
-            "time": current_time
-        })
+        # ========================================================
+        # SIMPAN RESPONSE
+        # ========================================================
+
+        st.session_state.messages.append(
+            {
+                "role": "assistant",
+                "text": response_text,
+                "time": current_time
+            }
+        )
 
 
         st.session_state.pending_prompt = None
 
         st.rerun()
 
+
+# ============================================================
+# SAAT MELIHAT HISTORY
+# ============================================================
 
 else:
 
