@@ -17,7 +17,7 @@ st.set_page_config(
 
 
 # ============================================================
-# CSS (raw string agar aman)
+# CSS (raw string)
 # ============================================================
 
 st.markdown(
@@ -230,17 +230,42 @@ st.markdown(
 
 
     /* ========================================================
-       ANALISIS - HIJAU TERANG MENYALA (di dalam expander)
+       EXPANDER (Analisis) - KOTAK HIJAU TERANG MENYALA
+       dan teks hitam menyala
     ======================================================== */
 
-    [data-testid="stExpander"] .stMarkdown {
-        color: #00ff00 !important;
+    /* Kotak expander (saat terbuka) */
+    [data-testid="stExpander"] details {
+        background: linear-gradient(145deg, #00ff44, #00cc33) !important;
+        border: 2px solid rgba(0, 255, 68, 0.9) !important;
+        box-shadow:
+            0 0 30px rgba(0, 255, 68, 0.7),
+            inset 0 0 20px rgba(255, 255, 255, 0.3) !important;
+        border-radius: 15px !important;
+        padding: 10px !important;
+    }
+
+    /* Judul expander (summary) - biarkan hitam menyala */
+    [data-testid="stExpander"] summary {
+        color: #000000 !important;
         text-shadow:
-            0 0 5px #00ff00,
-            0 0 10px #00ff00,
-            0 0 20px #00ff00,
-            0 0 40px #00ff00 !important;
-        font-weight: 500;
+            0 0 5px rgba(0, 0, 0, 0.8),
+            0 0 10px rgba(0, 255, 68, 0.5) !important;
+        font-weight: bold !important;
+        font-size: 1.1em !important;
+    }
+
+    /* Semua teks di dalam expander (termasuk analisis) menjadi hitam */
+    [data-testid="stExpander"] details * {
+        color: #000000 !important;
+        text-shadow:
+            0 0 5px rgba(255, 255, 255, 0.3),
+            0 0 10px rgba(0, 255, 68, 0.4) !important;
+    }
+
+    /* Khusus untuk markdown di dalam expander agar hitam */
+    [data-testid="stExpander"] .stMarkdown {
+        color: #000000 !important;
     }
 
 
@@ -582,7 +607,6 @@ with chat_panel:
                             expanded=False
                         ):
 
-                            # teks analisis akan otomatis berwarna hijau terang menyala
                             st.markdown(
                                 reasoning_part.strip()
                             )
