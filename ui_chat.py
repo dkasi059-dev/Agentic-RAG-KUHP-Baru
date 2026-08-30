@@ -237,7 +237,7 @@ st.markdown(
     .custom-caption {
         color: #000000 !important;
         font-weight: 900 !important;
-        font-size: 0.7em !important;
+        font-size: 0.95em !important;
         text-shadow: 0 0 12px rgba(255, 255, 255, 0.95) !important;
         margin-bottom: 4px !important;
     }
