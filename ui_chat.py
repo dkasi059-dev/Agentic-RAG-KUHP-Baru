@@ -812,7 +812,6 @@ st.markdown(
         <div class="header-box">
 
             <div class="main-title">
-                <span class="title-icon">⚖️</span>
                 Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru
             </div>
 
