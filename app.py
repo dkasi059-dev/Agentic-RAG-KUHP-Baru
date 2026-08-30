@@ -23,7 +23,7 @@ os.environ["LANGCHAIN_PROJECT"] = st.secrets["LANGCHAIN_PROJECT"]
 # 🔮 Setup LLM
 # ================================
 llm = ChatOpenAI(
-    model="poolside/laguna-s-2.1:free",
+    model="cohere/north-mini-code:free",
     temperature=0,
     openai_api_key=st.secrets["API_OR"],
     openai_api_base="https://openrouter.ai/api/v1"
