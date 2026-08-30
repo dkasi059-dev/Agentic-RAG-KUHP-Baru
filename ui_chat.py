@@ -15,9 +15,8 @@ st.set_page_config(
     layout="wide",
 )
 
-
 # ============================================================
-# CSS (raw string) – sudah dimodifikasi
+# CSS (raw string)
 # ============================================================
 
 st.markdown(
@@ -50,13 +49,11 @@ st.markdown(
             sans-serif;
     }
 
-
     .block-container {
         max-width: 1250px;
         padding-top: 1.5rem;
         padding-bottom: 5rem;
     }
-
 
     /* ========================================================
        HEADER AREA
@@ -83,7 +80,6 @@ st.markdown(
     ======================================================== */
 
     [data-testid="stSidebar"] {
-
         background:
             linear-gradient(
                 165deg,
@@ -93,108 +89,73 @@ st.markdown(
 
         border-right:
             1px solid rgba(15, 23, 42, 0.10);
-
         box-shadow:
             8px 0 30px rgba(0, 0, 0, 0.14);
     }
-
 
     [data-testid="stSidebar"] * {
         color: #1e293b;
     }
 
-
     .sidebar-title {
         text-align: center;
-
         font-size: 15px;
         font-weight: 800;
-
         letter-spacing: 0.8px;
-
         color: #172033;
-
         margin-top: 24px;
         margin-bottom: 15px;
-
         padding-bottom: 12px;
-
         border-bottom:
             1px solid rgba(71, 85, 105, 0.22);
     }
 
-
     [data-testid="stSidebar"] button {
-
         background: #ffffff !important;
-
         color: #7f1d1d !important;
-
         font-weight: 700 !important;
-
         border-radius: 12px !important;
-
         border:
             1px solid rgba(127, 29, 29, 0.28) !important;
-
         box-shadow:
             0 4px 12px rgba(15, 23, 42, 0.08);
-
         transition:
             all 0.2s ease !important;
     }
 
-
     [data-testid="stSidebar"] button:hover {
-
         background: #7f1d1d !important;
-
         color: #ffffff !important;
-
         border-color: #7f1d1d !important;
-
         transform: translateY(-1px);
-
         box-shadow:
             0 7px 18px rgba(127, 29, 29, 0.22);
     }
 
-
     [data-testid="stSidebar"] [data-testid="stAlert"] {
-
         background:
             rgba(255, 255, 255, 0.75);
-
         border:
             1px solid rgba(71, 85, 105, 0.15);
-
         border-radius: 13px;
-
         color: #475569;
     }
-
 
     /* ========================================================
        CHAT CONTAINER
     ======================================================== */
 
     .chat-panel {
-
         background:
             rgba(255, 255, 255, 0.045);
-
         border:
             1px solid rgba(255, 255, 255, 0.08);
-
         border-radius: 22px;
-
         padding: 18px 20px;
-
         box-shadow:
             0 20px 50px rgba(0, 0, 0, 0.22),
             inset 0 1px 0 rgba(255, 255, 255, 0.04);
     }
-
 
     /* ========================================================
        CHAT MESSAGE BOX - MERAH TERANG MENYALA ESTETIK
@@ -218,7 +179,6 @@ st.markdown(
             inset 0 0 20px rgba(255, 255, 255, 0.25) !important;
         transform: scale(1.01);
     }
-
 
     /* ========================================================
        CHAT MESSAGE TEXT COLOR - PUTIH (kecuali caption)
@@ -293,38 +253,27 @@ st.markdown(
         margin-bottom: 12px;
     }
 
-
     /* ========================================================
        CHAT INPUT
     ======================================================== */
 
     [data-testid="stChatInput"] {
-
         margin-top: 15px;
     }
-
-
+    
     [data-testid="stChatInput"] > div {
-
         background: #f8fafc !important;
-
         border:
             1px solid rgba(148, 163, 184, 0.35) !important;
-
         border-radius: 17px !important;
-
         box-shadow:
             0 10px 28px rgba(0, 0, 0, 0.18) !important;
     }
 
-
     [data-testid="stChatInput"] textarea {
-
         color: #1e293b !important;
-
         font-size: 15px !important;
     }
-
 
     /* ========================================================
        INFO
@@ -334,25 +283,21 @@ st.markdown(
         border-radius: 12px;
     }
 
-
     /* ========================================================
        MOBILE
     ======================================================== */
 
     @media (max-width: 768px) {
-
         .block-container {
             padding-left: 1rem;
             padding-right: 1rem;
         }
-
     }
 
     </style>
     """,
     unsafe_allow_html=True
 )
-
 
 # ============================================================
 # SESSION STATE
@@ -369,7 +314,6 @@ if "pending_prompt" not in st.session_state:
 
 if "viewing_history_index" not in st.session_state:
     st.session_state.viewing_history_index = None
-
 
 # ============================================================
 # SIDEBAR
@@ -402,7 +346,6 @@ with st.sidebar:
 
         st.rerun()
 
-
     # --------------------------------------------------------
     # HEADER RIWAYAT
     # --------------------------------------------------------
@@ -412,18 +355,15 @@ with st.sidebar:
         unsafe_allow_html=True
     )
 
-
     # --------------------------------------------------------
     # RIWAYAT
     # --------------------------------------------------------
 
     if st.session_state.chat_history:
-
         for i, chat in enumerate(
             reversed(st.session_state.chat_history),
             1
         ):
-
             first_msg = next(
                 (
                     m["text"]
@@ -432,26 +372,21 @@ with st.sidebar:
                 ),
                 "(tanpa isi)"
             )
-
             short_preview = (
                 first_msg[:60] + "..."
                 if len(first_msg) > 60
                 else first_msg
             )
-
             if st.button(
                 short_preview,
                 use_container_width=True,
                 key=f"hist_{i}"
             ):
-
                 # Muat riwayat ke sesi saat ini
                 st.session_state.messages = chat.copy()
                 st.session_state.viewing_history_index = (
-                    len(st.session_state.chat_history) - i
-                )
+                    len(st.session_state.chat_history) - i)
                 st.session_state.pending_prompt = None
-
                 st.rerun()
 
     else:
@@ -462,7 +397,6 @@ with st.sidebar:
             '"MULAI CHAT BARU".'
         )
 
-
 # ============================================================
 # HEADER UTAMA
 # ============================================================
@@ -472,34 +406,27 @@ logo_col, text_col = st.columns(
     vertical_alignment="center"
 )
 
-
 # ============================================================
 # LOGO
 # ============================================================
 
 with logo_col:
-
     try:
-
         st.image(
             "logo.png",
             width=700
         )
-
     except Exception:
-
         st.markdown(
             "⚖️",
             unsafe_allow_html=False
         )
-
 
 # ============================================================
 # TEKS DI SAMPING LOGO (rata tengah & putih)
 # ============================================================
 
 with text_col:
-
     st.markdown(
         """
         <div style="text-align: center; color: #ffffff;">
@@ -512,7 +439,6 @@ with text_col:
         unsafe_allow_html=True
     )
 
-
 # ============================================================
 # GARIS PEMISAH HEADER
 # ============================================================
@@ -522,20 +448,15 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 # ============================================================
 # AREA CHAT
 # ============================================================
 
 chat_panel = st.container()
 
-
 with chat_panel:
-
     if st.session_state.messages:
-
         for msg in st.session_state.messages:
-
             role = msg["role"]
             text = str(msg["text"])
             time = msg["time"]
@@ -545,32 +466,25 @@ with chat_panel:
             # =================================================
 
             if role == "user":
-
                 with st.chat_message(
                     "user",
                     avatar="👤"
                 ):
-
                     st.markdown(
                         f'<div class="custom-caption">Anda • {time}</div>',
                         unsafe_allow_html=True
                     )
-
-                    st.markdown(
-                        text
-                    )
+                    st.markdown(text)
 
             # =================================================
             # ASSISTANT
             # =================================================
 
             else:
-
                 with st.chat_message(
                     "assistant",
                     avatar="⚖️"
                 ):
-
                     st.markdown(
                         f'<div class="custom-caption">Chatbot Suhardi • {time}</div>',
                         unsafe_allow_html=True
@@ -595,39 +509,32 @@ with chat_panel:
                     # -----------------------------------------
                     # Jika terdapat analisis
                     # -----------------------------------------
-
+                    
                     analysis_marker = (
                         "🧠 **Analisis:**"
                     )
 
                     if analysis_marker in clean_text:
-
                         answer_part, reasoning_part = (
                             clean_text.split(
                                 analysis_marker,
                                 1
                             )
                         )
-
                         st.markdown(
                             answer_part.strip()
                         )
-
                         with st.expander(
                             "🧠 Analisis",
                             expanded=False
                         ):
-
                             st.markdown(
                                 reasoning_part.strip()
                             )
-
                     else:
-
                         st.markdown(
                             clean_text
                         )
-
 
 # ============================================================
 # NOTIFIKASI RIWAYAT (jika sedang melihat)
@@ -639,7 +546,6 @@ if st.session_state.viewing_history_index is not None:
         "Anda dapat melanjutkan percakapan di bawah ini. "
         "Klik 'MULAI CHAT BARU' untuk memulai percakapan baru."
     )
-
 
 # ============================================================
 # INPUT CHAT & PROSES RAG
@@ -654,11 +560,7 @@ prompt = st.chat_input(
 # ============================================================
 
 if prompt:
-
-    tz = pytz.timezone(
-        "Asia/Jakarta"
-    )
-
+    tz = pytz.timezone("Asia/Jakarta")
     current_time = datetime.datetime.now(
         tz
     ).strftime("%H:%M:%S")
@@ -674,67 +576,48 @@ if prompt:
             "time": current_time
         }
     )
-
     st.session_state.pending_prompt = prompt
-
     st.rerun()
-
 
 # ============================================================
 # PROSES AGENTIC RAG
 # ============================================================
 
 if st.session_state.pending_prompt:
-
     with st.spinner(
-        "🔍 Sedang menganalisis dengan Agentic RAG..."
-    ):
-
+        "🔍 Sedang menganalisis dengan Agentic RAG..."):
         try:
-
             # ------------------------------------------------
             # Ambil seluruh percakapan sebelum pertanyaan
             # terakhir.
             # ------------------------------------------------
-
             conversation_history = (
                 st.session_state.messages[:-1].copy()
             )
-
             # ------------------------------------------------
             # Format history untuk agent
             # ------------------------------------------------
-
             history_for_agent = [
-
                 {
                     "role": msg["role"],
                     "content": msg["text"]
                 }
-
                 for msg in conversation_history
             ]
-
             # ------------------------------------------------
             # State
             # ------------------------------------------------
-
             state = {
-
                 "question":
                     st.session_state.pending_prompt,
-
                 "history":
                     history_for_agent
             }
-
             # ------------------------------------------------
             # Jalankan graph
             # ------------------------------------------------
 
-            result = app.runnable_graph.invoke(
-                state
-            )
+            result = app.runnable_graph.invoke(state)
 
             # ------------------------------------------------
             # Ambil jawaban
@@ -755,21 +638,16 @@ if st.session_state.pending_prompt:
             # ------------------------------------------------
 
             if reasoning:
-
                 response_text = (
                     f"{answer}\n\n"
                     f"🧠 **Analisis:**\n"
                     f"{reasoning}"
                 )
-
             else:
-
                 response_text = str(
                     answer
                 )
-
         except Exception as e:
-
             response_text = (
                 "⚠️ Terjadi kesalahan:\n\n"
                 f"{str(e)}"
@@ -779,9 +657,7 @@ if st.session_state.pending_prompt:
     # WAKTU RESPONSE
     # ========================================================
 
-    tz = pytz.timezone(
-        "Asia/Jakarta"
-    )
+    tz = pytz.timezone("Asia/Jakarta")
 
     current_time = datetime.datetime.now(
         tz
@@ -807,5 +683,4 @@ if st.session_state.pending_prompt:
         st.session_state.chat_history[st.session_state.viewing_history_index] = st.session_state.messages.copy()
 
     st.session_state.pending_prompt = None
-
     st.rerun()
