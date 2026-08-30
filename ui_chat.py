@@ -17,7 +17,7 @@ st.set_page_config(
 
 
 # ============================================================
-# CSS (raw string)
+# CSS (raw string) – sudah dimodifikasi
 # ============================================================
 
 st.markdown(
@@ -230,18 +230,16 @@ st.markdown(
     }
 
     /* ========================================================
-       CAPTION (Anda • waktu & Chatbot Suhardi • waktu)
-       HITAM TERANG, BOLD, UKURAN LEBIH BESAR
-       Selector lebih spesifik untuk override
+       CAPTION KHUSUS - HITAM TERANG, BOLD, BESAR
+       Menggunakan kelas .custom-caption yang kita buat sendiri
     ======================================================== */
 
-    [data-testid="stChatMessage"] .stCaption,
-    [data-testid="stChatMessage"] small,
-    [data-testid="stChatMessage"] .caption {
+    .custom-caption {
         color: #000000 !important;
-        font-weight: 800 !important;
-        font-size: 1.2em !important;
-        text-shadow: 0 0 8px rgba(255, 255, 255, 0.9) !important;
+        font-weight: 900 !important;
+        font-size: 1.5em !important;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.95) !important;
+        margin-bottom: 4px !important;
     }
 
 
@@ -543,7 +541,6 @@ with chat_panel:
             text = str(msg["text"])
             time = msg["time"]
 
-
             # =================================================
             # USER
             # =================================================
@@ -555,14 +552,15 @@ with chat_panel:
                     avatar="👤"
                 ):
 
-                    st.caption(
-                        f"Anda • {time}"
+                    # ---- MODIFIKASI: gunakan custom class ----
+                    st.markdown(
+                        f'<div class="custom-caption">Anda • {time}</div>',
+                        unsafe_allow_html=True
                     )
 
                     st.markdown(
                         text
                     )
-
 
             # =================================================
             # ASSISTANT
@@ -575,8 +573,10 @@ with chat_panel:
                     avatar="⚖️"
                 ):
 
-                    st.caption(
-                        f"Chatbot Suhardi • {time}"
+                    # ---- MODIFIKASI: gunakan custom class ----
+                    st.markdown(
+                        f'<div class="custom-caption">Chatbot Suhardi • {time}</div>',
+                        unsafe_allow_html=True
                     )
 
                     # -----------------------------------------
@@ -595,7 +595,6 @@ with chat_panel:
                         .replace("</strong>", "**")
                     )
 
-
                     # -----------------------------------------
                     # Jika terdapat analisis
                     # -----------------------------------------
@@ -603,7 +602,6 @@ with chat_panel:
                     analysis_marker = (
                         "🧠 **Analisis:**"
                     )
-
 
                     if analysis_marker in clean_text:
 
@@ -644,7 +642,6 @@ if st.session_state.viewing_history_index is None:
         "💬 Tuliskan pertanyaan Anda seputar KUHP Baru..."
     )
 
-
     # ========================================================
     # PERTANYAAN BARU
     # ========================================================
@@ -659,7 +656,6 @@ if st.session_state.viewing_history_index is None:
             tz
         ).strftime("%H:%M:%S")
 
-
         # ----------------------------------------------------
         # Simpan pertanyaan user
         # ----------------------------------------------------
@@ -672,11 +668,9 @@ if st.session_state.viewing_history_index is None:
             }
         )
 
-
         st.session_state.pending_prompt = prompt
 
         st.rerun()
-
 
     # ========================================================
     # PROSES AGENTIC RAG
@@ -699,7 +693,6 @@ if st.session_state.viewing_history_index is None:
                     st.session_state.messages[:-1].copy()
                 )
 
-
                 # ------------------------------------------------
                 # Format history untuk agent
                 # ------------------------------------------------
@@ -714,7 +707,6 @@ if st.session_state.viewing_history_index is None:
                     for msg in conversation_history
                 ]
 
-
                 # ------------------------------------------------
                 # State
                 # ------------------------------------------------
@@ -728,7 +720,6 @@ if st.session_state.viewing_history_index is None:
                         history_for_agent
                 }
 
-
                 # ------------------------------------------------
                 # Jalankan graph
                 # ------------------------------------------------
@@ -736,7 +727,6 @@ if st.session_state.viewing_history_index is None:
                 result = app.runnable_graph.invoke(
                     state
                 )
-
 
                 # ------------------------------------------------
                 # Ambil jawaban
@@ -747,12 +737,10 @@ if st.session_state.viewing_history_index is None:
                     "Tidak ada jawaban ditemukan."
                 )
 
-
                 reasoning = result.get(
                     "reasoning",
                     ""
                 )
-
 
                 # ------------------------------------------------
                 # Simpan jawaban
@@ -772,14 +760,12 @@ if st.session_state.viewing_history_index is None:
                         answer
                     )
 
-
             except Exception as e:
 
                 response_text = (
                     "⚠️ Terjadi kesalahan:\n\n"
                     f"{str(e)}"
                 )
-
 
         # ========================================================
         # WAKTU RESPONSE
@@ -793,7 +779,6 @@ if st.session_state.viewing_history_index is None:
             tz
         ).strftime("%H:%M:%S")
 
-
         # ========================================================
         # SIMPAN RESPONSE
         # ========================================================
@@ -805,7 +790,6 @@ if st.session_state.viewing_history_index is None:
                 "time": current_time
             }
         )
-
 
         st.session_state.pending_prompt = None
 
