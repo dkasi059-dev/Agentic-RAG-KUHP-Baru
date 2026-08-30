@@ -230,6 +230,19 @@ st.markdown(
 
 
     /* ========================================================
+       CAPTION (Anda • waktu & Chatbot Suhardi • waktu)
+       HITAM TERANG, BOLD, UKURAN LEBIH BESAR
+    ======================================================== */
+
+    [data-testid="stChatMessage"] .stCaption {
+        color: #000000 !important;
+        font-weight: 800 !important;
+        font-size: 1.2em !important;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.8) !important;
+    }
+
+
+    /* ========================================================
        EXPANDER (Analisis) - KOTAK HIJAU TERANG MENYALA
        dan teks hitam menyala
     ======================================================== */
@@ -245,7 +258,7 @@ st.markdown(
         padding: 10px !important;
     }
 
-    /* Judul expander (summary) - biarkan hitam menyala */
+    /* Judul expander (summary) - hitam menyala */
     [data-testid="stExpander"] summary {
         color: #000000 !important;
         text-shadow:
