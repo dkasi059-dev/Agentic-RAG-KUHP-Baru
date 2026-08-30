@@ -315,6 +315,9 @@ if "pending_prompt" not in st.session_state:
 if "viewing_history_index" not in st.session_state:
     st.session_state.viewing_history_index = None
 
+if "need_rerun" not in st.session_state:
+    st.session_state.need_rerun = False
+
 # ============================================================
 # SIDEBAR
 # ============================================================
@@ -343,7 +346,6 @@ with st.sidebar:
         st.session_state.messages = []
         st.session_state.pending_prompt = None
         st.session_state.viewing_history_index = None
-
         st.rerun()
 
     # --------------------------------------------------------
@@ -537,17 +539,6 @@ with chat_panel:
                         )
 
 # ============================================================
-# NOTIFIKASI RIWAYAT (jika sedang melihat)
-# ============================================================
-
-if st.session_state.viewing_history_index is not None:
-    st.info(
-        "🔒 Anda sedang melihat riwayat chat lama. "
-        "Anda dapat melanjutkan percakapan di bawah ini. "
-        "Klik 'MULAI CHAT BARU' untuk memulai percakapan baru."
-    )
-
-# ============================================================
 # INPUT CHAT & PROSES RAG
 # ============================================================
 
@@ -584,8 +575,7 @@ if prompt:
 # ============================================================
 
 if st.session_state.pending_prompt:
-    with st.spinner(
-        "🔍 Sedang menganalisis dengan Agentic RAG..."):
+    with st.spinner("🔍 Sedang menganalisis dengan Agentic RAG..."):
         try:
             # ------------------------------------------------
             # Ambil seluruh percakapan sebelum pertanyaan
@@ -683,4 +673,23 @@ if st.session_state.pending_prompt:
         st.session_state.chat_history[st.session_state.viewing_history_index] = st.session_state.messages.copy()
 
     st.session_state.pending_prompt = None
+    st.session_state.need_rerun = True
+
+# ============================================================
+# NOTIFIKASI RIWAYAT (diletakkan di bawah spinner)
+# ============================================================
+
+if st.session_state.viewing_history_index is not None:
+    st.info(
+        "🔒 Anda sedang melihat riwayat chat lama. "
+        "Anda dapat melanjutkan percakapan di bawah ini. "
+        "Klik 'MULAI CHAT BARU' untuk memulai percakapan baru."
+    )
+
+# ============================================================
+# RERUN jika baru saja selesai memproses (agar pesan muncul)
+# ============================================================
+
+if st.session_state.need_rerun:
+    st.session_state.need_rerun = False
     st.rerun()
