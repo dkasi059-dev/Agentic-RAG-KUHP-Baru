@@ -383,11 +383,11 @@ with st.sidebar:
 # ============================================================
 # HEADER UTAMA
 # ============================================================
-# Logo diperbesar dan rasio kolom disesuaikan
+# Logo diperbesar, teks di kolom kanan dibuat rata tengah
 # ============================================================
 
 logo_col, text_col = st.columns(
-    [1.5, 3.5],  # ubah rasio agar logo lebih lebar
+    [1.5, 3.5],  # rasio agar logo lebih lebar
     vertical_alignment="center"
 )
 
@@ -402,7 +402,7 @@ with logo_col:
 
         st.image(
             "logo.png",
-            width=400  # diperbesar dari 270 menjadi 400
+            width=400  # diperbesar dari 270
         )
 
     except Exception:
@@ -414,26 +414,21 @@ with logo_col:
 
 
 # ============================================================
-# TEKS DI SAMPING LOGO
+# TEKS DI SAMPING LOGO (rata tengah)
 # ============================================================
 
 with text_col:
 
     st.markdown(
-        "# ⚖️ Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru"
-    )
-
-    st.markdown(
-        "### Agentic RAG with LangChain"
-    )
-
-    st.markdown(
-        "Tanyakan apa pun seputar "
-        "**UU No. 1 Tahun 2023 tentang KUHP**."
-    )
-
-    st.markdown(
-        "Chatbot ini dibuat oleh **SUHARDI**."
+        """
+        <div style="text-align: center;">
+            <h1>Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru</h1>
+            <h3>Agentic RAG with LangChain</h3>
+            <p>Tanyakan apa pun seputar <strong>UU No. 1 Tahun 2023 tentang KUHP</strong>.</p>
+            <p>Chatbot ini dibuat oleh <strong>SUHARDI</strong>.</p>
+        </div>
+        """,
+        unsafe_allow_html=True
     )
 
 
