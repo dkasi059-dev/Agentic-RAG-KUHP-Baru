@@ -197,11 +197,11 @@ st.markdown(
 
 
     /* ========================================================
-       CHAT MESSAGE BOX - MERAH TERANG MENYALA ESTETIK
+       CHAT MESSAGE BOX - HIJAU TERANG MENYALA ESTETIK
     ======================================================== */
 
     [data-testid="stChatMessage"] {
-        background: linear-gradient(145deg, #ff0040, #cc0033) !important;
+        background: linear-gradient(145deg, #22ff00, #cc0033) !important;
         border: 1px solid rgba(255, 0, 64, 0.7) !important;
         box-shadow:
             0 0 25px rgba(255, 0, 64, 0.6),
