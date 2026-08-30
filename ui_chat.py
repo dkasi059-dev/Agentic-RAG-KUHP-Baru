@@ -236,7 +236,7 @@ st.markdown(
 
     .custom-caption {
         color: #000000 !important;
-        font-weight: 500 !important;
+        font-weight: 333 !important;
         font-size: 1.5em !important;
         text-shadow: 0 0 12px rgba(255, 255, 255, 0.95) !important;
         margin-bottom: 4px !important;
@@ -484,7 +484,7 @@ with logo_col:
 
         st.image(
             "logo.png",
-            width=600
+            width=700
         )
 
     except Exception:
@@ -504,7 +504,8 @@ with text_col:
     st.markdown(
         """
         <div style="text-align: center; color: #ffffff;">
-            <h1>Chatbot Kitab Undang-Undang Hukum Pidana (KUHP) Baru</h1>
+            <h1>ASISTEN CERDAS</h1> 
+            <h1>Kitab Undang-Undang Hukum Pidana (KUHP) Baru</h1>
             <h3>Agentic RAG with LangChain</h3>
             <p>Tanyakan apa pun seputar <strong>UU No. 1 Tahun 2023 tentang KUHP</strong>.</p>
             <p>Chatbot ini dibuat oleh <strong>SUHARDI</strong>.</p>
