@@ -3,7 +3,7 @@
 ### AI-Powered Legal Assistant untuk Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana
 
 <p align="center">
-  <img src="Assets/logo.png" alt="Agentic RAG KUHP Baru Logo" width="180">
+  <img src="assets/logo.png" alt="Agentic RAG KUHP Baru Logo" width="180">
 </p>
 
 <p align="center">
@@ -19,7 +19,6 @@
 ![LangChain](https://img.shields.io/badge/LangChain-Framework-green)
 ![LangGraph](https://img.shields.io/badge/LangGraph-Agent%20Workflow-purple)
 ![RAG](https://img.shields.io/badge/Architecture-Agentic%20RAG-orange)
-![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 </p>
 
