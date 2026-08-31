@@ -415,7 +415,7 @@ logo_col, text_col = st.columns(
 with logo_col:
     try:
         st.image(
-            "logo.png",
+            "assets/logo.png",
             width=700
         )
     except Exception:
