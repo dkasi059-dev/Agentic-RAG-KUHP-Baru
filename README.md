@@ -31,20 +31,13 @@
 **Agentic RAG KUHP Baru** merupakan aplikasi asisten hukum berbasis **Artificial Intelligence (AI)** yang dirancang untuk membantu masyarakat memperoleh informasi dan memahami ketentuan dalam **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana (KUHP Baru)**.
 Proyek ini mengimplementasikan pendekatan **Agentic Retrieval-Augmented Generation (Agentic RAG)** yang mengombinasikan kemampuan **Large Language Model (LLM)**, retrieval dokumen hukum, workflow agen berbasis **LangGraph**, serta berbagai sumber informasi pendukung. Berbeda dari sistem pencarian berbasis kata kunci sederhana, agen dirancang untuk memahami konteks pertanyaan, menentukan informasi yang dibutuhkan, melakukan retrieval terhadap sumber yang relevan, melakukan pencarian sumber yang dibutuhkan di internet (sumber eksternal), mengevaluasi kecukupan informasi, dan menghasilkan jawaban berdasarkan konteks yang diperoleh. Selain itu, sistem ini juga bisa menolak pertanyaan yang tidak berhubungan dengan KUHP Baru waluapun mengandung kata kunci yang menyerupai pertanyaan tentang KUHP Baru. Sistem juga dilengkapi dengan **conversation memory**, sehingga konteks pertanyaan sebelumnya dapat dipertahankan selama sesi percakapan. Hal tersebut memungkinkan pengguna mengajukan pertanyaan lanjutan tanpa harus mengulangi seluruh konteks pembicaraan.
 
-> **AI for Equal Justice** — teknologi AI dimanfaatkan sebagai sarana pendukung untuk memperluas akses terhadap informasi hukum yang akurat, transparan, dan mudah dipahami.
+> **AI for Equal Justice** — teknologi AI dimanfaatkan sebagai sarana pendukung untuk memperluas akses terhadap informasi seputar KUHP Baru yang akurat, transparan, dan mudah dipahami.
 
 ---
 
 ## 🎯 Latar Belakang
 
-Perkembangan kecerdasan buatan telah membuka peluang baru dalam penyediaan layanan informasi di berbagai bidang, termasuk bidang hukum.
-
-Di Indonesia, kebutuhan terhadap akses informasi hukum semakin relevan setelah diberlakukannya **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana (KUHP Baru)**.
-
-KUHP Baru memiliki struktur dan substansi yang kompleks serta memuat **624 pasal**. Bagi masyarakat yang tidak memiliki latar belakang hukum, memahami keseluruhan ketentuan tersebut dapat menjadi tantangan.
-
-Permasalahan semakin kompleks ketika pencarian informasi hukum dilakukan menggunakan sistem berbasis keyword search. Pencarian berbasis kata kunci dapat menemukan dokumen yang mengandung istilah tertentu, tetapi belum tentu memahami:
-
+Perkembangan kecerdasan buatan telah membuka peluang baru dalam penyediaan layanan informasi di berbagai bidang, termasuk bidang hukum. Di Indonesia, kebutuhan terhadap akses informasi hukum semakin relevan setelah diberlakukannya **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana (KUHP Baru)**. KUHP Baru memiliki struktur dan substansi yang kompleks serta memuat **624 pasal**. Bagi masyarakat yang tidak memiliki latar belakang hukum, memahami keseluruhan ketentuan tersebut dapat menjadi tantangan. Permasalahan semakin kompleks ketika pencarian informasi hukum dilakukan menggunakan sistem berbasis keyword search. Pencarian berbasis kata kunci dapat menemukan dokumen yang mengandung istilah tertentu, tetapi belum tentu memahami:
 * konteks pertanyaan;
 * maksud pengguna;
 * hubungan antarketentuan;
@@ -52,9 +45,7 @@ Permasalahan semakin kompleks ketika pencarian informasi hukum dilakukan menggun
 * informasi apa yang sebenarnya dibutuhkan;
 * serta bagaimana menjelaskan ketentuan hukum dalam bahasa yang mudah dipahami.
 
-Di sisi lain, penggunaan LLM tanpa sumber eksternal atau mekanisme retrieval memiliki risiko **hallucination**, yaitu menghasilkan informasi yang terdengar meyakinkan tetapi tidak memiliki dasar yang benar.
-
-Oleh karena itu, proyek ini mengadopsi pendekatan **Agentic RAG** untuk menggabungkan kemampuan reasoning LLM dengan retrieval terhadap sumber hukum.
+Di sisi lain, penggunaan LLM tanpa sumber eksternal atau mekanisme retrieval memiliki risiko **hallucination**, yaitu menghasilkan informasi yang terdengar meyakinkan tetapi tidak memiliki dasar yang benar. Oleh karena itu, proyek ini mengadopsi pendekatan **Agentic RAG** untuk menggabungkan kemampuan reasoning LLM dengan retrieval terhadap sumber hukum.
 
 ---
 
@@ -88,34 +79,9 @@ Terdapat beberapa permasalahan yang ingin diselesaikan melalui proyek ini:
 
 Proyek ini menggunakan pendekatan **Agentic Retrieval-Augmented Generation** sehingga sistem dapat:
 
-```text
-User Question
-      │
-      ▼
-Context & Intent Analysis
-      │
-      ▼
-Source Selection
-      │
-      ├───────────────┐
-      ▼               ▼
-KUHP Baru        External Sources
-      │               │
-      └───────┬───────┘
-              ▼
-          Information
-           Synthesis
-              │
-              ▼
-        Answer Evaluation
-              │
-       ┌──────┴──────┐
-       │             │
-    Sufficient    Insufficient
-       │             │
-       ▼             └──────► Retrieval
-    Final Answer
-```
+<p align="left">
+  <img src="assets/logo.png" alt="Agentic RAG KUHP Baru Logo" width="373">
+</p>
 
 Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **agen yang dapat menentukan langkah yang diperlukan untuk menghasilkan jawaban**.
 
