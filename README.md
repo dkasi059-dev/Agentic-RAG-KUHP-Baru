@@ -28,8 +28,9 @@
 
 ## 📌 Tentang Proyek
 
-  **Agentic RAG KUHP Baru** merupakan aplikasi asisten hukum berbasis **Artificial Intelligence (AI)** yang dirancang untuk membantu masyarakat memperoleh informasi dan memahami ketentuan dalam **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana (KUHP Baru)**.
-  Proyek ini mengimplementasikan pendekatan **Agentic Retrieval-Augmented Generation (Agentic RAG)** yang mengombinasikan kemampuan **Large Language Model (LLM)**, retrieval dokumen hukum, workflow agen berbasis **LangGraph**, serta berbagai sumber informasi pendukung. Berbeda dari sistem pencarian berbasis kata kunci sederhana, agen dirancang untuk memahami konteks pertanyaan, menentukan informasi yang dibutuhkan, melakukan retrieval terhadap sumber yang relevan, melakukan pencarian sumber yang dibutuhkan di internet (sumber eksternal), mengevaluasi kecukupan informasi, dan menghasilkan jawaban berdasarkan konteks yang diperoleh. Selain itu, sistem ini juga bisa menolak pertanyaan yang tidak berhubungan dengan KUHP Baru waluapun mengandung kata kunci yang menyerupai pertanyaan tentang KUHP Baru. Sistem juga dilengkapi dengan **conversation memory**, sehingga konteks pertanyaan sebelumnya dapat dipertahankan selama sesi percakapan. Hal tersebut memungkinkan pengguna mengajukan pertanyaan lanjutan tanpa harus mengulangi seluruh konteks pembicaraan.
+**Agentic RAG KUHP Baru** merupakan aplikasi asisten hukum berbasis **Artificial Intelligence (AI)** yang dirancang untuk membantu masyarakat memperoleh informasi dan memahami ketentuan dalam **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana (KUHP Baru)**.
+
+Proyek ini mengimplementasikan pendekatan **Agentic Retrieval-Augmented Generation (Agentic RAG)** yang mengombinasikan kemampuan **Large Language Model (LLM)**, retrieval dokumen hukum, workflow agen berbasis **LangGraph**, serta berbagai sumber informasi pendukung. Berbeda dari sistem pencarian berbasis kata kunci sederhana, agen dirancang untuk memahami konteks pertanyaan, menentukan informasi yang dibutuhkan, melakukan retrieval terhadap sumber yang relevan, melakukan pencarian sumber yang dibutuhkan di internet (sumber eksternal), mengevaluasi kecukupan informasi, dan menghasilkan jawaban berdasarkan konteks yang diperoleh. Selain itu, sistem ini juga bisa menolak pertanyaan yang tidak berhubungan dengan KUHP Baru waluapun mengandung kata kunci yang menyerupai pertanyaan tentang KUHP Baru. Sistem juga dilengkapi dengan **conversation memory**, sehingga konteks pertanyaan sebelumnya dapat dipertahankan selama sesi percakapan. Hal tersebut memungkinkan pengguna mengajukan pertanyaan lanjutan tanpa harus mengulangi seluruh konteks pembicaraan.
 
 > **AI for Equal Justice** — teknologi AI dimanfaatkan sebagai sarana pendukung untuk memperluas akses terhadap informasi seputar KUHP Baru yang akurat, transparan, dan mudah dipahami.
 
@@ -88,27 +89,21 @@ Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **
 ---
 
 # 👥 Target Pengguna
-
-Aplikasi dirancang untuk berbagai kelompok pengguna.
+Aplikasi dirancang untuk berbagai kelompok pengguna setidak-tidaknya dapat digunakan oleh pihak-pihak di bawah ini.
 
 ### 👤 Masyarakat Umum
-
 Membantu memperoleh pemahaman awal mengenai ketentuan KUHP Baru tanpa harus memahami terminologi hukum secara mendalam.
 
 ### 🎓 Mahasiswa dan Pelajar
-
 Dapat digunakan sebagai media pembelajaran interaktif untuk mengeksplorasi konsep, pasal, serta hubungan antarketentuan dalam KUHP Baru.
 
 ### 🔬 Akademisi dan Peneliti
-
 Mendukung proses eksplorasi dan penelusuran informasi hukum dalam kegiatan akademik dan penelitian.
 
 ### ⚖️ Praktisi Hukum
-
 Dapat digunakan sebagai alat bantu pencarian awal terhadap referensi hukum.
 
 ### 🏛️ Instansi Pemerintah dan Pelayanan Publik
-
 Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyarakat.
 
 ---
@@ -116,35 +111,27 @@ Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyara
 # ✨ Fitur Utama
 
 ### 🤖 Agentic RAG
-
 Menggunakan workflow agen untuk menentukan langkah retrieval dan reasoning secara adaptif.
 
 ### 📚 KUHP sebagai Knowledge Base Utama
-
 Dokumen `KUHP_Baru.txt` digunakan sebagai sumber pengetahuan utama sistem.
 
 ### 🧠 LLM Reasoning
-
 LLM digunakan untuk memahami pertanyaan, mengintegrasikan informasi, serta menyusun jawaban berdasarkan konteks.
 
 ### 🔎 Multi-Source Retrieval
-
 Sistem dapat memanfaatkan sumber informasi internal maupun eksternal sesuai kebutuhan.
 
 ### 💬 Conversation Memory
-
 Konteks percakapan dipertahankan selama sesi sehingga pengguna dapat mengajukan pertanyaan lanjutan secara natural.
 
 ### 🔄 Iterative Retrieval
-
 Apabila informasi yang diperoleh belum memadai, workflow dapat kembali melakukan retrieval untuk memperoleh informasi tambahan.
 
 ### 📖 Source-Grounded Answer
-
 Jawaban diarahkan agar tetap berlandaskan sumber informasi yang digunakan dalam proses retrieval.
 
 ### 📊 Observability
-
 Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan LangSmith.
 
 ---
@@ -157,7 +144,7 @@ Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan
   <img src="assets/Graph 2.png" alt="Agentic RAG KUHP Baru Logo" width="373">
 </p>
 
-      Arsitektur tersebut menggambarkan proses sistem dalam menerima, mengolah, dan menghasilkan jawaban atas pertanyaan pengguna. Secara ringkas penjelasan alur di atas adalah sebagai berikut ini:
+Arsitektur tersebut menggambarkan proses sistem dalam menerima, mengolah, dan menghasilkan jawaban atas pertanyaan pengguna. Secara ringkas penjelasan alur di atas adalah sebagai berikut ini:
 1. Proses dimulai ketika pengguna berinteraksi melalui Antarmuka Streamlit sebagai media untuk memasukkan pertanyaan.
 2. Selanjutnya, sistem melakukan analisis pertanyaan guna memahami maksud dan kebutuhan informasi.
 3. Setelah itu, sistem menentukan apakah pertanyaan tersebut relevan. Jika tidak relevan, proses dihentikan dan sistem memberikan keterangan bahwa pertanyaan tidak berkaitan dengan KUHP Baru sehingga sistem tidak dapat memberikan jawaban lebih lanjut.
@@ -167,7 +154,7 @@ Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan
 7. Berdasarkan hasil evaluasi, sistem menyusun jawaban akhir yang paling sesuai dengan pertanyaan dan informasi yang diperoleh.
 8. Tahap terakhir adalah pemberian respons kepada pengguna.
 
-     Dengan demikian, alur ini menunjukkan proses yang sistematis, mulai dari pemahaman pertanyaan, validasi relevansi, pencarian informasi, evaluasi sumber, hingga penyusunan jawaban akhir yang diharapkan akurat dan relevan. Pendekatan ini membantu sistem menjaga ketepatan informasi, mengurangi kesalahan, dan memastikan respons akhir tetap relevan dengan kebutuhan pengguna secara lebih konsisten.
+Dengan demikian, alur ini menunjukkan proses yang sistematis, mulai dari pemahaman pertanyaan, validasi relevansi, pencarian informasi, evaluasi sumber, hingga penyusunan jawaban akhir yang diharapkan akurat dan relevan. Pendekatan ini membantu sistem menjaga ketepatan informasi, mengurangi kesalahan, dan memastikan respons akhir tetap relevan dengan kebutuhan pengguna secara lebih konsisten.
 
 ---
 
