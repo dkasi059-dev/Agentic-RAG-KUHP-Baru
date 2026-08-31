@@ -3,7 +3,7 @@
 ### AI-Powered Legal Assistant untuk Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana
 
 <p align="center">
-  <img src="assets/logo.png" alt="Agentic RAG KUHP Baru Logo" width="333">
+  <img src="assets/logo.png" alt="Agentic RAG KUHP Baru Logo" width="737">
 </p>
 
 <p align="center">
@@ -18,6 +18,8 @@
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red)
 ![LangChain](https://img.shields.io/badge/LangChain-Framework-green)
 ![LangGraph](https://img.shields.io/badge/LangGraph-Agent%20Workflow-purple)
+![OpenRouter](https://img.shields.io/badge/OpenRouter-LLM%20Gateway-orange)
+![Tavily](https://img.shields.io/badge/Tavily-Web%20Search-blue)
 ![RAG](https://img.shields.io/badge/Architecture-Agentic%20RAG-orange)
 
 </p>
@@ -367,7 +369,7 @@ Conversation memory sangat berguna ketika pengguna melakukan eksplorasi hukum se
 
 # 🖥️ Tampilan Aplikasi
 
-![Screenshot Aplikasi](assets/screenshot.png)
+![Screenshot Aplikasi](assets/Screenshot.png)
 
 Antarmuka aplikasi dirancang agar pengguna dapat melakukan interaksi dengan agen melalui percakapan secara langsung.
 
