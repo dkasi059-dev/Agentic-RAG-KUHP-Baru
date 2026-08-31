@@ -57,23 +57,14 @@ Di sisi lain, penggunaan LLM tanpa sumber eksternal atau mekanisme retrieval mem
 Terdapat beberapa permasalahan yang ingin diselesaikan melalui proyek ini:
 
 1. **Kompleksitas KUHP Baru**
-
    KUHP Baru terdiri dari 624 pasal sehingga membutuhkan waktu dan ketelitian untuk dipelajari secara menyeluruh.
-
 2. **Kesulitan masyarakat memahami bahasa hukum**
-
    Istilah dan struktur bahasa hukum sering kali sulit dipahami oleh masyarakat yang tidak memiliki latar belakang hukum.
-
 3. **Keterbatasan keyword search**
-
    Sistem pencarian konvensional cenderung berorientasi pada kecocokan kata, bukan pemahaman terhadap konteks pertanyaan.
-
 4. **Keterbatasan LLM tanpa retrieval**
-
    LLM dapat menghasilkan jawaban yang tidak memiliki dasar hukum yang memadai apabila tidak diberikan sumber informasi yang relevan.
-
 5. **Kebutuhan terhadap informasi hukum yang dapat ditelusuri**
-
    Jawaban hukum idealnya dapat dikaitkan kembali dengan sumber hukum yang menjadi dasar informasi tersebut.
 
 ### Solusi yang Ditawarkan
@@ -93,16 +84,12 @@ Aplikasi dirancang untuk berbagai kelompok pengguna setidak-tidaknya dapat digun
 
 ### 👤 Masyarakat Umum
 Membantu memperoleh pemahaman awal mengenai ketentuan KUHP Baru tanpa harus memahami terminologi hukum secara mendalam.
-
 ### 🎓 Mahasiswa dan Pelajar
 Dapat digunakan sebagai media pembelajaran interaktif untuk mengeksplorasi konsep, pasal, serta hubungan antarketentuan dalam KUHP Baru.
-
 ### 🔬 Akademisi dan Peneliti
 Mendukung proses eksplorasi dan penelusuran informasi hukum dalam kegiatan akademik dan penelitian.
-
 ### ⚖️ Praktisi Hukum
 Dapat digunakan sebagai alat bantu pencarian awal terhadap referensi hukum.
-
 ### 🏛️ Instansi Pemerintah dan Pelayanan Publik
 Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyarakat.
 
@@ -112,25 +99,18 @@ Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyara
 
 ### 🤖 Agentic RAG
 Menggunakan workflow agen untuk menentukan langkah retrieval dan reasoning secara adaptif.
-
 ### 📚 KUHP sebagai Knowledge Base Utama
 Dokumen `KUHP_Baru.txt` digunakan sebagai sumber pengetahuan utama sistem.
-
 ### 🧠 LLM Reasoning
 LLM digunakan untuk memahami pertanyaan, mengintegrasikan informasi, serta menyusun jawaban berdasarkan konteks.
-
 ### 🔎 Multi-Source Retrieval
 Sistem dapat memanfaatkan sumber informasi internal maupun eksternal sesuai kebutuhan.
-
 ### 💬 Conversation Memory
 Konteks percakapan dipertahankan selama sesi sehingga pengguna dapat mengajukan pertanyaan lanjutan secara natural.
-
 ### 🔄 Iterative Retrieval
 Apabila informasi yang diperoleh belum memadai, workflow dapat kembali melakukan retrieval untuk memperoleh informasi tambahan.
-
 ### 📖 Source-Grounded Answer
 Jawaban diarahkan agar tetap berlandaskan sumber informasi yang digunakan dalam proses retrieval.
-
 ### 📊 Observability
 Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan LangSmith.
 
@@ -138,7 +118,7 @@ Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan
 
 # 🏗️ Arsitektur Sistem
 
-      Secara konseptual, arsitektur sistem terdiri atas beberapa lapisan sebagai berikut ini.
+Secara konseptual, arsitektur sistem terdiri atas beberapa lapisan sebagai berikut ini.
 
 <p align="left">
   <img src="assets/Graph 2.png" alt="Agentic RAG KUHP Baru Logo" width="373">
@@ -155,27 +135,6 @@ Arsitektur tersebut menggambarkan proses sistem dalam menerima, mengolah, dan me
 8. Tahap terakhir adalah pemberian respons kepada pengguna.
 
 Dengan demikian, alur ini menunjukkan proses yang sistematis, mulai dari pemahaman pertanyaan, validasi relevansi, pencarian informasi, evaluasi sumber, hingga penyusunan jawaban akhir yang diharapkan akurat dan relevan. Pendekatan ini membantu sistem menjaga ketepatan informasi, mengurangi kesalahan, dan memastikan respons akhir tetap relevan dengan kebutuhan pengguna secara lebih konsisten.
-
----
-
-# 🧩 Technology Stack
-
-| Komponen             | Teknologi              | Fungsi                             |
-| -------------------- | ---------------------- | ---------------------------------- |
-| Programming Language | Python                 | Pengembangan aplikasi              |
-| UI                   | Streamlit              | Antarmuka pengguna                 |
-| Agent Framework      | LangGraph              | Workflow dan state management agen |
-| LLM Orchestration    | LangChain              | Integrasi LLM dan tools            |
-| LLM Gateway          | OpenRouter             | Akses model bahasa                 |
-| LLM                  | Cohere North Mini Code | Reasoning dan generation           |
-| Knowledge Base       | `KUHP_Baru.txt`        | Sumber hukum utama                 |
-| Search               | Tavily                 | Pencarian informasi eksternal      |
-| Knowledge Source     | Wikipedia              | Informasi konseptual               |
-| Academic Source      | arXiv                  | Referensi akademik                 |
-| Observability        | LangSmith              | Monitoring dan tracing             |
-| Deployment           | Streamlit Cloud        | Hosting aplikasi                   |
-
-> **Catatan:** model LLM dapat diganti dengan model lain sesuai kebutuhan, termasuk model premium dengan kapasitas konteks dan kemampuan yang lebih besar.
 
 ---
 
@@ -199,63 +158,14 @@ Sumber eksternal digunakan sebagai informasi pendukung ketika dibutuhkan, bukan 
 
 Sistem dapat menggunakan beberapa sumber informasi pendukung.
 
-### Wikipedia
-
-Digunakan untuk membantu memperoleh informasi konseptual mengenai istilah atau konsep tertentu.
-
-### arXiv
-
-Digunakan untuk memperoleh referensi akademik yang relevan.
-
-### Tavily Search
-
-Digunakan untuk memperoleh informasi eksternal dan informasi yang membutuhkan pencarian web.
-
 ### KUHP Baru
-
-Merupakan **knowledge source utama** untuk pertanyaan yang berkaitan dengan substansi KUHP.
-
----
-
-# 🧠 Agentic Workflow
-
-Salah satu karakteristik utama proyek ini adalah penggunaan workflow agen.
-
-Secara umum, proses dapat digambarkan sebagai:
-
-```text
-                User Question
-                     │
-                     ▼
-              Query Analysis
-                     │
-                     ▼
-             Source Selection
-                     │
-          ┌──────────┴──────────┐
-          │                     │
-          ▼                     ▼
-     KUHP Retrieval       External Search
-          │                     │
-          └──────────┬──────────┘
-                     ▼
-              Context Assembly
-                     │
-                     ▼
-                LLM Reasoning
-                     │
-                     ▼
-               Answer Review
-                     │
-              ┌──────┴──────┐
-              │             │
-          Adequate       Inadequate
-              │             │
-              ▼             ▼
-        Final Answer     Retrieval
-```
-
-Pendekatan tersebut memungkinkan sistem melakukan proses secara iteratif dibandingkan pipeline RAG sederhana yang selalu mengikuti satu jalur tetap.
+Merupakan **knowledge source intenal utama** untuk pertanyaan yang berkaitan dengan substansi KUHP.
+### Wikipedia
+Digunakan untuk membantu memperoleh informasi konseptual mengenai istilah atau konsep tertentu.
+### arXiv
+Digunakan untuk memperoleh referensi akademik yang relevan.
+### Tavily Search
+Digunakan untuk memperoleh informasi eksternal dan informasi yang membutuhkan pencarian web.
 
 ---
 
