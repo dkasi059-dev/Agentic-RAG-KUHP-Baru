@@ -142,15 +142,11 @@ Dengan demikian, alur ini menunjukkan proses yang sistematis, mulai dari pemaham
 
 Sumber pengetahuan utama aplikasi adalah:
 
-```text
-KUHP_Baru.txt
-```
+<p align="left">
+  <img src="assets/Ilustrasi.png" alt="Agentic RAG KUHP Baru Logo" width="373">
+</p>
 
-Dokumen tersebut berisi teks **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana** yang digunakan sebagai basis informasi utama dalam proses retrieval.
-
-Prioritas terhadap dokumen hukum utama dimaksudkan agar jawaban yang berkaitan langsung dengan substansi KUHP tetap memiliki landasan hukum yang jelas.
-
-Sumber eksternal digunakan sebagai informasi pendukung ketika dibutuhkan, bukan sebagai pengganti sumber hukum utama.
+Dokumen tersebut berisi teks **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana** yang digunakan sebagai basis informasi utama dalam proses retrieval. Prioritas terhadap dokumen hukum utama dimaksudkan agar jawaban yang berkaitan langsung dengan substansi KUHP tetap memiliki landasan hukum yang jelas. Sumber eksternal hanya digunakan sebagai informasi pendukung ketika dibutuhkan, bukan sebagai pengganti sumber hukum utama.
 
 ---
 
@@ -517,73 +513,6 @@ Menambahkan framework evaluasi khusus RAG untuk mengukur:
 
 ---
 
-# 🗺️ Roadmap
-
-```text
-[x] KUHP Baru sebagai knowledge base
-[x] LLM integration
-[x] Agentic workflow
-[x] Streamlit interface
-[x] Conversation memory
-[x] External information sources
-[x] LangSmith observability
-[ ] Vector database
-[ ] Structured legal citation
-[ ] Multi-regulation retrieval
-[ ] Legal knowledge graph
-[ ] Automated RAG evaluation
-[ ] Production-scale deployment
-```
-
----
-
-# 📖 Use Case Example
-
-Contoh interaksi:
-
-```text
-User:
-Apa yang dimaksud dengan tindak pidana dalam KUHP Baru?
-
-        ↓
-
-Agent
-        ↓
-
-Menganalisis pertanyaan
-        ↓
-
-Melakukan retrieval
-        ↓
-
-Mengambil konteks dari KUHP Baru
-        ↓
-
-Menganalisis informasi
-        ↓
-
-Mengevaluasi kecukupan konteks
-        ↓
-
-Menghasilkan jawaban
-        ↓
-
-User menerima penjelasan
-```
-
-Pengguna kemudian dapat melanjutkan:
-
-```text
-User:
-Apa unsur-unsurnya?
-
-Agent:
-Mempertahankan konteks percakapan sebelumnya
-dan memberikan jawaban lanjutan.
-```
-
----
-
 # 🧪 Evaluation
 
 Evaluasi sistem dapat dilakukan dari beberapa dimensi.
@@ -621,63 +550,6 @@ Evaluasi yang lebih komprehensif dapat ditambahkan pada pengembangan berikutnya.
 
 ---
 
-# 🤝 Contributing
-
-Kontribusi terhadap proyek sangat terbuka.
-
-Jika ingin berkontribusi:
-
-```bash
-git clone https://github.com/dkasi059-dev/Agentic-RAG-KUHP-Baru.git
-```
-
-Buat branch:
-
-```bash
-git checkout -b feature/nama-fitur
-```
-
-Lakukan perubahan dan commit:
-
-```bash
-git add .
-git commit -m "Add new feature"
-```
-
-Push branch:
-
-```bash
-git push origin feature/nama-fitur
-```
-
-Kemudian buat Pull Request.
-
----
-
-# 📜 License
-
-Jika repository menggunakan lisensi MIT, sertakan file `LICENSE` pada root repository dan gunakan:
-
-```text
-This project is licensed under the MIT License.
-```
-
-Sesuaikan bagian ini apabila repository menggunakan lisensi yang berbeda.
-
----
-
-# 👨‍💻 Project
-
-**Agentic RAG KUHP Baru**
-
-**AI for Equal Justice**
-
-Repository:
-
-https://github.com/dkasi059-dev/Agentic-RAG-KUHP-Baru
-
----
-
 # 📚 References
 
 1. Undang-Undang Republik Indonesia Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana.
@@ -694,15 +566,13 @@ https://github.com/dkasi059-dev/Agentic-RAG-KUHP-Baru
 
 ## ⚖️ Disclaimer
 
-**Agentic RAG KUHP Baru merupakan sistem berbasis kecerdasan buatan untuk membantu akses dan pemahaman awal terhadap informasi hukum. Sistem ini bukan merupakan pengganti konsultasi hukum profesional dan tidak memberikan nasihat hukum yang mengikat.**
-
-Pengguna disarankan untuk melakukan verifikasi terhadap **sumber hukum resmi** dan berkonsultasi dengan profesional hukum apabila membutuhkan analisis atau tindakan hukum yang spesifik.
+**Agentic RAG KUHP Baru merupakan sistem berbasis kecerdasan buatan untuk membantu akses dan pemahaman awal terhadap informasi hukum. Sistem ini bukan merupakan pengganti konsultasi hukum profesional dan tidak memberikan nasihat hukum yang mengikat.** Pengguna disarankan untuk melakukan verifikasi terhadap **sumber hukum resmi** dan berkonsultasi dengan profesional hukum apabila membutuhkan analisis atau tindakan hukum yang spesifik.
 
 ---
 
 <p align="center">
 
-### ⚖️ AI for Equal Justice
+### ⚖️ EquiLawForJustice: AI for Equal Justice
 
 **Mendorong akses informasi hukum yang lebih mudah, transparan, dan inklusif melalui Artificial Intelligence.**
 
