@@ -80,7 +80,7 @@ Terdapat beberapa permasalahan yang ingin diselesaikan melalui proyek ini:
 Proyek ini menggunakan pendekatan **Agentic Retrieval-Augmented Generation** sehingga sistem dapat:
 
 <p align="left">
-  <img src="assets/logo.png" alt="Agentic RAG KUHP Baru Logo" width="373">
+  <img src="assets/Graph 1.png" alt="Agentic RAG KUHP Baru Logo" width="373">
 </p>
 
 Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **agen yang dapat menentukan langkah yang diperlukan untuk menghasilkan jawaban**.
