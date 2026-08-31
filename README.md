@@ -304,27 +304,31 @@ Pendekatan tersebut memungkinkan sistem melakukan proses secara iteratif dibandi
 
 # 💬 Conversation Memory
 
-Aplikasi mendukung percakapan multi-turn.
+Aplikasi mendukung percakapan multi-turn, yakni bentuk dialog yang terdiri dari dua atau lebih pertukaran pesan beruntun di mana arti dan respons yang tepat bergantung pada apa yang dikatakan pada tahap sebelumnya.
 
 Contohnya:
 
 ```text
 User:
-Apa yang dimaksud dengan tindak pidana?
+Apa bunyi pasal 3 KUHP Baru?
 
 Agent:
-[Tanggapan mengenai tindak pidana]
+[Jawaban mengenai pasal 3 yang terdiri dari 7 ayat.]
 
 User:
-Bagaimana dengan bentuk pertanggungjawabannya?
+Jelaskan ayat 7 di atas?
 
 Agent:
-[Jawaban menggunakan konteks percakapan sebelumnya]
+[Jawaban menggunakan konteks percakapan sebelumnya. Agen mengetahui bahwa yang dimaksud ayat 7 di pasal 3 bukan pasal lain.]
+
+User:
+Jelaskan ayat sebelumnya?
+
+Agent:
+[Jawaban menggunakan konteks percakapan sebelumnya. Agen mengetahui bahwa yang dimaksud ayat sebelumnya adalah ayat 6 pasal 3 karena konteks percakapan sebelumnya pasal 3 ayat 7.]
 ```
 
-Dengan mekanisme tersebut, pengguna tidak selalu perlu mengulang konteks pada setiap pertanyaan.
-
-Conversation memory sangat berguna ketika pengguna melakukan eksplorasi hukum secara bertahap.
+Dengan mekanisme tersebut, pengguna tidak selalu perlu mengulang konteks pada setiap pertanyaan. Conversation memory sangat berguna ketika pengguna melakukan eksplorasi hukum secara bertahap.
 
 ---
 
