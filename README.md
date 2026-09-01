@@ -57,7 +57,7 @@ Di sisi lain, penggunaan LLM tanpa sumber eksternal atau mekanisme retrieval mem
 Terdapat beberapa permasalahan yang ingin diselesaikan melalui proyek ini:
 
 1. **Kompleksitas KUHP Baru**
-   /n KUHP Baru terdiri dari 624 pasal sehingga membutuhkan waktu dan ketelitian untuk dipelajari secara menyeluruh.
+   <br>KUHP Baru terdiri dari 624 pasal sehingga membutuhkan waktu dan ketelitian untuk dipelajari secara menyeluruh.
 3. **Kesulitan masyarakat memahami bahasa hukum**
    Istilah dan struktur bahasa hukum sering kali sulit dipahami oleh masyarakat yang tidak memiliki latar belakang hukum.
 4. **Keterbatasan keyword search**
