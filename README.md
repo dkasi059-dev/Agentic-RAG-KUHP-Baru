@@ -352,6 +352,8 @@ Pengembangan selanjutnya dapat diarahkan pada beberapa aspek.
 
 1. Undang-Undang Republik Indonesia Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana.
 2. Dokumentasi LangChain, LangGraph, Streamlit, OpenRouter, Tavily, dan LangSmith.
+3. https://www.unigoro.ac.id/tahun-2026-menyongsong-kehadiran-kuhp-baru/ diakses pada Kamis, 30 Juli 2026 pukul 10:13 WIB.
+4. https://www.hukumonline.com/berita/a/ini-12-ketentuan-kuhp-baru-yang-potensial-timbulkan-masalah-It6967ccec2b9d2/ diakses pada Kamis, 30 Juli 2026 pukul 10:32 WIB.
 
 ---
 
