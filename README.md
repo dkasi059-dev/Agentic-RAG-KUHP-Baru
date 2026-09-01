@@ -197,6 +197,14 @@ Dengan mekanisme tersebut, pengguna tidak selalu perlu mengulang konteks pada se
 
 # 📖 Riwayat Percakapan
 
+Sistem ini dirancang untuk mengelola riwayat percakapan pengguna secara terstruktur agar setiap sesi obrolan memiliki konteks yang jelas dan tidak saling bercampur. Ketika pengguna sedang melakukan percakapan kemudian menekan tombol *OBROLAN BARU*, sistem akan membuat sesi percakapan baru dan menyimpan percakapan sebelumnya pada bagian sisi kiri halaman dengan label *RIWAYAT PERCAKAPAN*. Dengan mekanisme tersebut, percakapan yang baru dimulai tidak akan membawa atau mencampurkan konteks dari percakapan sebelumnya, sehingga pengguna dapat memulai pembahasan dengan topik, tujuan, atau kebutuhan yang berbeda secara lebih terarah.
+
+Setiap percakapan yang telah ditinggalkan karena pengguna memilih *OBROLAN BARU* akan ditampilkan sebagai bagian tersendiri dalam *RIWAYAT PERCAKAPAN*. Pengguna dapat mengenali dan memilih percakapan terdahulu yang ingin dilanjutkan. Apabila pengguna mengeklik salah satu riwayat percakapan tersebut, sistem akan membuka kembali sesi percakapan yang dipilih sehingga pengguna dapat melanjutkan pembahasan sesuai dengan konteks yang terdapat dalam percakapan tersebut. Dengan demikian, pengguna tidak perlu mengulang informasi, pertanyaan, atau penjelasan yang sebelumnya telah disampaikan selama konteks percakapan masih tersedia.
+
+Mekanisme ini bertujuan memberikan pengalaman interaksi yang lebih rapi, terorganisasi, dan mudah digunakan, khususnya ketika pengguna menangani beberapa topik dalam satu halaman. Pemisahan sesi juga membantu mengurangi risiko informasi dari percakapan lama terbawa ke percakapan baru dan memengaruhi respons sistem.
+
+Namun, penyimpanan riwayat percakapan dalam mekanisme ini memiliki keterbatasan. Riwayat hanya dipertahankan selama pengguna masih berada pada halaman tersebut dan sesi halaman belum terputus. Apabila pengguna melakukan penyegaran atau *refresh* halaman, riwayat percakapan yang tersimpan pada sesi tersebut tidak dijamin tetap tersedia. Demikian pula, apabila koneksi internet terputus, kesinambungan sesi dan ketersediaan riwayat dapat terganggu. **Oleh karena itu, mekanisme ini pada dasarnya merupakan penyimpanan riwayat berbasis sesi aktif, bukan penyimpanan permanen. Pengguna sebaiknya menyelesaikan atau mencatat percakapan penting sebelum melakukan penyegaran halaman atau meninggalkan sesi.**
+
 ---
 
 # 📚 Kemampuan Utama
