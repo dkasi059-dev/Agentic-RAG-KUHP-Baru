@@ -83,14 +83,23 @@ Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **
 Aplikasi dirancang untuk berbagai kelompok pengguna setidak-tidaknya dapat digunakan oleh pihak-pihak di bawah ini.
 
 👤 **Masyarakat Umum**
+
 Membantu memperoleh pemahaman awal mengenai ketentuan KUHP Baru tanpa harus memahami terminologi hukum secara mendalam.
+
 🎓 **Mahasiswa dan Pelajar**
+
 Dapat digunakan sebagai media pembelajaran interaktif untuk mengeksplorasi konsep, pasal, serta hubungan antarketentuan dalam KUHP Baru.
+
 🔬 **Akademisi dan Peneliti**
+
 Mendukung proses eksplorasi dan penelusuran informasi hukum dalam kegiatan akademik dan penelitian.
+
 ⚖️ **Praktisi Hukum**
+
 Dapat digunakan sebagai alat bantu pencarian awal terhadap referensi hukum.
+
 🏛️ **Instansi Pemerintah dan Pelayanan Publik**
+
 Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyarakat.
 
 ---
