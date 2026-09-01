@@ -229,15 +229,32 @@ Beberapa kemampuan utama yang dimiliki oleh Asisten cerdas KUHP Baru ini di anta
 6. **Membantu eksplorasi mengenai tindakan pidana, pasal dan ayat yang mengatur, unsur-unsur pidana, sanksi/hukuman pidana, dan hal-hal yang berkaitan dengan hal tersebut.**
 <br>Sistem membantu pengguna menelusuri hubungan antara suatu tindakan pidana dengan ketentuan yang mengaturnya, termasuk unsur tindak pidana dan sanksinya. Dengan demikian, pengguna dapat mengeksplorasi suatu persoalan hukum secara lebih sistematis dan komprehensif.
 
-7. **Kemampuan lainnya yang berkaitan dengan KUHP Baru**
+7. **Kemampuan lainnya yang berkaitan dengan KUHP Baru.**
 
 
 ---
 # 🖥️ Tampilan dan Cara Penggunaan
 
+Tampilan dari halaman web Asisten Cerdas KUHP Baru seperti yang terlihat pada gambar berikut ini.
+
 ![Screenshot Aplikasi](assets/Screenshot.png)
 
 Antarmuka aplikasi dirancang agar pengguna dapat melakukan interaksi dengan agen melalui percakapan secara langsung.
+
+Adapun langkah-langkah penggunaan dari asisten cerdas ini adalah sebagai berikut ini:
+
+1. Kunjungi situs web di bawah ini melalui peramban Anda.
+<br>Tautan menuju halaman web: 
+2. Tanpa perlu membuat akun dan masuk sebagai pengguna, Anda dapat langsung menggunakan asisten ini. Tuliskan pertanyaan Anda seputar KUHP Baru yang masih dalam ruang lingkup kemampuan sistem ini (Lihat bagian: Kemampuan Utama) sesuai dengan kebutuhan Anda.
+3. Apabila Anda bertanya sesuatu hal yang tidak relevan dengan KUHP baru, maka asisten akan menolak untuk menjawab pertanyaan Anda.
+4. Setelah selesai menuliskan pertanyaan tekan tombol anak panah ke atas atau enter. Tunggu sistem memproses, menganalisis, dan memberikan jawaban atas pertanyaan Anda.
+5. Jika proses generasi jawaban sudah selesai maka akan muncul jawaban di bawah prtanyaan Anda disertai kolom "Analisis" yang membantu pengguna untuk mengetahui bagaimana sistem memproses dan menjawab pertanyaan pengguna.
+6. Lanjutkan percakapan tanpa khawatir kehilangan konteks pertanyaan selama masih dalam batas context window sistem ini. Apabila jumlah percakapan sudah terlalu banyak mungkin saja sistem mengalami kehilangan konteks sehingga secara berkala berikan konteks tambahan agar sistem mampu menjawab sesuai dengan konteks dan keinginan pengguna.
+7. Apabila Anda ingin memulai percakapan dengan topik atau pembahasan yang berbeda, tekan tombol "MULAI OBROLAN BARU". Sistem akan membuat sesi percakapan baru sehingga konteks dari percakapan sebelumnya tidak tercampur dengan percakapan yang baru dimulai.
+8. Ketika tombol "MULAI OBROLAN BARU" ditekan, percakapan sebelumnya akan tersimpan pada bagian sisi kiri halaman dalam kolom "RIWAYAT PERCAKAPAN". Setiap percakapan yang tersimpan akan menjadi riwayat tersendiri sehingga dapat dibedakan dari percakapan yang sedang berlangsung.
+9. Untuk melanjutkan percakapan sebelumnya, pilih atau klik percakapan terdahulu yang terdapat pada kolom "RIWAYAT PERCAKAPAN". Sistem akan membuka kembali percakapan tersebut sehingga Anda dapat melanjutkan pertanyaan atau pembahasan sesuai dengan konteks percakapan sebelumnya.
+10. Riwayat percakapan pada kolom "RIWAYAT PERCAKAPAN" hanya tersimpan selama Anda masih berada pada halaman aplikasi, tidak melakukan penyegaran atau "refresh" halaman, dan koneksi internet tetap terhubung. Apabila halaman disegarkan, ditutup, atau koneksi internet terputus, riwayat percakapan yang tersimpan pada sesi tersebut tidak dijamin tetap tersedia.
+11. Oleh karena itu, untuk percakapan yang penting atau memiliki konteks pembahasan yang panjang, disarankan untuk tidak melakukan "refresh" halaman dan memastikan koneksi internet tetap stabil selama menggunakan aplikasi. Mekanisme "RIWAYAT PERCAKAPAN" pada aplikasi ini bersifat sementara selama sesi aktif dan bukan merupakan penyimpanan riwayat secara permanen.
 
 ---
 
