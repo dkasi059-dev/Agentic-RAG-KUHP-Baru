@@ -57,14 +57,14 @@ Di sisi lain, penggunaan LLM tanpa sumber eksternal atau mekanisme retrieval mem
 Terdapat beberapa permasalahan yang ingin diselesaikan melalui proyek ini:
 
 1. **Kompleksitas KUHP Baru**
-   KUHP Baru terdiri dari 624 pasal sehingga membutuhkan waktu dan ketelitian untuk dipelajari secara menyeluruh.
-2. **Kesulitan masyarakat memahami bahasa hukum**
+   /n KUHP Baru terdiri dari 624 pasal sehingga membutuhkan waktu dan ketelitian untuk dipelajari secara menyeluruh.
+3. **Kesulitan masyarakat memahami bahasa hukum**
    Istilah dan struktur bahasa hukum sering kali sulit dipahami oleh masyarakat yang tidak memiliki latar belakang hukum.
-3. **Keterbatasan keyword search**
+4. **Keterbatasan keyword search**
    Sistem pencarian konvensional cenderung berorientasi pada kecocokan kata, bukan pemahaman terhadap konteks pertanyaan.
-4. **Keterbatasan LLM tanpa retrieval**
+5. **Keterbatasan LLM tanpa retrieval**
    LLM dapat menghasilkan jawaban yang tidak memiliki dasar hukum yang memadai apabila tidak diberikan sumber informasi yang relevan.
-5. **Kebutuhan terhadap informasi hukum yang dapat ditelusuri**
+6. **Kebutuhan terhadap informasi hukum yang dapat ditelusuri**
    Jawaban hukum idealnya dapat dikaitkan kembali dengan sumber hukum yang menjadi dasar informasi tersebut.
 
 ### Solusi yang Ditawarkan
@@ -83,21 +83,22 @@ Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **
 Aplikasi dirancang untuk berbagai kelompok pengguna setidak-tidaknya dapat digunakan oleh pihak-pihak di bawah ini.
 
 **1. Masyarakat Umum**
+
 Membantu memperoleh pemahaman awal mengenai ketentuan KUHP Baru tanpa harus memahami terminologi hukum secara mendalam.
 
-🎓 **Mahasiswa dan Pelajar**
+**2. Mahasiswa dan Pelajar**
 
 Dapat digunakan sebagai media pembelajaran interaktif untuk mengeksplorasi konsep, pasal, serta hubungan antarketentuan dalam KUHP Baru.
 
-🔬 **Akademisi dan Peneliti**
+**3. Akademisi dan Peneliti**
 
 Mendukung proses eksplorasi dan penelusuran informasi hukum dalam kegiatan akademik dan penelitian.
 
-⚖️ **Praktisi Hukum**
+**4. Praktisi Hukum**
 
 Dapat digunakan sebagai alat bantu pencarian awal terhadap referensi hukum.
 
-🏛️ **Instansi Pemerintah dan Pelayanan Publik**
+**5. Instansi Pemerintah dan Pelayanan Publik**
 
 Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyarakat.
 
