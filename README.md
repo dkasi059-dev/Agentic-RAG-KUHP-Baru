@@ -197,9 +197,9 @@ Dengan mekanisme tersebut, pengguna tidak selalu perlu mengulang konteks pada se
 
 # 📖 Riwayat Percakapan
 
-Sistem ini dirancang untuk mengelola riwayat percakapan pengguna secara terstruktur agar setiap sesi obrolan memiliki konteks yang jelas dan tidak saling bercampur. Ketika pengguna sedang melakukan percakapan kemudian menekan tombol *OBROLAN BARU*, sistem akan membuat sesi percakapan baru dan menyimpan percakapan sebelumnya pada bagian sisi kiri halaman dengan label *RIWAYAT PERCAKAPAN*. Dengan mekanisme tersebut, percakapan yang baru dimulai tidak akan membawa atau mencampurkan konteks dari percakapan sebelumnya, sehingga pengguna dapat memulai pembahasan dengan topik, tujuan, atau kebutuhan yang berbeda secara lebih terarah.
+Sistem ini dirancang untuk mengelola riwayat percakapan pengguna secara terstruktur agar setiap sesi obrolan memiliki konteks yang jelas dan tidak saling bercampur. Ketika pengguna sedang melakukan percakapan kemudian menekan tombol **MULAI OBROLAN BARU**, sistem akan membuat sesi percakapan baru dan menyimpan percakapan sebelumnya pada bagian sisi kiri halaman dengan label **RIWAYAT PERCAKAPAN**. Dengan mekanisme tersebut, percakapan yang baru dimulai tidak akan membawa atau mencampurkan konteks dari percakapan sebelumnya, sehingga pengguna dapat memulai pembahasan dengan topik, tujuan, atau kebutuhan yang berbeda secara lebih terarah.
 
-Setiap percakapan yang telah ditinggalkan karena pengguna memilih *OBROLAN BARU* akan ditampilkan sebagai bagian tersendiri dalam *RIWAYAT PERCAKAPAN*. Pengguna dapat mengenali dan memilih percakapan terdahulu yang ingin dilanjutkan. Apabila pengguna mengeklik salah satu riwayat percakapan tersebut, sistem akan membuka kembali sesi percakapan yang dipilih sehingga pengguna dapat melanjutkan pembahasan sesuai dengan konteks yang terdapat dalam percakapan tersebut. Dengan demikian, pengguna tidak perlu mengulang informasi, pertanyaan, atau penjelasan yang sebelumnya telah disampaikan selama konteks percakapan masih tersedia.
+Setiap percakapan yang telah ditinggalkan karena pengguna memilih **MULAI OBROLAN BARU** akan ditampilkan sebagai bagian tersendiri dalam **RIWAYAT PERCAKAPAN**. Pengguna dapat mengenali dan memilih percakapan terdahulu yang ingin dilanjutkan. Apabila pengguna mengeklik salah satu riwayat percakapan tersebut, sistem akan membuka kembali sesi percakapan yang dipilih sehingga pengguna dapat melanjutkan pembahasan sesuai dengan konteks yang terdapat dalam percakapan tersebut. Dengan demikian, pengguna tidak perlu mengulang informasi, pertanyaan, atau penjelasan yang sebelumnya telah disampaikan selama konteks percakapan masih tersedia.
 
 Mekanisme ini bertujuan memberikan pengalaman interaksi yang lebih rapi, terorganisasi, dan mudah digunakan, khususnya ketika pengguna menangani beberapa topik dalam satu halaman. Pemisahan sesi juga membantu mengurangi risiko informasi dari percakapan lama terbawa ke percakapan baru dan memengaruhi respons sistem.
 
@@ -208,6 +208,29 @@ Namun, penyimpanan riwayat percakapan dalam mekanisme ini memiliki keterbatasan.
 ---
 
 # 📚 Kemampuan Utama
+
+Beberapa kemampuan utama yang dimiliki oleh Asisten cerdas KUHP Baru ini di antaranya adalah sebagai berikut ini.
+
+1. **Menampilkan bunyi atau isi buku, bab, paragraf, pasal, dan ayat dalam KUHP Baru.**
+<br>Sistem dapat menampilkan ketentuan KUHP Baru berdasarkan bagian yang dipilih, mulai dari buku bab, paragraf, pasal, hingga ayat. Pengguna dapat mengakses isi ketentuan secara lebih cepat dan terstruktur.
+
+2. **Memberikan penjelasan ringkas buku, bab, paragraf, pasal, dan ayat dalam KUHP Baru.**
+<br>Sistem memberikan penjelasan sederhana mengenai substansi ketentuan yang dipilih agar lebih mudah dipahami. Penjelasan disesuaikan dengan konteks dan tingkat ketentuan yang sedang dibaca.
+
+3. **Deskripsi mengenai KUHP Baru.**
+<br>Sistem menyediakan informasi dan gambaran umum mengenai KUHP Baru, termasuk struktur, ruang lingkup, karakteristik pengaturannya, jumlah pasal, dan lain-lain. Hal ini membantu pengguna memperoleh pemahaman awal sebelum mendalami ketentuan tertentu.
+
+4. **Membuat artikel dan makalah seputar KUHP Baru.**
+<br>Sistem dapat membantu menyusun artikel, makalah, maupun tulisan akademik yang membahas berbagai isu terkait KUHP Baru. Pengguna dapat mengembangkan topik berdasarkan kebutuhan dan tujuan penulisannya.
+
+5. **Menampilkan suatu berita, karya ilmiah, dan yurisprudensi KUHP Baru dari sumber-sumber eksternal di internet.**
+<br>Sistem dapat membantu menemukan dan menampilkan informasi dari sumber eksternal di internet yang relevan dengan KUHP Baru. Sumber tersebut dapat berupa berita, karya ilmiah, putusan atau yurisprudensi, serta referensi lainnya.
+
+6. **Membantu eksplorasi mengenai tindakan pidana, pasal dan ayat yang mengatur, unsur-unsur pidana, sanksi/hukuman pidana, dan hal-hal yang berkaitan dengan hal tersebut.**
+<br>Sistem membantu pengguna menelusuri hubungan antara suatu tindakan pidana dengan ketentuan yang mengaturnya, termasuk unsur tindak pidana dan sanksinya. Dengan demikian, pengguna dapat mengeksplorasi suatu persoalan hukum secara lebih sistematis dan komprehensif.
+
+7. **Kemampuan lainnya yang berkaitan dengan KUHP Baru**
+
 
 ---
 # 🖥️ Tampilan dan Cara Penggunaan
