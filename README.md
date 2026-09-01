@@ -3,7 +3,7 @@
 ### AI-Powered Legal Assistant untuk Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana
 
 <p align="center">
-  <img src="assets/logo.png" alt="Agentic RAG KUHP Baru Logo" width="373">
+  <img src="assets/Logo.png" alt="Agentic RAG KUHP Baru Logo" width="373">
 </p>
 
 <p align="center">
@@ -257,7 +257,7 @@ Adapun langkah-langkah penggunaan dari asisten cerdas ini adalah sebagai berikut
 # 📂 Struktur Repositori
 
 <p align="left">
-  <img src="assets/Struktur.png" alt="Struktur Repositori" width="373">
+  <img src="assets/Struktur.png" alt="Struktur Repositori" width="737">
 </p>
 
 ### Penjelasan
