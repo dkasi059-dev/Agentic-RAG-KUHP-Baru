@@ -138,7 +138,7 @@ Dengan demikian, alur ini menunjukkan proses yang sistematis, mulai dari pemaham
 
 ---
 
-# 📚 Knowledge Base
+# 📚 Pengetahuan Dasar
 
 Sumber pengetahuan utama aplikasi adalah:
 
@@ -165,7 +165,7 @@ Sistem dapat menggunakan beberapa sumber informasi pendukung.
 
 ---
 
-# 💬 Conversation Memory
+# 💬 Memori Percakapan
 
 Aplikasi mendukung percakapan multi-turn, yakni bentuk dialog yang terdiri dari dua atau lebih pertukaran pesan beruntun di mana arti dan respons yang tepat bergantung pada apa yang dikatakan pada tahap sebelumnya.
 
@@ -193,11 +193,7 @@ Agent:
 
 Dengan mekanisme tersebut, pengguna tidak selalu perlu mengulang konteks pada setiap pertanyaan. Conversation memory sangat berguna ketika pengguna melakukan eksplorasi hukum secara bertahap.
 
----
-
-# 📖 Riwayat Percakapan
-
-Sistem ini dirancang untuk mengelola riwayat percakapan pengguna secara terstruktur agar setiap sesi obrolan memiliki konteks yang jelas dan tidak saling bercampur. Ketika pengguna sedang melakukan percakapan kemudian menekan tombol **MULAI OBROLAN BARU**, sistem akan membuat sesi percakapan baru dan menyimpan percakapan sebelumnya pada bagian sisi kiri halaman dengan label **RIWAYAT PERCAKAPAN**. Dengan mekanisme tersebut, percakapan yang baru dimulai tidak akan membawa atau mencampurkan konteks dari percakapan sebelumnya, sehingga pengguna dapat memulai pembahasan dengan topik, tujuan, atau kebutuhan yang berbeda secara lebih terarah.
+Selain itu, sistem ini juga dirancang untuk mengelola riwayat percakapan pengguna secara terstruktur agar setiap sesi obrolan memiliki konteks yang jelas dan tidak saling bercampur. Ketika pengguna sedang melakukan percakapan kemudian menekan tombol **MULAI OBROLAN BARU**, sistem akan membuat sesi percakapan baru dan menyimpan percakapan sebelumnya pada bagian sisi kiri halaman dengan label **RIWAYAT PERCAKAPAN**. Dengan mekanisme tersebut, percakapan yang baru dimulai tidak akan membawa atau mencampurkan konteks dari percakapan sebelumnya, sehingga pengguna dapat memulai pembahasan dengan topik, tujuan, atau kebutuhan yang berbeda secara lebih terarah.
 
 Setiap percakapan yang telah ditinggalkan karena pengguna memilih **MULAI OBROLAN BARU** akan ditampilkan sebagai bagian tersendiri dalam **RIWAYAT PERCAKAPAN**. Pengguna dapat mengenali dan memilih percakapan terdahulu yang ingin dilanjutkan. Apabila pengguna mengeklik salah satu riwayat percakapan tersebut, sistem akan membuka kembali sesi percakapan yang dipilih sehingga pengguna dapat melanjutkan pembahasan sesuai dengan konteks yang terdapat dalam percakapan tersebut. Dengan demikian, pengguna tidak perlu mengulang informasi, pertanyaan, atau penjelasan yang sebelumnya telah disampaikan selama konteks percakapan masih tersedia.
 
@@ -258,14 +254,18 @@ Adapun langkah-langkah penggunaan dari asisten cerdas ini adalah sebagai berikut
 
 ---
 
-# 📂 Struktur Repository
+# 📂 Struktur Repositori
 
 ```text
 Agentic-RAG-KUHP-Baru/
 │
 ├── Assets/
-│   ├── logo.png
-│   └── screenshot.png
+│   ├── Graph 1.png
+│   └── Graph 2.png
+|   └── Ilustrasi.png
+|   └── Logo.png
+|   └── Screenshot.png
+|   └── Struktur.png
 │
 ├── KUHP_Baru.txt
 │
@@ -293,7 +293,7 @@ Agentic-RAG-KUHP-Baru/
 
 ---
 
-# ⚠️ Limitations
+# ⚠️ Limitasi
 
 Proyek ini memiliki beberapa keterbatasan.
 1. **Potensi Halusinasi**
@@ -320,7 +320,7 @@ Tujuan utama sistem adalah **mempermudah akses terhadap informasi hukum**, bukan
 
 ---
 
-# 🌱 Impact
+# 🌱 Dampak
 
 Teknologi AI memiliki potensi untuk membantu mengurangi hambatan akses terhadap informasi hukum. Melalui aplikasi ini, pengguna dapat memperoleh sarana untuk:
 * memahami konsep hukum;
@@ -332,7 +332,7 @@ Dampak yang diharapkan tidak hanya bersifat teknis, tetapi juga sosial melalui p
 
 ---
 
-# 🔮 Future Development
+# 🔮 Pengembangan Berikutnya
 
 Pengembangan selanjutnya dapat diarahkan pada beberapa aspek.
 1. **Vector Database**
@@ -348,14 +348,14 @@ Pengembangan selanjutnya dapat diarahkan pada beberapa aspek.
 
 ---
 
-# 📚 References
+# 📚 Referensi
 
 1. Undang-Undang Republik Indonesia Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana.
 2. Dokumentasi LangChain, LangGraph, Streamlit, OpenRouter, Tavily, dan LangSmith.
 
 ---
 
-## ⚖️ Disclaimer
+## ⚖️ Penafian
 
 **Agentic RAG KUHP Baru merupakan sistem berbasis kecerdasan buatan untuk membantu akses dan pemahaman awal terhadap informasi hukum. Sistem ini bukan merupakan pengganti konsultasi hukum profesional dan tidak memberikan nasihat hukum yang mengikat.** Pengguna disarankan untuk melakukan verifikasi terhadap **sumber hukum resmi** dan berkonsultasi dengan profesional hukum apabila membutuhkan analisis atau tindakan hukum yang spesifik.
 
