@@ -59,13 +59,13 @@ Terdapat beberapa permasalahan yang ingin diselesaikan melalui proyek ini:
 1. **Kompleksitas KUHP Baru**
    <br>KUHP Baru terdiri dari 624 pasal sehingga membutuhkan waktu dan ketelitian untuk dipelajari secara menyeluruh.
 3. **Kesulitan masyarakat memahami bahasa hukum**
-   Istilah dan struktur bahasa hukum sering kali sulit dipahami oleh masyarakat yang tidak memiliki latar belakang hukum.
+   <br>Istilah dan struktur bahasa hukum sering kali sulit dipahami oleh masyarakat yang tidak memiliki latar belakang hukum.
 4. **Keterbatasan keyword search**
-   Sistem pencarian konvensional cenderung berorientasi pada kecocokan kata, bukan pemahaman terhadap konteks pertanyaan.
+   <br>Sistem pencarian konvensional cenderung berorientasi pada kecocokan kata, bukan pemahaman terhadap konteks pertanyaan.
 5. **Keterbatasan LLM tanpa retrieval**
-   LLM dapat menghasilkan jawaban yang tidak memiliki dasar hukum yang memadai apabila tidak diberikan sumber informasi yang relevan.
+   <br>LLM dapat menghasilkan jawaban yang tidak memiliki dasar hukum yang memadai apabila tidak diberikan sumber informasi yang relevan.
 6. **Kebutuhan terhadap informasi hukum yang dapat ditelusuri**
-   Jawaban hukum idealnya dapat dikaitkan kembali dengan sumber hukum yang menjadi dasar informasi tersebut.
+   <br>Jawaban hukum idealnya dapat dikaitkan kembali dengan sumber hukum yang menjadi dasar informasi tersebut.
 
 ### Solusi yang Ditawarkan
 
