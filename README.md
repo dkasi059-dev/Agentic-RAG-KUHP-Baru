@@ -82,36 +82,36 @@ Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **
 # 👥 Target Pengguna
 Aplikasi dirancang untuk berbagai kelompok pengguna setidak-tidaknya dapat digunakan oleh pihak-pihak di bawah ini.
 
-### 👤 Masyarakat Umum
+👤 **Masyarakat Umum**
 Membantu memperoleh pemahaman awal mengenai ketentuan KUHP Baru tanpa harus memahami terminologi hukum secara mendalam.
-### 🎓 Mahasiswa dan Pelajar
+🎓 **Mahasiswa dan Pelajar**
 Dapat digunakan sebagai media pembelajaran interaktif untuk mengeksplorasi konsep, pasal, serta hubungan antarketentuan dalam KUHP Baru.
-### 🔬 Akademisi dan Peneliti
+🔬 **Akademisi dan Peneliti**
 Mendukung proses eksplorasi dan penelusuran informasi hukum dalam kegiatan akademik dan penelitian.
-### ⚖️ Praktisi Hukum
+⚖️ **Praktisi Hukum**
 Dapat digunakan sebagai alat bantu pencarian awal terhadap referensi hukum.
-### 🏛️ Instansi Pemerintah dan Pelayanan Publik
+🏛️ **Instansi Pemerintah dan Pelayanan Publik**
 Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyarakat.
 
 ---
 
 # ✨ Fitur Utama
 
-### 🤖 Agentic RAG
+🤖 **Agentic RAG**
 Menggunakan workflow agen untuk menentukan langkah retrieval dan reasoning secara adaptif.
-### 📚 KUHP sebagai Knowledge Base Utama
-Dokumen `KUHP_Baru.txt` digunakan sebagai sumber pengetahuan utama sistem.
-### 🧠 LLM Reasoning
+📚 **KUHP Baru sebagai Knowledge Base Utama**
+Dokumen **Kitab Undang-Undang Hukum Pidana (KUHP) Baru** digunakan sebagai sumber pengetahuan utama sistem.
+🧠 **LLM Reasoning**
 LLM digunakan untuk memahami pertanyaan, mengintegrasikan informasi, serta menyusun jawaban berdasarkan konteks.
-### 🔎 Multi-Source Retrieval
+🔎 **Multi-Source Retrieval**
 Sistem dapat memanfaatkan sumber informasi internal maupun eksternal sesuai kebutuhan.
-### 💬 Conversation Memory
+💬 **Conversation Memory**
 Konteks percakapan dipertahankan selama sesi sehingga pengguna dapat mengajukan pertanyaan lanjutan secara natural.
-### 🔄 Iterative Retrieval
+🔄 **Iterative Retrieval**
 Apabila informasi yang diperoleh belum memadai, workflow dapat kembali melakukan retrieval untuk memperoleh informasi tambahan.
-### 📖 Source-Grounded Answer
+📖 **Source-Grounded Answer**
 Jawaban diarahkan agar tetap berlandaskan sumber informasi yang digunakan dalam proses retrieval.
-### 📊 Observability
+📊 **Observability**
 Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan LangSmith.
 
 ---
@@ -154,14 +154,14 @@ Dokumen tersebut berisi teks **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Un
 
 Sistem dapat menggunakan beberapa sumber informasi pendukung.
 
-### KUHP Baru
-Merupakan **knowledge source intenal utama** untuk pertanyaan yang berkaitan dengan substansi KUHP.
-### Wikipedia
+**KUHP Baru**
+Merupakan **knowledge source intenal utama** untuk pertanyaan yang berkaitan dengan substansi KUHP Baru.
+**Wikipedia**
 Digunakan untuk membantu memperoleh informasi konseptual mengenai istilah atau konsep tertentu.
-### arXiv
+**arXiv**
 Digunakan untuk memperoleh referensi akademik yang relevan.
-### Tavily Search
-Digunakan untuk memperoleh informasi eksternal dan informasi yang membutuhkan pencarian web.
+**Tavily Search**
+Digunakan untuk memperoleh informasi eksternal dan informasi terbaru yang membutuhkan pencarian web.
 
 ---
 
@@ -238,214 +238,41 @@ Agentic-RAG-KUHP-Baru/
 
 ---
 
-# ⚙️ Requirements
-
-Pastikan sistem memiliki:
-
-* Python 3.x
-* pip
-* Git
-* Internet connection
-* API key untuk layanan yang digunakan
-
-Dependencies Python tersedia pada:
-
-```text
-requirements.txt
-```
-
----
-
-# 🚀 Installation
-
-Clone repository:
-
-```bash
-git clone https://github.com/dkasi059-dev/Agentic-RAG-KUHP-Baru.git
-```
-
-Masuk ke directory:
-
-```bash
-cd Agentic-RAG-KUHP-Baru
-```
-
-Buat virtual environment:
-
-```bash
-python -m venv venv
-```
-
-Aktifkan virtual environment.
-
-### Windows
-
-```bash
-venv\Scripts\activate
-```
-
-### Linux / macOS
-
-```bash
-source venv/bin/activate
-```
-
-Install dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-# 🔐 Environment Variables
-
-Buat file:
-
-```text
-.env
-```
-
-Kemudian masukkan API key yang diperlukan sesuai konfigurasi aplikasi.
-
-Contoh:
-
-```env
-OPENROUTER_API_KEY=your_openrouter_api_key
-TAVILY_API_KEY=your_tavily_api_key
-LANGCHAIN_API_KEY=your_langsmith_api_key
-```
-
-> **Penting:** jangan pernah melakukan commit terhadap `.env` yang berisi API key asli.
-
-Gunakan `.gitignore` untuk mencegah file tersebut masuk ke repository.
-
-Contoh:
-
-```text
-.env
-venv/
-__pycache__/
-*.pyc
-```
-
----
-
-# ▶️ Menjalankan Aplikasi
-
-Setelah dependencies dan environment variables dikonfigurasi, jalankan:
-
-```bash
-streamlit run app.py
-```
-
-Streamlit kemudian akan menjalankan aplikasi pada server lokal.
-
----
-
-# ☁️ Deployment
-
-Aplikasi dapat di-deploy menggunakan **Streamlit Cloud**.
-
-Secara umum proses deployment:
-
-```text
-GitHub Repository
-       │
-       ▼
-Streamlit Cloud
-       │
-       ▼
-Configure Secrets
-       │
-       ▼
-Deploy
-       │
-       ▼
-Web Application
-```
-
-API key sebaiknya disimpan menggunakan **Secrets** pada platform deployment dan tidak dimasukkan langsung ke source code.
-
----
-
-# 📊 Observability
-
-Selama pengembangan, sistem dapat menggunakan **LangSmith** untuk melakukan observability terhadap workflow agen.
-
-Monitoring dapat membantu melihat:
-
-* input pengguna;
-* proses reasoning;
-* node yang dijalankan;
-* pemanggilan tools;
-* retrieval;
-* output LLM;
-* latency;
-* penggunaan token;
-* serta error yang terjadi selama workflow.
-
-Observability menjadi penting dalam pengembangan Agentic RAG karena workflow tidak hanya terdiri dari satu pemanggilan model.
-
----
-
 # ⚠️ Limitations
 
 Proyek ini memiliki beberapa keterbatasan.
-
-### 1. Bukan Pengganti Konsultasi Hukum
-
-Aplikasi merupakan **alat bantu informasi**, bukan pengganti advokat, konsultan hukum, hakim, jaksa, maupun profesional hukum lainnya.
-
-### 2. Potensi Hallucination
-
-Meskipun Agentic RAG dirancang untuk mengurangi hallucination melalui retrieval dan evaluasi, sistem berbasis LLM tetap memiliki kemungkinan menghasilkan informasi yang tidak sempurna.
-
-### 3. Ketergantungan terhadap Sumber
-
-Kualitas jawaban sangat dipengaruhi oleh kualitas dan kelengkapan sumber yang tersedia.
-
-### 4. Keterbatasan Model
-
-Model gratis atau model dengan kapasitas tertentu dapat memiliki keterbatasan context window, rate limit, reasoning capability, maupun jumlah pemanggilan.
-
-### 5. Ruang Lingkup Knowledge Base
-
-Implementasi saat ini berfokus pada **KUHP Baru**. Regulasi lain yang berkaitan belum seluruhnya menjadi bagian dari knowledge base utama.
-
-Karena itu, informasi yang dihasilkan sebaiknya tetap diverifikasi terhadap dokumen hukum resmi.
+**1. Potensi Halusinasi**
+Meskipun Agentic RAG dirancang untuk mengurangi halusinasi melalui retrieval dan evaluasi, sistem berbasis LLM tetap memiliki kemungkinan menghasilkan informasi yang tidak sempurna, walaupun kemungkinan itu sangat kecil.
+**2. Ketergantungan terhadap Sumber**
+Kualitas jawaban sangat dipengaruhi oleh kualitas dan kelengkapan sumber yang tersedia. Apabila ada perubahan-perubahan pasal dalam KUHP Baru maka sistem tidak serta merta akan mengikuti perubahan terbaru tersebut, melainkan harus dilakukan penyesuaian terhadap sumber dokumen utama.
+**3. Keterbatasan Model**
+Sistem ini masih menggunakan model gratis dengan kapasitas tertentu dapat memiliki keterbatasan context window, rate limit, reasoning capability, jumlah pemanggilan tools, dan jumlah pencarian sumber-sumber eksternal.
+**4. Belum terdapat halaman pembuatan akun pengguna**
+Walaupun di sisi lain memudahkan pengguna saat menggunakan sistem ini karena tidak perlu membuat dan masuk ke akun, ketiadaan halaman akun pengguna menyebabkan riwayat pesan hanya bertahan dalam satu sesi percakapan. Artinya, jika pengguna meninggalkan halaman ini atau koneksi internet terputus maka seluruh riwayat percakapan akan hilang.
 
 ---
 
 # 🔒 Responsible AI
 
-Karena aplikasi berada dalam domain hukum, penggunaan AI perlu dilakukan secara bertanggung jawab.
-
-Prinsip yang digunakan dalam proyek ini meliputi:
-
+Karena aplikasi berada dalam domain hukum, penggunaan AI perlu dilakukan secara bertanggung jawab. Prinsip yang digunakan dalam proyek ini meliputi:
 * mengutamakan sumber hukum sebagai landasan;
 * membedakan informasi hukum dari interpretasi AI;
 * tidak memosisikan AI sebagai pengganti profesional hukum;
 * mendorong verifikasi terhadap sumber resmi;
 * menjaga kerahasiaan API credentials;
 * serta menyadari keterbatasan model generatif.
-
 Tujuan utama sistem adalah **mempermudah akses terhadap informasi hukum**, bukan memberikan keputusan hukum yang mengikat.
 
 ---
 
 # 🌱 Impact
 
-Teknologi AI memiliki potensi untuk membantu mengurangi hambatan akses terhadap informasi hukum.
-
-Melalui aplikasi ini, pengguna dapat memperoleh sarana untuk:
-
+Teknologi AI memiliki potensi untuk membantu mengurangi hambatan akses terhadap informasi hukum. Melalui aplikasi ini, pengguna dapat memperoleh sarana untuk:
 * memahami konsep hukum;
 * mencari ketentuan dalam KUHP Baru;
-* mengeksplorasi pertanyaan hukum secara conversational;
+* mengeksplorasi pertanyaan hukum layaknya sedang bercakap-cakap dengan rekannya;
 * menemukan informasi yang relevan dengan lebih cepat;
 * serta memahami informasi hukum dengan bahasa yang lebih mudah dicerna.
-
 Dampak yang diharapkan tidak hanya bersifat teknis, tetapi juga sosial melalui peningkatan **literasi hukum** dan akses terhadap informasi.
 
 ---
@@ -453,63 +280,17 @@ Dampak yang diharapkan tidak hanya bersifat teknis, tetapi juga sosial melalui p
 # 🔮 Future Development
 
 Pengembangan selanjutnya dapat diarahkan pada beberapa aspek.
-
-### 🗄️ Vector Database
-
+🗄️ **Vector Database**
 Mengintegrasikan vector database untuk memungkinkan semantic retrieval yang lebih efisien ketika jumlah dokumen semakin besar.
-
-### 📚 Multi-Regulation Knowledge Base
-
-Memperluas knowledge base dari KUHP menjadi berbagai regulasi lain, seperti:
-
-* KUHAP;
-* KUHPerdata;
-* peraturan pemerintah;
-* peraturan sektoral;
-* serta regulasi nasional lainnya.
-
-### 🔗 Cross-Regulation Reasoning
-
-Memungkinkan agen menganalisis keterkaitan antara beberapa peraturan dalam satu proses reasoning.
-
-### 📑 Structured Legal Citation
-
-Mengembangkan mekanisme sitasi pasal secara lebih terstruktur sehingga pengguna dapat mengetahui dasar hukum dari setiap bagian jawaban.
-
-### 🕸️ Legal Knowledge Graph
-
-Membangun representasi hubungan:
-
-```text
-Pasal
- │
- ├── Unsur Tindak Pidana
- │
- ├── Sanksi
- │
- ├── Pengecualian
- │
- └── Pasal Terkait
-```
-
+🤖 **Model yang Lebih Cerdas**
+Mengganti model gratis yang memiliki beberapa keterbatasan dengan model berbayar yang lebih cerdas dan memiliki keterbatasan yang relatif lebih sedikit untuk meningkatkan kemampuan reasoning, terutama untuk pertanyaan hukum yang membutuhkan analisis multi-langkah, dan memperbanyak jumlah pencarian sumber eksternal.
+💬 **Halaman Pengguna**
+Menambahkan halaman pembuatan akun pengguna agar tiap pengguna yang menggunakan sistem ini memiliki halaman pribadi yang dapat menyimpan seluruh riwayat percakapan sebelumnya agar dapat membaca atau meneruskan percakapan kapan pun pengguna menginginkannya. 
+📚 **Multi-Regulation Knowledge Base**
+Memperluas knowledge base dari KUHP menjadi berbagai regulasi lain, seperti KUHAP, KUHPerdata, peraturan pemerintah, peraturan sektoral, serta regulasi nasional lainnya.
+📑 **Hasil yang Lebih Terstruktur**
+Mengembangkan mekanisme sitasi pasal secara lebih terstruktur sehingga pengguna dapat mengetahui dasar hukum dari setiap bagian jawaban. Selain itu, juga perlu membangun representasi hubungan dalam bentuk visual/grafik menggenai unsur tindak pidana, sanksi, pengecualian, dan pasal terkait
 sehingga hubungan antar ketentuan dapat dieksplorasi secara visual.
-
-### 🧠 Improved Reasoning
-
-Menggunakan model yang lebih kuat untuk meningkatkan kemampuan reasoning, terutama untuk pertanyaan hukum yang membutuhkan analisis multi-step.
-
-### 📈 Automated Evaluation
-
-Menambahkan framework evaluasi khusus RAG untuk mengukur:
-
-* faithfulness;
-* answer relevancy;
-* context precision;
-* context recall;
-* retrieval quality;
-* latency;
-* token usage;
-* dan cost.
 
 ---
 
