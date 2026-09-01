@@ -83,45 +83,40 @@ Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **
 Aplikasi dirancang untuk berbagai kelompok pengguna setidak-tidaknya dapat digunakan oleh pihak-pihak di bawah ini.
 
 **1. Masyarakat Umum**
-
-Membantu memperoleh pemahaman awal mengenai ketentuan KUHP Baru tanpa harus memahami terminologi hukum secara mendalam.
+<br>Membantu memperoleh pemahaman awal mengenai ketentuan KUHP Baru tanpa harus memahami terminologi hukum secara mendalam.
 
 **2. Mahasiswa dan Pelajar**
-
-Dapat digunakan sebagai media pembelajaran interaktif untuk mengeksplorasi konsep, pasal, serta hubungan antarketentuan dalam KUHP Baru.
+<br>Dapat digunakan sebagai media pembelajaran interaktif untuk mengeksplorasi konsep, pasal, serta hubungan antarketentuan dalam KUHP Baru.
 
 **3. Akademisi dan Peneliti**
-
-Mendukung proses eksplorasi dan penelusuran informasi hukum dalam kegiatan akademik dan penelitian.
+<br>Mendukung proses eksplorasi dan penelusuran informasi hukum dalam kegiatan akademik dan penelitian.
 
 **4. Praktisi Hukum**
-
-Dapat digunakan sebagai alat bantu pencarian awal terhadap referensi hukum.
+<br>Dapat digunakan sebagai alat bantu pencarian awal terhadap referensi hukum.
 
 **5. Instansi Pemerintah dan Pelayanan Publik**
-
-Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyarakat.
+<br>Berpotensi digunakan sebagai pendukung penyediaan informasi hukum kepada masyarakat.
 
 ---
 
 # ✨ Fitur Utama
 
-🤖 **Agentic RAG**
-Menggunakan workflow agen untuk menentukan langkah retrieval dan reasoning secara adaptif.
-📚 **KUHP Baru sebagai Knowledge Base Utama**
-Dokumen **Kitab Undang-Undang Hukum Pidana (KUHP) Baru** digunakan sebagai sumber pengetahuan utama sistem.
-🧠 **LLM Reasoning**
-LLM digunakan untuk memahami pertanyaan, mengintegrasikan informasi, serta menyusun jawaban berdasarkan konteks.
-🔎 **Multi-Source Retrieval**
-Sistem dapat memanfaatkan sumber informasi internal maupun eksternal sesuai kebutuhan.
-💬 **Conversation Memory**
-Konteks percakapan dipertahankan selama sesi sehingga pengguna dapat mengajukan pertanyaan lanjutan secara natural.
-🔄 **Iterative Retrieval**
-Apabila informasi yang diperoleh belum memadai, workflow dapat kembali melakukan retrieval untuk memperoleh informasi tambahan.
-📖 **Source-Grounded Answer**
-Jawaban diarahkan agar tetap berlandaskan sumber informasi yang digunakan dalam proses retrieval.
-📊 **Observability**
-Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan LangSmith.
+**1. Agentic RAG**
+<br>Menggunakan workflow agen untuk menentukan langkah retrieval dan reasoning secara adaptif.
+**2. KUHP Baru sebagai Knowledge Base Utama**
+<br>Dokumen **Kitab Undang-Undang Hukum Pidana (KUHP) Baru** digunakan sebagai sumber pengetahuan utama sistem.
+**3. LLM Reasoning**
+<br>LLM digunakan untuk memahami pertanyaan, mengintegrasikan informasi, serta menyusun jawaban berdasarkan konteks.
+**4. Multi-Source Retrieval**
+<br>Sistem dapat memanfaatkan sumber informasi internal maupun eksternal sesuai kebutuhan.
+**5. Conversation Memory**
+<br>Konteks percakapan dipertahankan selama sesi sehingga pengguna dapat mengajukan pertanyaan lanjutan secara natural.
+**6. Iterative Retrieval**
+<br>Apabila informasi yang diperoleh belum memadai, workflow dapat kembali melakukan retrieval untuk memperoleh informasi tambahan.
+**7. Source-Grounded Answer**
+<br>Jawaban diarahkan agar tetap berlandaskan sumber informasi yang digunakan dalam proses retrieval.
+**8. Observability**
+<br>Proses workflow agen dapat dipantau selama pengembangan dan evaluasi menggunakan LangSmith.
 
 ---
 
@@ -163,14 +158,14 @@ Dokumen tersebut berisi teks **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Un
 
 Sistem dapat menggunakan beberapa sumber informasi pendukung.
 
-**KUHP Baru**
-Merupakan **knowledge source intenal utama** untuk pertanyaan yang berkaitan dengan substansi KUHP Baru.
-**Wikipedia**
-Digunakan untuk membantu memperoleh informasi konseptual mengenai istilah atau konsep tertentu.
-**arXiv**
-Digunakan untuk memperoleh referensi akademik yang relevan.
-**Tavily Search**
-Digunakan untuk memperoleh informasi eksternal dan informasi terbaru yang membutuhkan pencarian web.
+**1. KUHP Baru**
+<br>Merupakan **knowledge source intenal utama** untuk pertanyaan yang berkaitan dengan substansi KUHP Baru.
+**2. Wikipedia**
+<br>Digunakan untuk membantu memperoleh informasi konseptual mengenai istilah atau konsep tertentu.
+**3. ArXiv**
+<br>Digunakan untuk memperoleh referensi akademik yang relevan.
+**4. Tavily Search**
+<br>Digunakan untuk memperoleh informasi eksternal dan informasi terbaru yang membutuhkan pencarian web.
 
 ---
 
@@ -204,7 +199,14 @@ Dengan mekanisme tersebut, pengguna tidak selalu perlu mengulang konteks pada se
 
 ---
 
-# 🖥️ Tampilan Aplikasi
+# 📖 Riwayat Percakapan
+
+---
+
+# 📚 Kemampuan Utama
+
+---
+# 🖥️ Tampilan dan Cara Penggunaan
 
 ![Screenshot Aplikasi](assets/Screenshot.png)
 
@@ -251,13 +253,13 @@ Agentic-RAG-KUHP-Baru/
 
 Proyek ini memiliki beberapa keterbatasan.
 **1. Potensi Halusinasi**
-Meskipun Agentic RAG dirancang untuk mengurangi halusinasi melalui retrieval dan evaluasi, sistem berbasis LLM tetap memiliki kemungkinan menghasilkan informasi yang tidak sempurna, walaupun kemungkinan itu sangat kecil.
+<br>Meskipun Agentic RAG dirancang untuk mengurangi halusinasi melalui retrieval dan evaluasi, sistem berbasis LLM tetap memiliki kemungkinan menghasilkan informasi yang tidak sempurna, walaupun kemungkinan itu sangat kecil.
 **2. Ketergantungan terhadap Sumber**
-Kualitas jawaban sangat dipengaruhi oleh kualitas dan kelengkapan sumber yang tersedia. Apabila ada perubahan-perubahan pasal dalam KUHP Baru maka sistem tidak serta merta akan mengikuti perubahan terbaru tersebut, melainkan harus dilakukan penyesuaian terhadap sumber dokumen utama.
+<br>Kualitas jawaban sangat dipengaruhi oleh kualitas dan kelengkapan sumber yang tersedia. Apabila ada perubahan-perubahan pasal dalam KUHP Baru maka sistem tidak serta merta akan mengikuti perubahan terbaru tersebut, melainkan harus dilakukan penyesuaian terhadap sumber dokumen utama.
 **3. Keterbatasan Model**
-Sistem ini masih menggunakan model gratis dengan kapasitas tertentu dapat memiliki keterbatasan context window, rate limit, reasoning capability, jumlah pemanggilan tools, dan jumlah pencarian sumber-sumber eksternal.
+<br>Sistem ini masih menggunakan model gratis dengan kapasitas tertentu dapat memiliki keterbatasan context window, rate limit, reasoning capability, jumlah pemanggilan tools, dan jumlah pencarian sumber-sumber eksternal.
 **4. Belum terdapat halaman pembuatan akun pengguna**
-Walaupun di sisi lain memudahkan pengguna saat menggunakan sistem ini karena tidak perlu membuat dan masuk ke akun, ketiadaan halaman akun pengguna menyebabkan riwayat pesan hanya bertahan dalam satu sesi percakapan. Artinya, jika pengguna meninggalkan halaman ini atau koneksi internet terputus maka seluruh riwayat percakapan akan hilang.
+<br>Walaupun di sisi lain memudahkan pengguna saat menggunakan sistem ini karena tidak perlu membuat dan masuk ke akun, ketiadaan halaman akun pengguna menyebabkan riwayat pesan hanya bertahan dalam satu sesi percakapan. Artinya, jika pengguna meninggalkan halaman ini atau koneksi internet terputus maka seluruh riwayat percakapan akan hilang.
 
 ---
 
@@ -289,68 +291,23 @@ Dampak yang diharapkan tidak hanya bersifat teknis, tetapi juga sosial melalui p
 # 🔮 Future Development
 
 Pengembangan selanjutnya dapat diarahkan pada beberapa aspek.
-🗄️ **Vector Database**
-Mengintegrasikan vector database untuk memungkinkan semantic retrieval yang lebih efisien ketika jumlah dokumen semakin besar.
-🤖 **Model yang Lebih Cerdas**
-Mengganti model gratis yang memiliki beberapa keterbatasan dengan model berbayar yang lebih cerdas dan memiliki keterbatasan yang relatif lebih sedikit untuk meningkatkan kemampuan reasoning, terutama untuk pertanyaan hukum yang membutuhkan analisis multi-langkah, dan memperbanyak jumlah pencarian sumber eksternal.
-💬 **Halaman Pengguna**
-Menambahkan halaman pembuatan akun pengguna agar tiap pengguna yang menggunakan sistem ini memiliki halaman pribadi yang dapat menyimpan seluruh riwayat percakapan sebelumnya agar dapat membaca atau meneruskan percakapan kapan pun pengguna menginginkannya. 
-📚 **Multi-Regulation Knowledge Base**
-Memperluas knowledge base dari KUHP menjadi berbagai regulasi lain, seperti KUHAP, KUHPerdata, peraturan pemerintah, peraturan sektoral, serta regulasi nasional lainnya.
-📑 **Hasil yang Lebih Terstruktur**
-Mengembangkan mekanisme sitasi pasal secara lebih terstruktur sehingga pengguna dapat mengetahui dasar hukum dari setiap bagian jawaban. Selain itu, juga perlu membangun representasi hubungan dalam bentuk visual/grafik menggenai unsur tindak pidana, sanksi, pengecualian, dan pasal terkait
-sehingga hubungan antar ketentuan dapat dieksplorasi secara visual.
-
----
-
-# 🧪 Evaluation
-
-Evaluasi sistem dapat dilakukan dari beberapa dimensi.
-
-### Retrieval
-
-Mengukur apakah sistem mampu menemukan konteks hukum yang relevan.
-
-### Generation
-
-Mengukur apakah jawaban yang dihasilkan sesuai dengan konteks yang diperoleh.
-
-### Faithfulness
-
-Mengukur apakah jawaban tetap berlandaskan informasi yang tersedia.
-
-### Relevance
-
-Mengukur apakah jawaban benar-benar menjawab pertanyaan pengguna.
-
-### Agent Workflow
-
-Mengukur kemampuan agen dalam menentukan sumber dan langkah retrieval yang sesuai.
-
-### Performance
-
-Mengukur:
-
-* response latency;
-* token consumption;
-* API usage;
-* dan biaya inference.
-
-Evaluasi yang lebih komprehensif dapat ditambahkan pada pengembangan berikutnya.
+**1. Vector Database**
+<br>Mengintegrasikan vector database untuk memungkinkan semantic retrieval yang lebih efisien ketika jumlah dokumen semakin besar.
+**2. Model yang Lebih Cerdas**
+<br>Mengganti model gratis yang memiliki beberapa keterbatasan dengan model berbayar yang lebih cerdas dan memiliki keterbatasan yang relatif lebih sedikit untuk meningkatkan kemampuan reasoning, terutama untuk pertanyaan hukum yang membutuhkan analisis multi-langkah, dan memperbanyak jumlah pencarian sumber eksternal.
+**3. Halaman Pengguna**
+<br>Menambahkan halaman pembuatan akun pengguna agar tiap pengguna yang menggunakan sistem ini memiliki halaman pribadi yang dapat menyimpan seluruh riwayat percakapan sebelumnya agar dapat membaca atau meneruskan percakapan kapan pun pengguna menginginkannya. 
+**4. Multi-Regulation Knowledge Base**
+<br>Memperluas knowledge base dari KUHP menjadi berbagai regulasi lain, seperti KUHAP, KUHPerdata, peraturan pemerintah, peraturan sektoral, serta regulasi nasional lainnya.
+**5. Hasil yang Lebih Terstruktur**
+<br>Mengembangkan mekanisme sitasi pasal secara lebih terstruktur sehingga pengguna dapat mengetahui dasar hukum dari setiap bagian jawaban. Selain itu, juga perlu membangun representasi hubungan dalam bentuk visual/grafik menggenai unsur tindak pidana, sanksi, pengecualian, dan pasal terkait sehingga hubungan antar ketentuan dapat dieksplorasi secara visual.
 
 ---
 
 # 📚 References
 
 1. Undang-Undang Republik Indonesia Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana.
-2. Dokumentasi LangChain.
-3. Dokumentasi LangGraph.
-4. Dokumentasi Streamlit.
-5. Dokumentasi OpenRouter.
-6. Dokumentasi Tavily.
-7. Dokumentasi LangSmith.
-8. Dokumentasi Wikipedia API.
-9. Dokumentasi arXiv.
+2. Dokumentasi LangChain, LangGraph, Streamlit, OpenRouter, Tavily, dan LangSmith.
 
 ---
 
