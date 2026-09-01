@@ -72,7 +72,7 @@ Terdapat beberapa permasalahan yang ingin diselesaikan melalui proyek ini:
 Proyek ini menggunakan pendekatan **Agentic Retrieval-Augmented Generation** sehingga sistem dapat:
 
 <p align="left">
-  <img src="assets/Graph 1.png" alt="Agentic RAG KUHP Baru Logo" width="373">
+  <img src="assets/Graph 1.png" alt="Langkah Generasi Jawaban" width="373">
 </p>
 
 Dengan demikian, sistem tidak hanya berfungsi sebagai chatbot, tetapi sebagai **agen yang dapat menentukan langkah yang diperlukan untuk menghasilkan jawaban**.
@@ -121,7 +121,7 @@ Aplikasi dirancang untuk berbagai kelompok pengguna setidak-tidaknya dapat digun
 Secara konseptual, arsitektur sistem terdiri atas beberapa lapisan sebagai berikut ini.
 
 <p align="left">
-  <img src="assets/Graph 2.png" alt="Agentic RAG KUHP Baru Logo" width="373">
+  <img src="assets/Graph 2.png" alt="Arsitektur Sistem" width="373">
 </p>
 
 Arsitektur tersebut menggambarkan proses sistem dalam menerima, mengolah, dan menghasilkan jawaban atas pertanyaan pengguna. Secara ringkas penjelasan alur di atas adalah sebagai berikut ini:
@@ -143,7 +143,7 @@ Dengan demikian, alur ini menunjukkan proses yang sistematis, mulai dari pemaham
 Sumber pengetahuan utama aplikasi adalah:
 
 <p align="left">
-  <img src="assets/Ilustrasi.png" alt="Agentic RAG KUHP Baru Logo" width="373">
+  <img src="assets/Ilustrasi.png" alt="Ilustrasi Dokumen KUHP Baru" width="373">
 </p>
 
 Dokumen tersebut berisi teks **Undang-Undang Nomor 1 Tahun 2023 tentang Kitab Undang-Undang Hukum Pidana** yang digunakan sebagai basis informasi utama dalam proses retrieval. Prioritas terhadap dokumen hukum utama dimaksudkan agar jawaban yang berkaitan langsung dengan substansi KUHP tetap memiliki landasan hukum yang jelas. Sumber eksternal hanya digunakan sebagai informasi pendukung ketika dibutuhkan, bukan sebagai pengganti sumber hukum utama.
@@ -256,40 +256,25 @@ Adapun langkah-langkah penggunaan dari asisten cerdas ini adalah sebagai berikut
 
 # 📂 Struktur Repositori
 
-```text
-Agentic-RAG-KUHP-Baru/
-│
-├── Assets/
-│   ├── Graph 1.png
-│   └── Graph 2.png
-|   └── Ilustrasi.png
-|   └── Logo.png
-|   └── Screenshot.png
-|   └── Struktur.png
-│
-├── KUHP_Baru.txt
-│
-├── app.py
-│
-├── ui_chat.py
-│
-├── requirements.txt
-│
-└── README.md
-```
+<p align="left">
+  <img src="assets/Struktur.png" alt="Struktur Repositori" width="373">
+</p>
 
 ### Penjelasan
 
-| File / Folder           | Fungsi                   |
-| ----------------------- | ------------------------ |
-| `Assets/`               | Asset visual aplikasi    |
-| `Assets/logo.png`       | Logo aplikasi            |
-| `Assets/screenshot.png` | Screenshot antarmuka     |
-| `KUHP_Baru.txt`         | Knowledge base KUHP Baru |
-| `app.py`                | Komponen utama aplikasi  |
-| `ui_chat.py`            | Komponen antarmuka chat  |
-| `requirements.txt`      | Dependencies Python      |
-| `README.md`             | Dokumentasi proyek       |
+Struktur proyek terdiri dari kode aplikasi, sumber data KUHP Baru, serta aset pendukung untuk sistem Agentic-RAG.
+1. **Assets/**
+<br>Berisi seluruh aset visual yang digunakan untuk dokumentasi dan tampilan proyek, seperti diagram alur, ilustrasi, logo, screenshot antarmuka, dan gambar struktur repositori.
+2. **KUHP_Baru.txt**
+<br>Merupakan basis pengetahuan utama yang berisi teks atau materi KUHP Baru yang digunakan sebagai sumber informasi dalam proses Retrieval-Augmented Generation (RAG).
+3. **app.py**
+<br>Berfungsi sebagai aplikasi utama/backend yang mengatur logika Agentic-RAG, termasuk pemrosesan pertanyaan, penggunaan tools/agent, retrieval, dan pembentukan jawaban.
+4. **ui_chat.py**
+<br>Mengatur antarmuka percakapan (chat UI) sehingga pengguna dapat berinteraksi dengan sistem melalui halaman web.
+5. **requirements.txt**
+<br>Berisi daftar library Python dan dependensi yang diperlukan untuk menjalankan proyek.
+6. **README.md**
+<br>Berisi dokumentasi proyek, seperti deskripsi sistem, cara instalasi, konfigurasi, struktur proyek, dan cara menjalankan aplikasi.
 
 ---
 
