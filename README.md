@@ -240,7 +240,7 @@ Antarmuka aplikasi dirancang agar pengguna dapat melakukan interaksi dengan agen
 Adapun langkah-langkah penggunaan dari asisten cerdas ini adalah sebagai berikut ini:
 
 1. Kunjungi situs web di bawah ini melalui peramban Anda.
-<br>Tautan menuju halaman web: 
+<br>Tautan menuju halaman web: https://bit.ly/AsistenCerdasKUHPBaru
 2. Tanpa perlu membuat akun dan masuk sebagai pengguna, Anda dapat langsung menggunakan asisten ini. Tuliskan pertanyaan Anda seputar KUHP Baru yang masih dalam ruang lingkup kemampuan sistem ini (Lihat bagian: Kemampuan Utama) sesuai dengan kebutuhan Anda.
 3. Apabila Anda bertanya sesuatu hal yang tidak relevan dengan KUHP baru, maka asisten akan menolak untuk menjawab pertanyaan Anda.
 4. Setelah selesai menuliskan pertanyaan tekan tombol anak panah ke atas atau enter. Tunggu sistem memproses, menganalisis, dan memberikan jawaban atas pertanyaan Anda.
@@ -251,6 +251,9 @@ Adapun langkah-langkah penggunaan dari asisten cerdas ini adalah sebagai berikut
 9. Untuk melanjutkan percakapan sebelumnya, pilih atau klik percakapan terdahulu yang terdapat pada kolom "RIWAYAT PERCAKAPAN". Sistem akan membuka kembali percakapan tersebut sehingga Anda dapat melanjutkan pertanyaan atau pembahasan sesuai dengan konteks percakapan sebelumnya.
 10. Riwayat percakapan pada kolom "RIWAYAT PERCAKAPAN" hanya tersimpan selama Anda masih berada pada halaman aplikasi, tidak melakukan penyegaran atau "refresh" halaman, dan koneksi internet tetap terhubung. Apabila halaman disegarkan, ditutup, atau koneksi internet terputus, riwayat percakapan yang tersimpan pada sesi tersebut tidak dijamin tetap tersedia.
 11. Oleh karena itu, untuk percakapan yang penting atau memiliki konteks pembahasan yang panjang, disarankan untuk tidak melakukan "refresh" halaman dan memastikan koneksi internet tetap stabil selama menggunakan aplikasi. Mekanisme "RIWAYAT PERCAKAPAN" pada aplikasi ini bersifat sementara selama sesi aktif dan bukan merupakan penyimpanan riwayat secara permanen.
+
+Selain itu, cara penggunaannya juga dapat disaksikan dalam video demo berikut ini:
+
 
 ---
 
