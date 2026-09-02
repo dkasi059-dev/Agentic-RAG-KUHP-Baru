@@ -262,7 +262,7 @@ st.markdown(
     }
     
     [data-testid="stChatInput"] > div {
-        background: #f8fafc !important;
+        background: #041366 !important;
         border:
             1px solid rgba(148, 163, 184, 0.35) !important;
         border-radius: 17px !important;
