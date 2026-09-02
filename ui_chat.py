@@ -263,16 +263,20 @@ st.markdown(
     
     [data-testid="stChatInput"] > div {
         background: #ffffff !important;
-        border:
-            1px solid rgba(148, 163, 184, 0.35) !important;
+        border: 1px solid rgba(148, 163, 184, 0.35) !important;
         border-radius: 17px !important;
-        box-shadow:
-            0 10px 28px rgba(0, 0, 0, 0.18) !important;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18) !important;
     }
-
+    
     [data-testid="stChatInput"] textarea {
         color: #1e293b !important;
         font-size: 15px !important;
+    }
+    
+    [data-testid="stChatInput"] textarea::placeholder {
+        color: #334155 !important;    /* warna gelap */
+        opacity: 1 !important;
+        font-weight: 500 !important;
     }
 
     /* ========================================================
