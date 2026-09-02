@@ -253,7 +253,7 @@ Adapun langkah-langkah penggunaan dari asisten cerdas ini adalah sebagai berikut
 11. Oleh karena itu, untuk percakapan yang penting atau memiliki konteks pembahasan yang panjang, disarankan untuk tidak melakukan "refresh" halaman dan memastikan koneksi internet tetap stabil selama menggunakan aplikasi. Mekanisme "RIWAYAT PERCAKAPAN" pada aplikasi ini bersifat sementara selama sesi aktif dan bukan merupakan penyimpanan riwayat secara permanen.
 
 Selain itu, cara penggunaannya juga dapat disaksikan dalam video demo berikut ini:
-[![Demo KUHP](Assets/thumbnail_video.png)](https://drive.google.com/file/d/1UUHk0pTFcmqP7q6kDZb23kqjlNeO9bzQ/view?usp=sharing)
+[![Demo KUHP](Assets/Thumbnail_video.png)](https://drive.google.com/file/d/1UUHk0pTFcmqP7q6kDZb23kqjlNeO9bzQ/view?usp=sharing)
 
 ---
 
